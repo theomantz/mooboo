@@ -1,12 +1,17 @@
 body {
-  background-color: rgba(127, 255, 212, 0.24);
+  /* background-color: rgba(127, 255, 212, 0.24); */
+  background-image: linear-gradient(180deg, rgba(127, 255, 212, 0.24), rgba(255, 255, 255, 0) );
+  height: 100%;
+
 }
 
 .page-container {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
 }
 
 .header {
@@ -26,14 +31,14 @@ body {
 @media screen and (min-width: 601px) {
   .header {
     font-size: 120px;
-    margin: 100px 0 100px 0;
+    margin: 100px 0 0 0;
   }
 }
 
 @media screen and (max-width: 600px) {
   .header {
     font-size: 60px;
-    margin: 50px 0 50px 0;
+    margin: 50px 0 0 0;
   }
 }
 
@@ -51,4 +56,17 @@ body {
   font-family: zipline-lined,sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 33%;
+}
+
+.fa-4x {
+  color: aquamarine;
 }
