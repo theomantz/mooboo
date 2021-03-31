@@ -2,31 +2,38 @@ body {
   background-color: rgba(127, 255, 212, 0.24);
 }
 
+.page-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
   width: 100%;
-  height: 100px;
+  height: fit-content;
   justify-content: center;
   align-items: center;
+  text-align: center;
   font-family: zipline-half-solid,sans-serif;
   font-weight: 400;
   font-style: normal;
-  margin-top: 100px;
-  margin-bottom: 100px;
 }
 
 @media screen and (min-width: 601px) {
   .header {
     font-size: 120px;
+    margin: 100px 0 100px 0;
   }
 }
 
 @media screen and (max-width: 600px) {
   .header {
     font-size: 60px;
+    margin: 50px 0 50px 0;
   }
 }
 
@@ -37,6 +44,7 @@ body {
   width: 100%;
   justify-content: center;
   align-items: center;
+  text-align: center;
   height: 100px;
   margin: 50px 0 0 0;
   font-size: 2rem;
