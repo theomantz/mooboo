@@ -1,0 +1,18 @@
+.banner {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  background-color: aquamarine;
+
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+}
+
+.assets-container {
+  
+}
