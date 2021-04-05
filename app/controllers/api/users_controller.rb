@@ -5,7 +5,7 @@ class Api::UsersController < ApplicationController
     if @user.save
       render :show
     else
-      render json: errors: @user.errors.full_messages 
+      render json: @user.errors.full_messages
     end
   end
 

@@ -1,18 +1,49 @@
+.canary {
+  font-size: 2rem;
+}
+
+.banner-header {
+  height: 100px;
+}
+
 .banner {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-  background-color: aquamarine;
+  align-items: center;
+}
 
+.assets-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px;
+}
+
+.right-nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 10px;
+  width: 50%;
 }
 
 .button-container {
   display: flex;
   flex-direction: row;
-  width: 30%;
+  margin-left: 10px;
 }
 
-.assets-container {
-  
+.button-container > a {
+  text-decoration: none;
+  padding: 7px;
+  margin: 5px 10px 5px 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.button-container > a:hover {
+  background-color: aquamarine;
 }

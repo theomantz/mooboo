@@ -34,8 +34,8 @@ export const logOut = () => dispatch => (
     errors => dispatch(receiveErrors(errors)))
 );
 
-export const signUp = user => dispatch => (
-  SessionApiUtil.signUp(user)
+export const signUp = user => dispatch => {
+  return (SessionApiUtil.signUp(user)
     .then(user => dispatch(receiveCurrentUser(user)),
-    errors => dispatch(receiveErrors(errors)))
-);
+    errors => dispatch(receiveErrors(errors))))
+};

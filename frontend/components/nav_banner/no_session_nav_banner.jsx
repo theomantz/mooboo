@@ -8,9 +8,9 @@ class NoSessionNavBanner extends React.Component {
           <div className="assets-container">
             <h3>Assets Section</h3> 
           </div>
-          <div className="button-container">
+          <div className="right-nav-container">
             <div>About/Socials/Link</div>
-            <nav>
+            <nav className="button-container">
               <Link to='/signup' >Sign Up</Link>
               <Link to='/login' >Log In</Link>
             </nav>
