@@ -10,7 +10,6 @@ class DemoUser extends React.Component {
   }
 
   handleClick(e) {
-    // debugger
     e.preventDefault()
     this.props.logIn(this.props.demoUser)
   }

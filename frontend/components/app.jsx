@@ -4,6 +4,7 @@ import { Router, Route } from 'react-router-dom'
 import NavBannerContainer from './nav_banner/nav_banner_container'
 import LoginFormContainer from './session_forms/login_form_container'
 import SignupFormContainer from './session_forms/signup_form_container'
+import PinIndexContainer from './pins/pin_index_container';
 
 const App = () => (
   <div>
@@ -13,6 +14,7 @@ const App = () => (
 
     <AuthRoute exact path='/login' component={LoginFormContainer} />
     <AuthRoute exact path='/signup' component={SignupFormContainer} />
+    <Route exact path='/' component={PinIndexContainer} />
   </div>
 )
 
