@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'react-uuid'
 
 class DemoUser extends React.Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class DemoUser extends React.Component {
   render() {
     return( <button
               onClick={this.handleClick}
-              className="demo-user-button button">
+              className="demo-user-button button session-form-button"
+              key={uuid()}>
               Try it Out
             </button>)
   }

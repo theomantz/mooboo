@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import DemoUser from './demo_user_button'
-import { logIn } from '../../util/session_api_util'
+import { logIn } from '../../actions/session_actions'
 
 const mapStateToProps = ( { session } ) => {
   return {

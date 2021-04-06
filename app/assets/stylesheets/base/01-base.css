@@ -1,0 +1,37 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+button {
+  box-sizing: border-box;
+  margin: 15px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.text-input {
+  border-style: none;
+  border-radius: 68px;
+  background: #ffffff;
+  box-shadow: inset 9px 9px 12px #f0f0f0,
+              inset -9px -9px 12px #ffffff;
+}
+
+.button-link {
+  display: block;
+  color: black;
+  text-decoration: none;
+  border-style: none;
+  padding: 8px 18px 8px 18px;
+  margin: 5px 10px 5px 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 20px;
+  transition: all 1s ease-in-out;
+  border-radius: 68px;
+  background: #ffffff;
+  box-shadow:  8px 8px 16px #dbdbdb,
+              -8px -8px 16px #ffffff;
+}
