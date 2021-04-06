@@ -35,3 +35,17 @@ button {
   box-shadow:  8px 8px 16px #dbdbdb,
               -8px -8px 16px #ffffff;
 }
+
+.logo {
+  height: 32px;
+  width: 32px;
+  padding: 15px;
+}
+
+.welcome-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #14613B;
+  margin-left: 20px;
+}

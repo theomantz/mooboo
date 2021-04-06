@@ -4,7 +4,7 @@ const config = {
   entry: "./frontend/mooboo.jsx",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
+    path: path.resolve(__dirname, "app", "assets", "javascripts"),
   },
   module: {
     rules: [
@@ -14,6 +14,13 @@ const config = {
         loader: "babel-loader",
         options: {
           presets: ["@babel/env", "@babel/react"],
+        },
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: "file-loader",
+        options: {
+          name: "[path][name].[ext]",
         },
       },
     ],

@@ -8,7 +8,6 @@ import SignupFormContainer from './session_forms/signup_form_container'
 const App = () => (
   <div>
     <header>
-      <h1 className="mooboo-app canary">App is Working</h1>
       <NavBannerContainer />
     </header>
 
