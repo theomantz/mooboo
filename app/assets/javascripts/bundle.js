@@ -10005,6 +10005,50 @@ var convertCurry = convert.bind(null, react__WEBPACK_IMPORTED_MODULE_2__.createE
 
 /***/ }),
 
+/***/ "./frontend/actions/pins_actions.js":
+/*!******************************************!*\
+  !*** ./frontend/actions/pins_actions.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RECEIVE_PINS": () => (/* binding */ RECEIVE_PINS),
+/* harmony export */   "RECEIVE_ERRORS": () => (/* binding */ RECEIVE_ERRORS),
+/* harmony export */   "fetchPins": () => (/* binding */ fetchPins)
+/* harmony export */ });
+/* harmony import */ var _util_pins_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/pins_api_util */ "./frontend/util/pins_api_util.js");
+
+var RECEIVE_PINS = 'RECEIVE_PINS';
+var RECEIVE_ERRORS = 'RECEIVE_ERRORS';
+
+var receivePins = function receivePins(pins) {
+  return {
+    type: RECEIVE_PINS,
+    pins: pins
+  };
+};
+
+var receiveErrors = function receiveErrors(errors) {
+  return {
+    type: RECEIVE_ERRORS,
+    errors: errors
+  };
+};
+
+var fetchPins = function fetchPins() {
+  return function (dispatch) {
+    return _util_pins_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchPins().then(function (pins) {
+      return dispatch(receivePins(pins));
+    }, function (errors) {
+      return dispatch(receiveErrors(errors));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -10017,9 +10061,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "RECEIVE_CURRENT_USER": () => (/* binding */ RECEIVE_CURRENT_USER),
 /* harmony export */   "LOGOUT_CURRENT_USER": () => (/* binding */ LOGOUT_CURRENT_USER),
 /* harmony export */   "RECEIVE_SESSION_ERRORS": () => (/* binding */ RECEIVE_SESSION_ERRORS),
+/* harmony export */   "CLEAR_SESSION_ERRORS": () => (/* binding */ CLEAR_SESSION_ERRORS),
 /* harmony export */   "logIn": () => (/* binding */ logIn),
 /* harmony export */   "logOut": () => (/* binding */ logOut),
-/* harmony export */   "signUp": () => (/* binding */ signUp)
+/* harmony export */   "signUp": () => (/* binding */ signUp),
+/* harmony export */   "clearSession": () => (/* binding */ clearSession)
 /* harmony export */ });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
  // Session actions to interact with state. Session controller can create
@@ -10028,6 +10074,7 @@ __webpack_require__.r(__webpack_exports__);
 var RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 var LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
 var RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
+var CLEAR_SESSION_ERRORS = "CLEAR_SESSION_ERRORS";
 
 var receiveCurrentUser = function receiveCurrentUser(user) {
   return {
@@ -10046,6 +10093,12 @@ var receiveErrors = function receiveErrors(errors) {
   return {
     type: RECEIVE_SESSION_ERRORS,
     errors: errors
+  };
+};
+
+var clearSessionErrors = function clearSessionErrors() {
+  return {
+    type: CLEAR_SESSION_ERRORS
   };
 };
 
@@ -10075,6 +10128,9 @@ var signUp = function signUp(user) {
       return dispatch(receiveErrors(errors));
     });
   };
+};
+var clearSession = function clearSession() {
+  return dispatch(clearSessionErrors());
 };
 
 /***/ }),
@@ -10563,10 +10619,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var mapStateToProps = function mapStateToProps(_ref) {
   var errors = _ref.errors;
   return {
-    errors: Object.values(errors.session),
+    errors: errors.session,
     formType: 'login',
     linkTo: '/signup',
     linkText: 'not on mooboo? sign up instead.'
@@ -10577,6 +10634,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
       return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__.logIn)(user));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__.clearSession)());
     }
   };
 };
@@ -10651,6 +10711,11 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(SessionForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.clearErrors();
+    }
+  }, {
     key: "handleChange",
     value: function handleChange(type) {
       var _this2 = this;
@@ -10749,10 +10814,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var mapStateToProps = function mapStateToProps(_ref) {
   var errors = _ref.errors;
   return {
-    errors: Object.values(errors.session),
+    errors: errors.session,
     formType: 'signup',
     linkTo: '/login',
     linkText: 'already on mooboo? log in instead'
@@ -10763,6 +10829,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
       return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__.signUp)(user));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__.clearSession)());
     }
   };
 };
@@ -10858,13 +10927,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var sessionErrorsReducer = function sessionErrorsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SESSION_ERRORS:
       return Object.values(action.errors.responseJSON);
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__.CLEAR_SESSION_ERRORS:
+      return [];
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_CURRENT_USER:
       return [];
@@ -11024,6 +11096,29 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var AuthRoute = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, null)(Auth));
+
+/***/ }),
+
+/***/ "./frontend/util/pins_api_util.js":
+/*!****************************************!*\
+  !*** ./frontend/util/pins_api_util.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fetchPins": () => (/* binding */ fetchPins)
+/* harmony export */ });
+var fetchPins = function fetchPins() {
+  return $.ajax({
+    url: 'api/pins',
+    method: 'GET',
+    error: function error(_error) {
+      return console.log('api request failed', _error);
+    }
+  });
+};
 
 /***/ }),
 
@@ -47586,7 +47681,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_pins_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/pins_actions */ "./frontend/actions/pins_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -47614,6 +47709,9 @@ document.addEventListener("DOMContentLoaded", function () {
   } // test section
 
 
+  window.dispatch = store.dispatch;
+  window.getState = store.dispatch;
+  window.fetchPins = _actions_pins_actions__WEBPACK_IMPORTED_MODULE_4__.fetchPins;
   react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_root__WEBPACK_IMPORTED_MODULE_2__.default, {
     store: store
   }), root);

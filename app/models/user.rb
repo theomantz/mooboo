@@ -11,6 +11,10 @@ class User < ApplicationRecord
 
   after_initialize :ensure_session_token, :username
 
+  has_many :pins,
+    class_name: :Pin,
+    foreign_key: :uploader_id
+
 
   def self.find_by_credentials(user_params)
     user = User.find_by(email: user_params[:email])
