@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid';
+import DemoUserButtonContainer from '../demo_user/demo_user_button_container'
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class SessionForm extends React.Component {
       email: "",
       password: "",
     };
-
+    this.renderErrors = this.renderErrors.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -24,8 +25,9 @@ class SessionForm extends React.Component {
   }
 
   renderErrors() {
+    if( this.props.errors === [] ) return null;
     return (
-      <ul className="session-form errors-list">
+      <ul className="session-form-errors-list">
         {this.props.errors.map((error, i) => (
           <li key={`error-${i}`} className="session-form errors-list">{error}</li>
         ))}
@@ -34,13 +36,11 @@ class SessionForm extends React.Component {
   }
 
   render() {
-    const { formType } = this.props;
-    const linkTo = formType === "login" ? "/signup" : "/login";
-    const linkText = formType === "login" ? "Sign Up" : "Log In";
+    const { formType, linkTo, linkText } = this.props;
     return (
       <div className={`session-form-container ${formType}-form-container`}>
-        <h3 className="session-form-header-text">welcome to mooboo</h3>
         <form onSubmit={this.handleSubmit} className="session-form">
+          <h3 className="session-form-header-text">welcome to mooboo</h3>
           {this.renderErrors()}
           <label>
             <input
@@ -61,10 +61,11 @@ class SessionForm extends React.Component {
             />
           </label>
           <div className="session-form-button-container">
-            <button className={`session-form-button button-main`}>
+            <button className={`session-form-button button-main button`}>
               {formType === "login" ? "Log In" : "Continue"}
             </button>
-            <Link to={linkTo} className="session-form-button session-form-link">
+            <DemoUserButtonContainer/>
+            <Link to={linkTo} className="session-form-link">
               {linkText}
             </Link>
           </div>
