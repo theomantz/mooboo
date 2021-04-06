@@ -4,44 +4,44 @@ import uuid from 'react-uuid';
 
 class SessionForm extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      email: '',
-      password: ''
-    }
-    
-    this.handleSubmit = this.handleSubmit.bind(this);
+      email: "",
+      password: "",
+    };
 
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(type) {
-    return e => this.setState( { [type]: e.currentTarget.value } )
+    return (e) => this.setState({ [type]: e.currentTarget.value });
   }
 
   handleSubmit(e) {
-    e.preventDefault()
-    const user = Object.assign({}, this.state)
-    this.props.processForm(this.state)
+    e.preventDefault();
+    const user = Object.assign({}, this.state);
+    this.props.processForm(this.state);
   }
 
-  handleErrors() {
-    let errors = Object.values(this.props.errors)
-    if (errors.length) {
-      errors = errors.map((error) => <p key={uuid()}>{error}</p>);
-      return <div className="errors-container">{errors}</div>;
-    } else {
-      return null;
-    }
+  renderErrors() {
+    return (
+      <ul className="session-form errors-list">
+        {this.props.errors.map((error, i) => (
+          <li key={`error-${i}`} className="session-form errors-list">{error}</li>
+        ))}
+      </ul>
+    );
   }
 
   render() {
-    const { formType } = this.props
-    const linkTo = formType === 'login' ? '/signup' : '/login'
-    const linkText = formType === 'login' ? 'Sign Up' : 'Log In'
+    const { formType } = this.props;
+    const linkTo = formType === "login" ? "/signup" : "/login";
+    const linkText = formType === "login" ? "Sign Up" : "Log In";
     return (
       <div className={`session-form-container ${formType}-form-container`}>
         <h3 className="session-form-header-text">welcome to mooboo</h3>
         <form onSubmit={this.handleSubmit} className="session-form">
+          {this.renderErrors()}
           <label>
             <input
               type="text"
@@ -67,7 +67,6 @@ class SessionForm extends React.Component {
             <Link to={linkTo} className="session-form-button session-form-link">
               {linkText}
             </Link>
-            {this.handleErrors()}
           </div>
         </form>
       </div>

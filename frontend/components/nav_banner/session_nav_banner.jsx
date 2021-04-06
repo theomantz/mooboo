@@ -15,7 +15,7 @@ class SessionNavBanner extends React.Component {
         </div>
         <div className="button-container">
           <Link to='/profile'>Profile Placeholder</Link>
-          <button onClick={() => this.props.logOut()}>Sign Out</button>
+          <button onClick={() => this.props.logOut()} className="sign-out-button button">Sign Out</button>
         </div>
       </div>
     )

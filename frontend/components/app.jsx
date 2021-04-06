@@ -1,4 +1,5 @@
 import React from 'react'
+import { AuthRoute } from '../util/frontend_util'
 import { Router, Route } from 'react-router-dom'
 import NavBannerContainer from './nav_banner/nav_banner_container'
 import LoginFormContainer from './session_forms/login_form_container'
@@ -11,8 +12,8 @@ const App = () => (
       <NavBannerContainer />
     </header>
 
-    <Route path='/login' component={LoginFormContainer} />
-    <Route path='/signup' component={SignupFormContainer} />
+    <AuthRoute exact path='/login' component={LoginFormContainer} />
+    <AuthRoute exact path='/signup' component={SignupFormContainer} />
   </div>
 )
 

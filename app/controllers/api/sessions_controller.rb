@@ -4,7 +4,7 @@ class Api::SessionsController < ApplicationController
     @user = User.find_by_credentials(user_params)
     if @user
       log_in!(@user)
-      redirect_to root_url
+      render 'api/users/show'
     else
       render json: ['Incorrect email and password combination'], status: 401
     end
