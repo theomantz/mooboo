@@ -5,7 +5,7 @@ export const pinStyles = {
     "flexDirection": "column",
     padding: 0,
     width: "96vw",
-    height: "100%"
+    height: "90vw"
   },
   pin_grid: {
     display: "grid",
@@ -17,6 +17,12 @@ export const pinStyles = {
     transform: "translateX(-50%)",
     justifyContent: "center",
     backgroundColor: "lightgray",
+  },
+  pin_column: {
+    height: "100%",
+    width: "100%",
+    boxSizing: "border-box",
+    padding: "0 8px 0 8px"
   },
   pin_width: 250,
 };

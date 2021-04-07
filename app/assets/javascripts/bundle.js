@@ -10135,6 +10135,46 @@ var clearSession = function clearSession() {
 
 /***/ }),
 
+/***/ "./frontend/actions/ui_actions.js":
+/*!****************************************!*\
+  !*** ./frontend/actions/ui_actions.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RECEIVE_NUM_COLS": () => (/* binding */ RECEIVE_NUM_COLS),
+/* harmony export */   "RECEIVE_HEIGHT": () => (/* binding */ RECEIVE_HEIGHT),
+/* harmony export */   "setNumColumns": () => (/* binding */ setNumColumns),
+/* harmony export */   "setHeight": () => (/* binding */ setHeight)
+/* harmony export */ });
+var RECEIVE_NUM_COLS = 'RECEIVE_NUM_COLS';
+var RECEIVE_HEIGHT = 'RECEIVE_HEIGHT';
+
+var receiveNumCols = function receiveNumCols(numCols) {
+  return {
+    type: RECEIVE_NUM_COLS,
+    numCols: numCols
+  };
+};
+
+var receiveHeight = function receiveHeight(height) {
+  return {
+    type: RECEIVE_HEIGHT,
+    height: height
+  };
+};
+
+var setNumColumns = function setNumColumns(numCols) {
+  return dispatch(receiveNumCols(numCols));
+};
+var setHeight = function setHeight(height) {
+  return dispatch(receiveHeight(height));
+};
+
+/***/ }),
+
 /***/ "./frontend/components/app.jsx":
 /*!*************************************!*\
   !*** ./frontend/components/app.jsx ***!
@@ -10205,7 +10245,7 @@ var pinStyles = {
     "flexDirection": "column",
     padding: 0,
     width: "96vw",
-    height: "100%"
+    height: "90vw"
   },
   pin_grid: {
     display: "grid",
@@ -10217,6 +10257,12 @@ var pinStyles = {
     transform: "translateX(-50%)",
     justifyContent: "center",
     backgroundColor: "lightgray"
+  },
+  pin_column: {
+    height: "100%",
+    width: "100%",
+    boxSizing: "border-box",
+    padding: "0 8px 0 8px"
   },
   pin_width: 250
 };
@@ -10342,10 +10388,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/document_grid/document_grid.jsx":
-/*!*************************************************************!*\
-  !*** ./frontend/components/document_grid/document_grid.jsx ***!
-  \*************************************************************/
+/***/ "./frontend/components/document_cols/document_col.jsx":
+/*!************************************************************!*\
+  !*** ./frontend/components/document_cols/document_col.jsx ***!
+  \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10379,6 +10425,99 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+var actions = ["scroll"];
+
+var DocumentColumn = /*#__PURE__*/function (_React$Component) {
+  _inherits(DocumentColumn, _React$Component);
+
+  var _super = _createSuper(DocumentColumn);
+
+  function DocumentColumn(props) {
+    var _this;
+
+    _classCallCheck(this, DocumentColumn);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      height: null
+    };
+    return _this;
+  }
+
+  _createClass(DocumentColumn, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      actions.forEach(function (event) {
+        return _this2.updateContainerDimensions;
+      });
+    }
+  }, {
+    key: "updateContainerDimensions",
+    value: function updateContainerDimensions() {
+      this.setState({
+        height: this.container.offsetHeight
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var id = this.props.id;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_column,
+        id: id
+      });
+    }
+  }]);
+
+  return DocumentColumn;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DocumentColumn);
+
+/***/ }),
+
+/***/ "./frontend/components/document_grid/document_grid.jsx":
+/*!*************************************************************!*\
+  !*** ./frontend/components/document_grid/document_grid.jsx ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
+/* harmony import */ var _document_cols_document_col__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../document_cols/document_col */ "./frontend/components/document_cols/document_col.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var actions = ["scroll", "resize"];
 
 var DocumentGrid = /*#__PURE__*/function (_React$Component) {
   _inherits(DocumentGrid, _React$Component);
@@ -10393,60 +10532,58 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       width: null,
-      height: null
+      height: null,
+      numCols: null
     };
-    _this.updateContainerDimsiones = _this.updateContainerDimsiones.bind(_assertThisInitialized(_this));
+    _this.updateContainerDimensions = _this.updateContainerDimensions.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(DocumentGrid, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.updateContainerDimsiones();
-      window.addEventListener("resize", this.updateContainerDimsiones);
+      var _this2 = this;
+
+      this.props.fetchPins();
+      this.updateContainerDimensions();
+      actions.forEach(function (event) {
+        return window.addEventListener(event, _this2.updateContainerDimensions);
+      }); // window.addEventListener("resize", this.updateContainerDimensions)
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      window.removeEventListener("resize", this.addEventListener);
-    }
-  }, {
-    key: "updateContainerDimsiones",
-    value: function updateContainerDimsiones() {
-      this.setState({
-        width: this.container.offsetWidth,
-        height: this.container.offsetHeight
+      var _this3 = this;
+
+      actions.forEach(function (event) {
+        return window.removeEventListener(event, _this3.addEventListener);
       });
     }
   }, {
-    key: "calculateCols",
-    value: function calculateCols() {
-      var width = this.state.width;
-      var numCols = Math.floor(width / _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_width);
-      var divCols = [];
-
-      for (var i = 0; i < numCols; i++) {
-        divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          key: "div-col-".concat(i),
-          id: i + 1
-        }));
-      }
-
-      return divCols;
+    key: "updateContainerDimensions",
+    value: function updateContainerDimensions() {
+      this.setState({
+        width: this.container.offsetWidth,
+        height: this.container.offsetHeight,
+        numCols: Math.floor(this.container.offsetWidth / _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_width)
+      });
+      this.props.setHeight(this.state.height);
+      this.props.setCols(this.state.numCols);
     }
   }, {
     key: "renderContent",
     value: function renderContent() {
       var _this$state = this.state,
+          width = _this$state.width,
           height = _this$state.height,
-          width = _this$state.width;
-      var numCols = Math.floor(width / _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_width);
+          numCols = _this$state.numCols;
       var divCols = [];
 
       for (var i = 0; i < numCols; i++) {
-        divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_document_cols_document_col__WEBPACK_IMPORTED_MODULE_2__.default, {
           key: "div-col-".concat(i),
-          id: i + 1
+          id: i + 1,
+          height: height
         }));
       }
 
@@ -10457,12 +10594,12 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_container,
         ref: function ref(el) {
-          return _this2.container = el;
+          return _this4.container = el;
         }
       }, this.renderContent());
     }
@@ -10487,10 +10624,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _document_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./document_grid */ "./frontend/components/document_grid/document_grid.jsx");
+/* harmony import */ var _actions_pins_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/pins_actions */ "./frontend/actions/pins_actions.js");
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+/* harmony import */ var _document_grid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./document_grid */ "./frontend/components/document_grid/document_grid.jsx");
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(null, null)(_document_grid__WEBPACK_IMPORTED_MODULE_1__.default));
+
+
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var entities = _ref.entities;
+  return {
+    pins: entities.pins
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchPins: function fetchPins() {
+      return dispatch((0,_actions_pins_actions__WEBPACK_IMPORTED_MODULE_1__.fetchPins)());
+    },
+    setCols: function setCols(numCols) {
+      return dispatch((0,_actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__.setColumns)(numCols));
+    },
+    setHeight: function setHeight(height) {
+      return dispatch((0,_actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__.setHeight)(height));
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mapStateToProps, mapDispatchToProps)(_document_grid__WEBPACK_IMPORTED_MODULE_3__.default));
 
 /***/ }),
 
@@ -11155,6 +11318,63 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/reducers/cols_reducer.js":
+/*!*******************************************!*\
+  !*** ./frontend/reducers/cols_reducer.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+
+
+var colsReducer = function colsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case RECEIVE_COLS:
+      return action.numCols;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (colsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/document_reducer.js":
+/*!***********************************************!*\
+  !*** ./frontend/reducers/document_reducer.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _cols_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cols_reducer */ "./frontend/reducers/cols_reducer.js");
+/* harmony import */ var _height_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./height_reducer */ "./frontend/reducers/height_reducer.js");
+
+
+
+var documentReducer = (0,redux__WEBPACK_IMPORTED_MODULE_2__.combineReducers)({
+  columns: _cols_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
+  height: _height_reducer__WEBPACK_IMPORTED_MODULE_1__.default
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (documentReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/entitites_reducer.js":
 /*!************************************************!*\
   !*** ./frontend/reducers/entitites_reducer.js ***!
@@ -11202,6 +11422,38 @@ var errorsReducer = (0,redux__WEBPACK_IMPORTED_MODULE_1__.combineReducers)({
 
 /***/ }),
 
+/***/ "./frontend/reducers/height_reducer.js":
+/*!*********************************************!*\
+  !*** ./frontend/reducers/height_reducer.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+
+
+var heightReducer = function heightReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_HEIGHT:
+      return action.height;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (heightReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/pins_reducer.js":
 /*!*******************************************!*\
   !*** ./frontend/reducers/pins_reducer.js ***!
@@ -11245,18 +11497,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _errors_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./errors_reducer */ "./frontend/reducers/errors_reducer.js");
 /* harmony import */ var _session_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session_reducer */ "./frontend/reducers/session_reducer.js");
 /* harmony import */ var _entitites_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entitites_reducer */ "./frontend/reducers/entitites_reducer.js");
+/* harmony import */ var _ui_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui_reducer */ "./frontend/reducers/ui_reducer.js");
 
 
 
 
-var rootReducer = (0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)({
+
+var rootReducer = (0,redux__WEBPACK_IMPORTED_MODULE_4__.combineReducers)({
   entities: _entitites_reducer__WEBPACK_IMPORTED_MODULE_2__.default,
   session: _session_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
-  errors: _errors_reducer__WEBPACK_IMPORTED_MODULE_0__.default
+  errors: _errors_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
+  ui: _ui_reducer__WEBPACK_IMPORTED_MODULE_3__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (rootReducer);
 
@@ -11338,6 +11593,28 @@ var sessionReducer = function sessionReducer() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (sessionReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/ui_reducer.js":
+/*!*****************************************!*\
+  !*** ./frontend/reducers/ui_reducer.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _document_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./document_reducer */ "./frontend/reducers/document_reducer.js");
+
+
+var uiReducer = (0,redux__WEBPACK_IMPORTED_MODULE_1__.combineReducers)({
+  document: _document_reducer__WEBPACK_IMPORTED_MODULE_0__.default
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (uiReducer);
 
 /***/ }),
 

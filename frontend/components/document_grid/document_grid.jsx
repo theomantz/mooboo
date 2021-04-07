@@ -1,5 +1,11 @@
 import React from 'react';
 import { pinStyles } from '../config/document_grid'
+import DocumentColumn from '../document_cols/document_col'
+
+const actions = [
+  "scroll",
+  "resize"
+]
 
 class DocumentGrid extends React.Component {
   constructor(props) {
@@ -7,49 +13,52 @@ class DocumentGrid extends React.Component {
 
     this.state = {
       width: null,
-      height: null
+      height: null,
+      numCols: null
     }
 
-    this.updateContainerDimsiones = this.updateContainerDimsiones.bind(this)
+    this.updateContainerDimensions = this.updateContainerDimensions.bind(this)
   }
 
   componentDidMount() {
-    this.updateContainerDimsiones();
-    window.addEventListener("resize", this.updateContainerDimsiones)
+    this.props.fetchPins()
+    this.updateContainerDimensions();
+    actions.forEach( event => 
+      window.addEventListener(event, this.updateContainerDimensions)
+      )
+    // window.addEventListener("resize", this.updateContainerDimensions)
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.addEventListener)
+    actions.forEach((event) =>
+      window.removeEventListener( event, this.addEventListener)
+    );
+    
   }
 
-  updateContainerDimsiones() {
-    this.setState( { width: this.container.offsetWidth, height: this.container.offsetHeight })
-  }
-
-
-  calculateCols() {
-    const { width } = this.state;
-    const numCols = Math.floor( width / pinStyles.pin_width )
-    let divCols = []
-    for(let i = 0 ; i < numCols ; i++ ){
-      divCols.push(<div key={`div-col-${i}`} id={i+1} ></div>)
-    }
-    return divCols
+  updateContainerDimensions() {
+    this.setState( { 
+      width: this.container.offsetWidth, 
+      height: this.container.offsetHeight,
+      numCols: Math.floor(this.container.offsetWidth / pinStyles.pin_width) })
+    this.props.setHeight(this.state.height)
+    this.props.setCols(this.state.numCols)
   }
 
   renderContent() {
-    const { height, width } = this.state;
-    const numCols = Math.floor(width / pinStyles.pin_width);
-    let divCols = [];
+    const { width, height, numCols } = this.state
+    let divCols = []
     for (let i = 0; i < numCols; i++) {
-      divCols.push(<div key={`div-col-${i}`} id={i + 1}></div>);
+      divCols.push(<DocumentColumn 
+        key={`div-col-${i}`} 
+        id={i + 1} 
+        height={height}/>);
     }
     return(
       <div style={pinStyles.pin_grid}>
         {divCols}
       </div>
-      ) 
-      
+      )
   }
 
   render() {
