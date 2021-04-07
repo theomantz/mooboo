@@ -10014,12 +10014,15 @@ var convertCurry = convert.bind(null, react__WEBPACK_IMPORTED_MODULE_2__.createE
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RECEIVE_PIN": () => (/* binding */ RECEIVE_PIN),
 /* harmony export */   "RECEIVE_PINS": () => (/* binding */ RECEIVE_PINS),
 /* harmony export */   "RECEIVE_ERRORS": () => (/* binding */ RECEIVE_ERRORS),
-/* harmony export */   "fetchPins": () => (/* binding */ fetchPins)
+/* harmony export */   "fetchPins": () => (/* binding */ fetchPins),
+/* harmony export */   "fetchPin": () => (/* binding */ fetchPin)
 /* harmony export */ });
 /* harmony import */ var _util_pins_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/pins_api_util */ "./frontend/util/pins_api_util.js");
 
+var RECEIVE_PIN = 'RECEIVE_PIN';
 var RECEIVE_PINS = 'RECEIVE_PINS';
 var RECEIVE_ERRORS = 'RECEIVE_ERRORS';
 
@@ -10027,6 +10030,13 @@ var receivePins = function receivePins(pins) {
   return {
     type: RECEIVE_PINS,
     pins: pins
+  };
+};
+
+var receivePin = function receivePin(pin) {
+  return {
+    type: RECEIVE_PIN,
+    pin: pin
   };
 };
 
@@ -10043,6 +10053,13 @@ var fetchPins = function fetchPins() {
       return dispatch(receivePins(pins));
     }, function (errors) {
       return dispatch(receiveErrors(errors));
+    });
+  };
+};
+var fetchPin = function fetchPin(pinId) {
+  return function (dispatch) {
+    return _util_pins_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchPin(pinId).then(function (pin) {
+      return dispatch(receivePin(pin));
     });
   };
 };
@@ -10146,11 +10163,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RECEIVE_NUM_COLS": () => (/* binding */ RECEIVE_NUM_COLS),
 /* harmony export */   "RECEIVE_HEIGHT": () => (/* binding */ RECEIVE_HEIGHT),
+/* harmony export */   "RECEIVE_CONTENT": () => (/* binding */ RECEIVE_CONTENT),
 /* harmony export */   "setNumColumns": () => (/* binding */ setNumColumns),
-/* harmony export */   "setHeight": () => (/* binding */ setHeight)
+/* harmony export */   "setHeight": () => (/* binding */ setHeight),
+/* harmony export */   "setContent": () => (/* binding */ setContent)
 /* harmony export */ });
 var RECEIVE_NUM_COLS = 'RECEIVE_NUM_COLS';
 var RECEIVE_HEIGHT = 'RECEIVE_HEIGHT';
+var RECEIVE_CONTENT = 'RECEIVE_CONTENT';
 
 var receiveNumCols = function receiveNumCols(numCols) {
   return {
@@ -10166,11 +10186,21 @@ var receiveHeight = function receiveHeight(height) {
   };
 };
 
+var receiveContent = function receiveContent(content) {
+  return {
+    type: RECEIVE_CONTENT,
+    content: content
+  };
+};
+
 var setNumColumns = function setNumColumns(numCols) {
   return dispatch(receiveNumCols(numCols));
 };
 var setHeight = function setHeight(height) {
   return dispatch(receiveHeight(height));
+};
+var setContent = function setContent(content) {
+  return dispatch(receiveContent(content));
 };
 
 /***/ }),
@@ -10206,7 +10236,7 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
-      height: "100%"
+      height: "100vw"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_nav_banner_nav_banner_container__WEBPACK_IMPORTED_MODULE_4__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.AuthRoute, {
     exact: true,
@@ -10227,6 +10257,111 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./frontend/components/card/card.jsx":
+/*!*******************************************!*\
+  !*** ./frontend/components/card/card.jsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-uuid */ "./node_modules/react-uuid/uuid.js");
+/* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_uuid__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var DocumentCard = /*#__PURE__*/function (_React$Component) {
+  _inherits(DocumentCard, _React$Component);
+
+  var _super = _createSuper(DocumentCard);
+
+  function DocumentCard(props) {
+    _classCallCheck(this, DocumentCard);
+
+    return _super.call(this, props);
+  }
+
+  _createClass(DocumentCard, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_2__.docStyles.docCard,
+        id: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
+      });
+    }
+  }]);
+
+  return DocumentCard;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DocumentCard);
+
+/***/ }),
+
+/***/ "./frontend/components/card/card_container.js":
+/*!****************************************************!*\
+  !*** ./frontend/components/card/card_container.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_pins_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/pins_actions */ "./frontend/actions/pins_actions.js");
+/* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./card */ "./frontend/components/card/card.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    pin: state.entities.pins[ownProps.pinId]
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchPin: function fetchPin(pinId) {
+      return dispatch((0,_actions_pins_actions__WEBPACK_IMPORTED_MODULE_1__.fetchPin)(pinId));
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mapStateToProps, mapDispatchToProps)(_card__WEBPACK_IMPORTED_MODULE_2__.default));
+
+/***/ }),
+
 /***/ "./frontend/components/config/document_grid.js":
 /*!*****************************************************!*\
   !*** ./frontend/components/config/document_grid.js ***!
@@ -10236,10 +10371,10 @@ var App = function App() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "pinStyles": () => (/* binding */ pinStyles)
+/* harmony export */   "docStyles": () => (/* binding */ docStyles)
 /* harmony export */ });
-var pinStyles = {
-  pin_container: {
+var docStyles = {
+  docContainer: {
     margin: "100px 0 0 0",
     display: "flex",
     "flexDirection": "column",
@@ -10247,9 +10382,9 @@ var pinStyles = {
     width: "96vw",
     height: "90vw"
   },
-  pin_grid: {
+  docGrid: {
     display: "grid",
-    width: "100%",
+    width: "95vw",
     height: "100%",
     gridTemplateColumns: "repeat(auto-fill, 250px)",
     position: "absolute",
@@ -10258,13 +10393,18 @@ var pinStyles = {
     justifyContent: "center",
     backgroundColor: "lightgray"
   },
-  pin_column: {
+  docColumn: {
     height: "100%",
     width: "100%",
     boxSizing: "border-box",
-    padding: "0 8px 0 8px"
+    padding: "0 8px 0 8px",
+    display: "flex",
+    flexDirection: "column"
   },
-  pin_width: 250
+  docCard: {
+    height: "250px"
+  },
+  docColWidth: 250
 };
 
 /***/ }),
@@ -10388,10 +10528,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/document_cols/document_col.jsx":
-/*!************************************************************!*\
-  !*** ./frontend/components/document_cols/document_col.jsx ***!
-  \************************************************************/
+/***/ "./frontend/components/document_col/document_col.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/document_col/document_col.jsx ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10400,7 +10540,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
+/* harmony import */ var _card_card_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../card/card_container */ "./frontend/components/card/card_container.js");
+/* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10425,6 +10566,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var actions = ["scroll"];
 
 var DocumentColumn = /*#__PURE__*/function (_React$Component) {
@@ -10439,7 +10581,8 @@ var DocumentColumn = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      height: null
+      height: null,
+      loading: true
     };
     return _this;
   }
@@ -10449,25 +10592,58 @@ var DocumentColumn = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      this.setState({
+        loading: false
+      });
       actions.forEach(function (event) {
-        return _this2.updateContainerDimensions;
+        return window.addEventListener(event, _this2.updateContainerDimensions);
       });
     }
   }, {
     key: "updateContainerDimensions",
     value: function updateContainerDimensions() {
-      this.setState({
-        height: this.container.offsetHeight
+      if (this.container) {
+        this.setState({
+          height: this.container.offsetHeight,
+          loading: true
+        });
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      var _this3 = this;
+
+      actions.forEach(function (event) {
+        return window.removeEventListener(event, _this3.addEventListener);
       });
+    }
+  }, {
+    key: "renderCards",
+    value: function renderCards() {
+      if (!this.state.loading) {
+        var height = this.state.height;
+        var cardArray = [];
+      }
+    }
+  }, {
+    key: "renderContent",
+    value: function renderContent() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null);
     }
   }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       var id = this.props.id;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_column,
-        id: id
-      });
+        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_2__.docStyles.docColumn,
+        id: id,
+        ref: function ref(el) {
+          return _this4.container = el;
+        }
+      }, this.renderContent());
     }
   }]);
 
@@ -10475,6 +10651,53 @@ var DocumentColumn = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DocumentColumn);
+
+/***/ }),
+
+/***/ "./frontend/components/document_col/document_col_container.js":
+/*!********************************************************************!*\
+  !*** ./frontend/components/document_col/document_col_container.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _util_pins_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/pins_api_util */ "./frontend/util/pins_api_util.js");
+/* harmony import */ var _document_col__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./document_col */ "./frontend/components/document_col/document_col.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    setHeight: function (_setHeight) {
+      function setHeight(_x) {
+        return _setHeight.apply(this, arguments);
+      }
+
+      setHeight.toString = function () {
+        return _setHeight.toString();
+      };
+
+      return setHeight;
+    }(function (height) {
+      return dispatch(setHeight(height));
+    }),
+    fetchPin: function fetchPin(pinId) {
+      return dispatch((0,_util_pins_api_util__WEBPACK_IMPORTED_MODULE_1__.fetchPin)(pinId));
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(null, mapDispatchToProps)(_document_col__WEBPACK_IMPORTED_MODULE_2__.default));
 
 /***/ }),
 
@@ -10491,8 +10714,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
-/* harmony import */ var _document_cols_document_col__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../document_cols/document_col */ "./frontend/components/document_cols/document_col.jsx");
+/* harmony import */ var _document_col_document_col_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../document_col/document_col_container */ "./frontend/components/document_col/document_col_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -10533,7 +10758,8 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       width: null,
       height: null,
-      numCols: null
+      numCols: null,
+      content: _this.props.content
     };
     _this.updateContainerDimensions = _this.updateContainerDimensions.bind(_assertThisInitialized(_this));
     return _this;
@@ -10548,7 +10774,7 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
       this.updateContainerDimensions();
       actions.forEach(function (event) {
         return window.addEventListener(event, _this2.updateContainerDimensions);
-      }); // window.addEventListener("resize", this.updateContainerDimensions)
+      });
     }
   }, {
     key: "componentWillUnmount",
@@ -10565,30 +10791,42 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
       this.setState({
         width: this.container.offsetWidth,
         height: this.container.offsetHeight,
-        numCols: Math.floor(this.container.offsetWidth / _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_width)
+        numCols: Math.floor(this.container.offsetWidth / _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.docStyles.docColWidth)
       });
       this.props.setHeight(this.state.height);
       this.props.setCols(this.state.numCols);
+      this.assignContent();
+    }
+  }, {
+    key: "assignContent",
+    value: function assignContent() {
+      debugger;
+      var content = this.state.content;
+
+      if (content) {
+        for (var i = 0; i < this.state.numCols; i++) {
+          this.props.setContent(_defineProperty({}, i, content.pop()));
+        }
+      }
     }
   }, {
     key: "renderContent",
     value: function renderContent() {
       var _this$state = this.state,
-          width = _this$state.width,
           height = _this$state.height,
           numCols = _this$state.numCols;
       var divCols = [];
 
       for (var i = 0; i < numCols; i++) {
-        divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_document_cols_document_col__WEBPACK_IMPORTED_MODULE_2__.default, {
+        divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_document_col_document_col_container__WEBPACK_IMPORTED_MODULE_2__.default, {
           key: "div-col-".concat(i),
-          id: i + 1,
+          id: i,
           height: height
         }));
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_grid
+        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.docStyles.docGrid
       }, divCols);
     }
   }, {
@@ -10597,7 +10835,7 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
       var _this4 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_container,
+        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.docStyles.docContainer,
         ref: function ref(el) {
           return _this4.container = el;
         }
@@ -10635,7 +10873,8 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(_ref) {
   var entities = _ref.entities;
   return {
-    pins: entities.pins
+    content: Object.values(entities.pins),
+    type: "home"
   };
 };
 
@@ -10645,10 +10884,13 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
       return dispatch((0,_actions_pins_actions__WEBPACK_IMPORTED_MODULE_1__.fetchPins)());
     },
     setCols: function setCols(numCols) {
-      return dispatch((0,_actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__.setColumns)(numCols));
+      return dispatch((0,_actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__.setNumColumns)(numCols));
     },
     setHeight: function setHeight(height) {
       return dispatch((0,_actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__.setHeight)(height));
+    },
+    setContent: function setContent(content) {
+      return dispatch((0,_actions_ui_actions__WEBPACK_IMPORTED_MODULE_2__.setContent)(content));
     }
   };
 };
@@ -11338,7 +11580,7 @@ var colsReducer = function colsReducer() {
   Object.freeze(state);
 
   switch (action.type) {
-    case RECEIVE_COLS:
+    case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_NUM_COLS:
       return action.numCols;
 
     default:
@@ -11347,6 +11589,41 @@ var colsReducer = function colsReducer() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (colsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/content_reducer.js":
+/*!**********************************************!*\
+  !*** ./frontend/reducers/content_reducer.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var contentReducer = function contentReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_CONTENT:
+      var content = Object.assign({}, state, _defineProperty({}, action.id, action.content));
+      return content;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (contentReducer);
 
 /***/ }),
 
@@ -11361,15 +11638,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _cols_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cols_reducer */ "./frontend/reducers/cols_reducer.js");
 /* harmony import */ var _height_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./height_reducer */ "./frontend/reducers/height_reducer.js");
+/* harmony import */ var _content_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./content_reducer */ "./frontend/reducers/content_reducer.js");
 
 
 
-var documentReducer = (0,redux__WEBPACK_IMPORTED_MODULE_2__.combineReducers)({
+
+var documentReducer = (0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)({
   columns: _cols_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
-  height: _height_reducer__WEBPACK_IMPORTED_MODULE_1__.default
+  height: _height_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
+  content: _content_reducer__WEBPACK_IMPORTED_MODULE_2__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (documentReducer);
 
@@ -11466,6 +11746,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _actions_pins_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/pins_actions */ "./frontend/actions/pins_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var pinsReducer = function pinsReducer() {
@@ -11476,6 +11758,9 @@ var pinsReducer = function pinsReducer() {
   switch (action.type) {
     case _actions_pins_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PINS:
       return action.pins;
+
+    case _actions_pins_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PIN:
+      return Object.assign({}, state, _defineProperty({}, action.pin.id, action.pin));
 
     default:
       return state;
@@ -11735,15 +12020,19 @@ var AuthRoute = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.withRouter)((0,
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fetchPin": () => (/* binding */ fetchPin),
 /* harmony export */   "fetchPins": () => (/* binding */ fetchPins)
 /* harmony export */ });
+var fetchPin = function fetchPin(pinId) {
+  return $.ajax({
+    url: "api/pins/".concat(pinId),
+    method: 'GET'
+  });
+};
 var fetchPins = function fetchPins() {
   return $.ajax({
     url: 'api/pins',
-    method: 'GET',
-    error: function error(_error) {
-      return console.log('api request failed', _error);
-    }
+    method: 'GET'
   });
 };
 

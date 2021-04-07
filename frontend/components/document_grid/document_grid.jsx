@@ -1,6 +1,6 @@
 import React from 'react';
-import { pinStyles } from '../config/document_grid'
-import DocumentColumn from '../document_cols/document_col'
+import { docStyles } from '../config/document_grid'
+import DocumentColumnContainer from '../document_col/document_col_container'
 
 const actions = [
   "scroll",
@@ -14,7 +14,8 @@ class DocumentGrid extends React.Component {
     this.state = {
       width: null,
       height: null,
-      numCols: null
+      numCols: null,
+      content: this.props.content,
     }
 
     this.updateContainerDimensions = this.updateContainerDimensions.bind(this)
@@ -26,36 +27,45 @@ class DocumentGrid extends React.Component {
     actions.forEach( event => 
       window.addEventListener(event, this.updateContainerDimensions)
       )
-    // window.addEventListener("resize", this.updateContainerDimensions)
   }
 
   componentWillUnmount() {
     actions.forEach((event) =>
       window.removeEventListener( event, this.addEventListener)
     );
-    
   }
 
   updateContainerDimensions() {
     this.setState( { 
       width: this.container.offsetWidth, 
       height: this.container.offsetHeight,
-      numCols: Math.floor(this.container.offsetWidth / pinStyles.pin_width) })
+      numCols: Math.floor(this.container.offsetWidth / docStyles.docColWidth) })
     this.props.setHeight(this.state.height)
     this.props.setCols(this.state.numCols)
+    this.assignContent()
+  }
+
+  assignContent() {
+    debugger
+    const { content } = this.state
+    if(content){
+      for(let i = 0; i < this.state.numCols ; i++) {
+        this.props.setContent( { [i]: content.pop() } )
+      }
+    }
   }
 
   renderContent() {
-    const { width, height, numCols } = this.state
+    const { height, numCols } = this.state
     let divCols = []
     for (let i = 0; i < numCols; i++) {
-      divCols.push(<DocumentColumn 
-        key={`div-col-${i}`} 
-        id={i + 1} 
+      divCols.push(<DocumentColumnContainer 
+        key={`div-col-${i}`}
+        id={i}
         height={height}/>);
     }
     return(
-      <div style={pinStyles.pin_grid}>
+      <div style={docStyles.docGrid}>
         {divCols}
       </div>
       )
@@ -63,7 +73,7 @@ class DocumentGrid extends React.Component {
 
   render() {
     return (
-      <div style={pinStyles.pin_container} ref={(el) => (this.container = el)}>
+      <div style={docStyles.docContainer} ref={(el) => (this.container = el)}>
         {this.renderContent()}
       </div>
     );

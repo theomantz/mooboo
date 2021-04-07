@@ -1,5 +1,5 @@
-export const pinStyles = {
-  pin_container: {
+export const docStyles = {
+  docContainer: {
     margin: "100px 0 0 0",
     display: "flex",
     "flexDirection": "column",
@@ -7,9 +7,9 @@ export const pinStyles = {
     width: "96vw",
     height: "90vw"
   },
-  pin_grid: {
+  docGrid: {
     display: "grid",
-    width: "100%",
+    width: "95vw",
     height: "100%",
     gridTemplateColumns: "repeat(auto-fill, 250px)",
     position: "absolute",
@@ -18,11 +18,16 @@ export const pinStyles = {
     justifyContent: "center",
     backgroundColor: "lightgray",
   },
-  pin_column: {
+  docColumn: {
     height: "100%",
     width: "100%",
     boxSizing: "border-box",
-    padding: "0 8px 0 8px"
+    padding: "0 8px 0 8px",
+    display: "flex",
+    flexDirection: "column"
   },
-  pin_width: 250,
+  docCard: {
+    height: "250px"
+  },
+  docColWidth: 250,
 };

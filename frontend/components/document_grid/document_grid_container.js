@@ -1,17 +1,19 @@
 import { connect } from 'react-redux';
 import { fetchPins } from '../../actions/pins_actions';
-import { setColumns, setHeight } from '../../actions/ui_actions'
+import { setNumColumns, setHeight, setContent } from '../../actions/ui_actions'
 import DocumentGrid from './document_grid'
 
 const mapStateToProps = ({ entities }) => ({
-  pins: entities.pins
+  content: Object.values(entities.pins),
+  type: "home"
 })
 
 
 const mapDispatchToProps = dispatch => ({
   fetchPins: () => dispatch(fetchPins()),
-  setCols: numCols => dispatch(setColumns(numCols)),
-  setHeight: height => dispatch(setHeight(height))
+  setCols: numCols => dispatch(setNumColumns(numCols)),
+  setHeight: height => dispatch(setHeight(height)),
+  setContent: content => dispatch(setContent(content))
 })
 
 

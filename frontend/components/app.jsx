@@ -8,7 +8,7 @@ import LoginFormContainer from './session_forms/login_form_container'
 import SignupFormContainer from './session_forms/signup_form_container'
 
 const App = () => (
-  <div style={{height: "100%"}}>
+  <div style={{height: "100vw"}}>
     <header>
       <NavBannerContainer />
     </header>
