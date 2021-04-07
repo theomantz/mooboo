@@ -10164,7 +10164,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_nav_banner_nav_banner_container__WEBPACK_IMPORTED_MODULE_4__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.AuthRoute, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      height: "100%"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_nav_banner_nav_banner_container__WEBPACK_IMPORTED_MODULE_4__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.AuthRoute, {
     exact: true,
     path: "/login",
     component: _session_forms_login_form_container__WEBPACK_IMPORTED_MODULE_5__.default
@@ -10180,6 +10184,42 @@ var App = function App() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
+
+/***/ }),
+
+/***/ "./frontend/components/config/document_grid.js":
+/*!*****************************************************!*\
+  !*** ./frontend/components/config/document_grid.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "pinStyles": () => (/* binding */ pinStyles)
+/* harmony export */ });
+var pinStyles = {
+  pin_container: {
+    margin: "100px 0 0 0",
+    display: "flex",
+    "flexDirection": "column",
+    padding: 0,
+    width: "96vw",
+    height: "100%"
+  },
+  pin_grid: {
+    display: "grid",
+    width: "100%",
+    height: "100%",
+    gridTemplateColumns: "repeat(auto-fill, 250px)",
+    position: "absolute",
+    left: "50%",
+    transform: "translateX(-50%)",
+    justifyContent: "center",
+    backgroundColor: "lightgray"
+  },
+  pin_width: 250
+};
 
 /***/ }),
 
@@ -10314,6 +10354,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10337,22 +10378,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-var styles = {
-  pin_container: {
-    margin: "100px 0 0 0",
-    padding: 0,
-    width: "96vw",
-    display: "grid",
-    height: "100%",
-    gridTemplateColumns: "repeat(auto-fill, 250px)",
-    position: "absolute",
-    left: "50%",
-    transform: "translateX(-50%)",
-    justifyContent: "center",
-    backgroundColor: "lightgray"
-  },
-  pin_width: 250
-};
+
 
 var DocumentGrid = /*#__PURE__*/function (_React$Component) {
   _inherits(DocumentGrid, _React$Component);
@@ -10366,20 +10392,18 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      width: 0,
-      height: 0
+      width: null,
+      height: null
     };
-    _this.updateWindowDimensions = _this.updateWindowDimensions.bind(_assertThisInitialized(_this));
-    _this.numCols = _this.numCols.bind(_assertThisInitialized(_this));
+    _this.updateContainerDimsiones = _this.updateContainerDimsiones.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(DocumentGrid, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.updateWindowDimensions();
-      window.addEventListener("resize", this.updateWindowDimensions);
-      this.numCols();
+      this.updateContainerDimsiones();
+      window.addEventListener("resize", this.updateContainerDimsiones);
     }
   }, {
     key: "componentWillUnmount",
@@ -10387,26 +10411,60 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
       window.removeEventListener("resize", this.addEventListener);
     }
   }, {
-    key: "updateWindowDimensions",
-    value: function updateWindowDimensions() {
+    key: "updateContainerDimsiones",
+    value: function updateContainerDimsiones() {
       this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: this.container.offsetWidth,
+        height: this.container.offsetHeight
       });
     }
   }, {
-    key: "numCols",
-    value: function numCols() {
-      debugger;
-      var useableWidth = this.state.width * parseInt(styles.pin_container.width.slice(-2));
-      return Math.floor(useableWidth / styles.pin_width);
+    key: "calculateCols",
+    value: function calculateCols() {
+      var width = this.state.width;
+      var numCols = Math.floor(width / _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_width);
+      var divCols = [];
+
+      for (var i = 0; i < numCols; i++) {
+        divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          key: "div-col-".concat(i),
+          id: i + 1
+        }));
+      }
+
+      return divCols;
+    }
+  }, {
+    key: "renderContent",
+    value: function renderContent() {
+      var _this$state = this.state,
+          height = _this$state.height,
+          width = _this$state.width;
+      var numCols = Math.floor(width / _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_width);
+      var divCols = [];
+
+      for (var i = 0; i < numCols; i++) {
+        divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          key: "div-col-".concat(i),
+          id: i + 1
+        }));
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_grid
+      }, divCols);
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        style: styles.pin_container
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, this.numCols()));
+        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.pinStyles.pin_container,
+        ref: function ref(el) {
+          return _this2.container = el;
+        }
+      }, this.renderContent());
     }
   }]);
 
