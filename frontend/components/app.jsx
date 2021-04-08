@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthRoute } from '../util/frontend_util'
-import { Router, Route } from 'react-router-dom'
+import { Router, Route, Redirect } from 'react-router-dom'
 import PinIndexContainer from './pins/pin_index_container';
 import DocumentGridContainer from './document_grid/document_grid_container'
 import NavBannerContainer from './nav_banner/nav_banner_container'
@@ -15,7 +15,6 @@ const App = () => (
 
     <AuthRoute exact path='/login' component={LoginFormContainer} />
     <AuthRoute exact path='/signup' component={SignupFormContainer} />
-    {/* <Route exact path='/' component={PinIndexContainer} /> */}
     <Route exact path='/' component={DocumentGridContainer} />
   </div>
 )
