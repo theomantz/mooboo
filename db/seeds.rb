@@ -8,4 +8,3 @@
 
 User.destroy_all
 Pin.destroy_all
-gst
