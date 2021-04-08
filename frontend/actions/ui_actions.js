@@ -24,7 +24,7 @@ const receiveContent = content => {
 }
 
 
-export const setNumColumns = numCols => {
+export const setNumColumns = numCols => dispatch => {
   return dispatch(receiveNumCols(numCols))
 }
 

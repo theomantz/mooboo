@@ -11,6 +11,7 @@ class Api::PinsController < ApplicationController
 
   def show
     @pin = Pin.find_by(id: params[:id])
+    @numCols = params[:numCols]
     render 'api/pins/show'
   end
 

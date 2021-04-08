@@ -10194,7 +10194,9 @@ var receiveContent = function receiveContent(content) {
 };
 
 var setNumColumns = function setNumColumns(numCols) {
-  return dispatch(receiveNumCols(numCols));
+  return function (dispatch) {
+    return dispatch(receiveNumCols(numCols));
+  };
 };
 var setHeight = function setHeight(height) {
   return dispatch(receiveHeight(height));
@@ -10717,8 +10719,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _document_col_document_col_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../document_col/document_col_container */ "./frontend/components/document_col/document_col_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -10770,7 +10770,10 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.props.fetchPins();
+      if (this.props.numCols) {
+        this.props.fetchPins();
+      }
+
       this.updateContainerDimensions();
       actions.forEach(function (event) {
         return window.addEventListener(event, _this2.updateContainerDimensions);
@@ -10794,21 +10797,21 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
         numCols: Math.floor(this.container.offsetWidth / _config_document_grid__WEBPACK_IMPORTED_MODULE_1__.docStyles.docColWidth)
       });
       this.props.setHeight(this.state.height);
-      this.props.setCols(this.state.numCols);
-      this.assignContent();
-    }
-  }, {
-    key: "assignContent",
-    value: function assignContent() {
-      debugger;
-      var content = this.state.content;
+      this.props.setCols(this.state.numCols); // this.assignContent()
+    } // assignContent() {
+    //   const { content, numCols } = this.props
+    //   const stateContent  = this.state.content
+    //   if(content.length) {
+    //     debugger
+    //     this.setState({content: content})
+    //     for(let i = 0; i < numCols ; i++ ) {
+    //       let slice = Math.floor( stateContent.length / numCols );
+    //       this.props.setContent({ [i]: stateContent.slice(0, slice) })
+    //       this.setState({ content: stateContent.slice(slice) })
+    //     }
+    //   }
+    // }
 
-      if (content) {
-        for (var i = 0; i < this.state.numCols; i++) {
-          this.props.setContent(_defineProperty({}, i, content.pop()));
-        }
-      }
-    }
   }, {
     key: "renderContent",
     value: function renderContent() {
@@ -11611,6 +11614,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var contentReducer = function contentReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  // debugger
   Object.freeze(state);
 
   switch (action.type) {
@@ -12029,10 +12033,13 @@ var fetchPin = function fetchPin(pinId) {
     method: 'GET'
   });
 };
-var fetchPins = function fetchPins() {
+var fetchPins = function fetchPins(numCols) {
   return $.ajax({
     url: 'api/pins',
-    method: 'GET'
+    method: 'GET',
+    data: {
+      numCols: numCols
+    }
   });
 };
 

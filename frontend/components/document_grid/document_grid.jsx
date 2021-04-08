@@ -15,14 +15,16 @@ class DocumentGrid extends React.Component {
       width: null,
       height: null,
       numCols: null,
-      content: this.props.content,
+      content: this.props.content
     }
 
     this.updateContainerDimensions = this.updateContainerDimensions.bind(this)
   }
 
   componentDidMount() {
-    this.props.fetchPins()
+    if(this.props.numCols) {
+      this.props.fetchPins()
+    }
     this.updateContainerDimensions();
     actions.forEach( event => 
       window.addEventListener(event, this.updateContainerDimensions)
@@ -42,18 +44,22 @@ class DocumentGrid extends React.Component {
       numCols: Math.floor(this.container.offsetWidth / docStyles.docColWidth) })
     this.props.setHeight(this.state.height)
     this.props.setCols(this.state.numCols)
-    this.assignContent()
+    // this.assignContent()
   }
 
-  assignContent() {
-    debugger
-    const { content } = this.state
-    if(content){
-      for(let i = 0; i < this.state.numCols ; i++) {
-        this.props.setContent( { [i]: content.pop() } )
-      }
-    }
-  }
+  // assignContent() {
+  //   const { content, numCols } = this.props
+  //   const stateContent  = this.state.content
+  //   if(content.length) {
+  //     debugger
+  //     this.setState({content: content})
+  //     for(let i = 0; i < numCols ; i++ ) {
+  //       let slice = Math.floor( stateContent.length / numCols );
+  //       this.props.setContent({ [i]: stateContent.slice(0, slice) })
+  //       this.setState({ content: stateContent.slice(slice) })
+  //     }
+  //   }
+  // }
 
   renderContent() {
     const { height, numCols } = this.state
