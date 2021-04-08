@@ -1,29 +1,20 @@
 import React from 'react';
+import { docStyles } from '../config/document_grid'
+import DocumentColumnContainer from '../document_col/document_col_container'
 
-const styles = {
-  pin_container: {
-    margin: "100px 0 0 0",
-    padding: 0,
-    width: "96vw",
-    display: "grid",
-    height: "100%",
-    gridTemplateColumns: "repeat(auto-fill, 250px)",
-    position: "absolute",
-    left: "50%",
-    transform: "translateX(-50%)",
-    justifyContent: "center",
-    backgroundColor: "lightgray",
-  },
-  pin_width: 250
-};
+const actions = [
+  "scroll",
+  "resize"
+]
 
 class DocumentGrid extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      width: 0,
-      height: 0
+      width: null,
+      height: null,
+      numCols: null,
     }
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -35,18 +26,25 @@ class DocumentGrid extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.addEventListener)
+    actions.forEach((event) =>
+      window.removeEventListener( event, this.addEventListener)
+    );
   }
 
-  updateWindowDimensions() {
-    this.setState( { width: window.innerWidth, height: window.innerHeight })
+  updateContainerDimensions() {
+    this.setState( { 
+      width: this.container.offsetWidth, 
+      height: this.container.offsetHeight,
+      numCols: Math.floor(this.container.offsetWidth / docStyles.docColWidth) })
+    this.props.setHeight(this.state.height)
+    this.props.setCols(this.state.numCols)
   }
 
   render() {
     return(
       <div style={styles.pin_container}>
       </div>
-    )
+    );
   }
 }
 
