@@ -7,17 +7,16 @@ import LoginFormContainer from './session_forms/login_form_container'
 import SignupFormContainer from './session_forms/signup_form_container'
 
 const App = () => (
-  <div style={{height: "100vw"}}>
+  <div>
     <header>
       <NavBannerContainer />
-      <AuthRoute exact path='/' component={LandingPageContainer} />
+    </header>
+    <Switch>
       <AuthRoute exact path='/login' component={LoginFormContainer} />
       <AuthRoute exact path='/signup' component={SignupFormContainer} />
-    </header>
-
-    {/* <Route exact path='/' component={PinIndexContainer} /> */}
-    <Route exact path='/home' component={DocumentGridContainer} />
-    <Redirect exact from='*' to='/' />
+      <ProtectedRoute exact path='/' component={DocumentGridContainer} />
+      <Redirect exact from="*" to='/' />
+    </Switch>
   </div>
 )
 

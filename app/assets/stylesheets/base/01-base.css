@@ -57,24 +57,3 @@ button {
   color: #14613B;
   margin-left: 20px;
 }
-
-.landing-page-text { 
-  display: flex;
-  flex-direction: column;
-  margin: 50px auto 50px auto;
-  justify-content: center;
-  font-size: 24px;
-  text-align: center;
-}
-
-.landing-page-header {
-  padding: 25px;
-  font-size: 40px;
-  font-weight: 700;
-}
-
-.landing-page-subtext {
-  padding: 25px;
-  font-size: 32px;
-  font-weight: 500;
-}

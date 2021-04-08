@@ -1,6 +1,5 @@
 import {
-  RECEIVE_PINS,
-  RECEIVE_PIN
+  RECEIVE_PINS
 } from '../actions/pins_actions';
 
 const pinsReducer = (state = {}, action) => {
@@ -8,8 +7,6 @@ const pinsReducer = (state = {}, action) => {
   switch(action.type) {
     case RECEIVE_PINS:
       return action.pins
-    case RECEIVE_PIN:
-      return Object.assign({}, state, { [action.pin.id]: action.pin })
     default:
       return state
   }
