@@ -10014,12 +10014,15 @@ var convertCurry = convert.bind(null, react__WEBPACK_IMPORTED_MODULE_2__.createE
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RECEIVE_PIN": () => (/* binding */ RECEIVE_PIN),
 /* harmony export */   "RECEIVE_PINS": () => (/* binding */ RECEIVE_PINS),
 /* harmony export */   "RECEIVE_ERRORS": () => (/* binding */ RECEIVE_ERRORS),
-/* harmony export */   "fetchPins": () => (/* binding */ fetchPins)
+/* harmony export */   "fetchPins": () => (/* binding */ fetchPins),
+/* harmony export */   "fetchPin": () => (/* binding */ fetchPin)
 /* harmony export */ });
 /* harmony import */ var _util_pins_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/pins_api_util */ "./frontend/util/pins_api_util.js");
 
+var RECEIVE_PIN = 'RECEIVE_PIN';
 var RECEIVE_PINS = 'RECEIVE_PINS';
 var RECEIVE_ERRORS = 'RECEIVE_ERRORS';
 
@@ -10027,6 +10030,13 @@ var receivePins = function receivePins(pins) {
   return {
     type: RECEIVE_PINS,
     pins: pins
+  };
+};
+
+var receivePin = function receivePin(pin) {
+  return {
+    type: RECEIVE_PIN,
+    pin: pin
   };
 };
 
@@ -10043,6 +10053,13 @@ var fetchPins = function fetchPins() {
       return dispatch(receivePins(pins));
     }, function (errors) {
       return dispatch(receiveErrors(errors));
+    });
+  };
+};
+var fetchPin = function fetchPin(pinId) {
+  return function (dispatch) {
+    return _util_pins_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchPin(pinId).then(function (pin) {
+      return dispatch(receivePin(pin));
     });
   };
 };
@@ -10164,7 +10181,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_nav_banner_nav_banner_container__WEBPACK_IMPORTED_MODULE_4__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.AuthRoute, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      height: "100vw"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_nav_banner_nav_banner_container__WEBPACK_IMPORTED_MODULE_4__.default, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.AuthRoute, {
     exact: true,
     path: "/login",
     component: _session_forms_login_form_container__WEBPACK_IMPORTED_MODULE_5__.default
@@ -10314,6 +10335,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module '../config/document_grid'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+Object(function webpackMissingModule() { var e = new Error("Cannot find module '../document_col/document_col_container'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10337,22 +10360,9 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
-var styles = {
-  pin_container: {
-    margin: "100px 0 0 0",
-    padding: 0,
-    width: "96vw",
-    display: "grid",
-    height: "100%",
-    gridTemplateColumns: "repeat(auto-fill, 250px)",
-    position: "absolute",
-    left: "50%",
-    transform: "translateX(-50%)",
-    justifyContent: "center",
-    backgroundColor: "lightgray"
-  },
-  pin_width: 250
-};
+
+
+var actions = ["scroll", "resize"];
 
 var DocumentGrid = /*#__PURE__*/function (_React$Component) {
   _inherits(DocumentGrid, _React$Component);
@@ -10366,47 +10376,93 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      width: 0,
-      height: 0
+      width: null,
+      height: null,
+      numCols: null,
+      content: _this.props.content
     };
-    _this.updateWindowDimensions = _this.updateWindowDimensions.bind(_assertThisInitialized(_this));
-    _this.numCols = _this.numCols.bind(_assertThisInitialized(_this));
+    _this.updateContainerDimensions = _this.updateContainerDimensions.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(DocumentGrid, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.updateWindowDimensions();
-      window.addEventListener("resize", this.updateWindowDimensions);
-      this.numCols();
+      var _this2 = this;
+
+      if (this.props.numCols) {
+        this.props.fetchPins();
+      }
+
+      this.updateContainerDimensions();
+      actions.forEach(function (event) {
+        return window.addEventListener(event, _this2.updateContainerDimensions);
+      });
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      window.removeEventListener("resize", this.addEventListener);
-    }
-  }, {
-    key: "updateWindowDimensions",
-    value: function updateWindowDimensions() {
-      this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight
+      var _this3 = this;
+
+      actions.forEach(function (event) {
+        return window.removeEventListener(event, _this3.addEventListener);
       });
     }
   }, {
-    key: "numCols",
-    value: function numCols() {
-      debugger;
-      var useableWidth = this.state.width * parseInt(styles.pin_container.width.slice(-2));
-      return Math.floor(useableWidth / styles.pin_width);
+    key: "updateContainerDimensions",
+    value: function updateContainerDimensions() {
+      this.setState({
+        width: this.container.offsetWidth,
+        height: this.container.offsetHeight,
+        numCols: Math.floor(this.container.offsetWidth / Object(function webpackMissingModule() { var e = new Error("Cannot find module '../config/document_grid'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()))
+      });
+      this.props.setHeight(this.state.height);
+      this.props.setCols(this.state.numCols); // this.assignContent()
+    } // assignContent() {
+    //   const { content, numCols } = this.props
+    //   const stateContent  = this.state.content
+    //   if(content.length) {
+    //     debugger
+    //     this.setState({content: content})
+    //     for(let i = 0; i < numCols ; i++ ) {
+    //       let slice = Math.floor( stateContent.length / numCols );
+    //       this.props.setContent({ [i]: stateContent.slice(0, slice) })
+    //       this.setState({ content: stateContent.slice(slice) })
+    //     }
+    //   }
+    // }
+
+  }, {
+    key: "renderContent",
+    value: function renderContent() {
+      var _this$state = this.state,
+          height = _this$state.height,
+          numCols = _this$state.numCols;
+      var divCols = [];
+
+      for (var i = 0; i < numCols; i++) {
+        divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Object(function webpackMissingModule() { var e = new Error("Cannot find module '../document_col/document_col_container'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+          key: "div-col-".concat(i),
+          id: i,
+          height: height
+        }));
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        style: Object(function webpackMissingModule() { var e = new Error("Cannot find module '../config/document_grid'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
+      }, divCols);
     }
   }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        style: styles.pin_container
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, this.numCols()));
+        style: Object(function webpackMissingModule() { var e = new Error("Cannot find module '../config/document_grid'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()),
+        ref: function ref(el) {
+          return _this4.container = el;
+        }
+      }, this.renderContent());
     }
   }]);
 
@@ -10429,10 +10485,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _document_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./document_grid */ "./frontend/components/document_grid/document_grid.jsx");
+/* harmony import */ var _actions_pins_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/pins_actions */ "./frontend/actions/pins_actions.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../actions/ui_actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _document_grid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./document_grid */ "./frontend/components/document_grid/document_grid.jsx");
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(null, null)(_document_grid__WEBPACK_IMPORTED_MODULE_1__.default));
+
+
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var entities = _ref.entities;
+  return {
+    content: Object.values(entities.pins),
+    type: "home"
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchPins: function fetchPins() {
+      return dispatch((0,_actions_pins_actions__WEBPACK_IMPORTED_MODULE_1__.fetchPins)());
+    },
+    setCols: function setCols(numCols) {
+      return dispatch(Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../actions/ui_actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(numCols));
+    },
+    setHeight: function setHeight(height) {
+      return dispatch(Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../actions/ui_actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(height));
+    },
+    setContent: function setContent(content) {
+      return dispatch(Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../actions/ui_actions'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(content));
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mapStateToProps, mapDispatchToProps)(_document_grid__WEBPACK_IMPORTED_MODULE_3__.default));
 
 /***/ }),
 
@@ -11156,6 +11242,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _actions_pins_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/pins_actions */ "./frontend/actions/pins_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var pinsReducer = function pinsReducer() {
@@ -11166,6 +11254,9 @@ var pinsReducer = function pinsReducer() {
   switch (action.type) {
     case _actions_pins_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PINS:
       return action.pins;
+
+    case _actions_pins_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PIN:
+      return Object.assign({}, state, _defineProperty({}, action.pin.id, action.pin));
 
     default:
       return state;
@@ -11187,18 +11278,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _errors_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./errors_reducer */ "./frontend/reducers/errors_reducer.js");
 /* harmony import */ var _session_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session_reducer */ "./frontend/reducers/session_reducer.js");
 /* harmony import */ var _entitites_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entitites_reducer */ "./frontend/reducers/entitites_reducer.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './ui_reducer'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 
 
 
 
-var rootReducer = (0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)({
+
+var rootReducer = (0,redux__WEBPACK_IMPORTED_MODULE_4__.combineReducers)({
   entities: _entitites_reducer__WEBPACK_IMPORTED_MODULE_2__.default,
   session: _session_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
-  errors: _errors_reducer__WEBPACK_IMPORTED_MODULE_0__.default
+  errors: _errors_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
+  ui: Object(function webpackMissingModule() { var e = new Error("Cannot find module './ui_reducer'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (rootReducer);
 
@@ -11400,14 +11494,21 @@ var AuthRoute = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.withRouter)((0,
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fetchPin": () => (/* binding */ fetchPin),
 /* harmony export */   "fetchPins": () => (/* binding */ fetchPins)
 /* harmony export */ });
-var fetchPins = function fetchPins() {
+var fetchPin = function fetchPin(pinId) {
+  return $.ajax({
+    url: "api/pins/".concat(pinId),
+    method: 'GET'
+  });
+};
+var fetchPins = function fetchPins(numCols) {
   return $.ajax({
     url: 'api/pins',
     method: 'GET',
-    error: function error(_error) {
-      return console.log('api request failed', _error);
+    data: {
+      numCols: numCols
     }
   });
 };
