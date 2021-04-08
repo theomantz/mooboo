@@ -9,6 +9,5 @@ export const fetchPins = (numCols) => (
   $.ajax({
     url: 'api/pins',
     method: 'GET',
-    data: { numCols }
   })
 );

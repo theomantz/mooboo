@@ -9,9 +9,13 @@ class DocumentCard extends React.Component {
   }
 
   render() {
+    const { content } = this.props
     return ( 
     <div style={docStyles.docCard} id={uuid()}>
-      
+      <div className='content-card'>
+        {content.title}
+        {content.description}
+      </div>
     </div> 
     )
   }

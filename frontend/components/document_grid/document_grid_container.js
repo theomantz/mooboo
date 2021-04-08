@@ -3,9 +3,10 @@ import { fetchPins } from '../../actions/pins_actions';
 import { setNumColumns, setHeight, setContent } from '../../actions/ui_actions'
 import DocumentGrid from './document_grid'
 
-const mapStateToProps = ({ entities }) => ({
+const mapStateToProps = ({ entities, ui }) => ({
   content: Object.values(entities.pins),
-  type: "home"
+  columns: ui.document.columns,
+  type: "home",
 })
 
 

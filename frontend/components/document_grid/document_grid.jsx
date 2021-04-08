@@ -15,16 +15,13 @@ class DocumentGrid extends React.Component {
       width: null,
       height: null,
       numCols: null,
-      content: this.props.content
     }
 
     this.updateContainerDimensions = this.updateContainerDimensions.bind(this)
   }
 
   componentDidMount() {
-    if(this.props.numCols) {
-      this.props.fetchPins()
-    }
+    this.props.fetchPins()
     this.updateContainerDimensions();
     actions.forEach( event => 
       window.addEventListener(event, this.updateContainerDimensions)
@@ -44,35 +41,32 @@ class DocumentGrid extends React.Component {
       numCols: Math.floor(this.container.offsetWidth / docStyles.docColWidth) })
     this.props.setHeight(this.state.height)
     this.props.setCols(this.state.numCols)
-    // this.assignContent()
   }
 
-  // assignContent() {
-  //   const { content, numCols } = this.props
-  //   const stateContent  = this.state.content
-  //   if(content.length) {
-  //     debugger
-  //     this.setState({content: content})
-  //     for(let i = 0; i < numCols ; i++ ) {
-  //       let slice = Math.floor( stateContent.length / numCols );
-  //       this.props.setContent({ [i]: stateContent.slice(0, slice) })
-  //       this.setState({ content: stateContent.slice(slice) })
-  //     }
-  //   }
-  // }
+  columnConstructor() {
+    const { columns, content } = this.props
+    let divCols = []
+    let localContent = content
+    if(columns && content ) {
+      let contentSlice = Math.floor(content.length / columns)
+      for(let i = 0; i < columns; i++ ) {
+        divCols.push(
+          <DocumentColumnContainer
+            id={i}
+            key={`div-col-${i}`} 
+            content={localContent.slice(0, contentSlice)}
+            />
+        )
+        localContent = localContent.slice(contentSlice)
+      }
+    }
+    return divCols;
+  }
 
   renderContent() {
-    const { height, numCols } = this.state
-    let divCols = []
-    for (let i = 0; i < numCols; i++) {
-      divCols.push(<DocumentColumnContainer 
-        key={`div-col-${i}`}
-        id={i}
-        height={height}/>);
-    }
     return(
       <div style={docStyles.docGrid}>
-        {divCols}
+        {this.columnConstructor()}
       </div>
       )
   }

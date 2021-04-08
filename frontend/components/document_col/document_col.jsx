@@ -36,18 +36,13 @@ class DocumentColumn extends React.Component {
       window.removeEventListener(event, this.addEventListener))
   }
 
-  renderCards() {
-    if(!this.state.loading) {
-      const { height } = this.state;
-      const cardArray = [];
-      
-    }
-  }
-
   renderContent() {
-    return (
-      <div/>
-    );
+    let docCards
+    if( this.props.content.length ) {
+      const { content } = this.props
+      docCards = content.map((item, index) => <DocumentCardContainer content={item} key={`doc-card-${index}`} /> )
+    }
+    return docCards
   }
 
   render() {
