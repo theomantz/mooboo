@@ -27,13 +27,11 @@ class DocumentGrid extends React.Component {
     }
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-    this.numCols = this.numCols.bind(this)
   }
 
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions)
-    this.numCols()
   }
 
   componentWillUnmount() {
@@ -44,18 +42,9 @@ class DocumentGrid extends React.Component {
     this.setState( { width: window.innerWidth, height: window.innerHeight })
   }
 
-  numCols() {
-    debugger
-    const useableWidth = (this.state.width 
-      * parseInt(styles.pin_container.width.slice(-2))
-    )
-    return Math.floor( useableWidth / styles.pin_width )
-  }
-
   render() {
     return(
       <div style={styles.pin_container}>
-        <h1>{this.numCols()}</h1>
       </div>
     )
   }

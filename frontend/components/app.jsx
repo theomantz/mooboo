@@ -1,7 +1,6 @@
 import React from 'react'
-import { AuthRoute } from '../util/frontend_util'
-import { Router, Route, Redirect } from 'react-router-dom'
-import PinIndexContainer from './pins/pin_index_container';
+import { AuthRoute, ProtectedRoute } from '../util/frontend_util'
+import { Redirect, Switch } from 'react-router-dom'
 import DocumentGridContainer from './document_grid/document_grid_container'
 import NavBannerContainer from './nav_banner/nav_banner_container'
 import LoginFormContainer from './session_forms/login_form_container'
@@ -12,10 +11,12 @@ const App = () => (
     <header>
       <NavBannerContainer />
     </header>
-
-    <AuthRoute exact path='/login' component={LoginFormContainer} />
-    <AuthRoute exact path='/signup' component={SignupFormContainer} />
-    <Route exact path='/' component={DocumentGridContainer} />
+    <Switch>
+      <AuthRoute exact path='/login' component={LoginFormContainer} />
+      <AuthRoute exact path='/signup' component={SignupFormContainer} />
+      <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
+      <Redirect exact from='*' to='/' />
+    </Switch>
   </div>
 )
 

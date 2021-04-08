@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import uuid from 'react-uuid';
 import DemoUserButtonContainer from '../demo_user/demo_user_button_container'
 
@@ -24,7 +24,9 @@ class SessionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    debugger
     this.props.processForm(this.state);
+    <Redirect to='/home'/>
   }
 
   renderErrors() {

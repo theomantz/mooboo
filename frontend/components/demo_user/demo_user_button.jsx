@@ -1,5 +1,6 @@
 import React from 'react'
 import uuid from 'react-uuid'
+import { withRouter, Redirect } from 'react-router-dom';
 
 class DemoUser extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class DemoUser extends React.Component {
   handleClick(e) {
     e.preventDefault()
     this.props.logIn(this.props.demoUser)
+    return <Redirect to='/home'/>
   }
 
 
@@ -26,4 +28,4 @@ class DemoUser extends React.Component {
   }
 }
 
-export default DemoUser
+export default withRouter(DemoUser)
