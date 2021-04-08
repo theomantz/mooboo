@@ -17,15 +17,12 @@ class DocumentGrid extends React.Component {
       numCols: null,
     }
 
-    this.updateContainerDimensions = this.updateContainerDimensions.bind(this)
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
   componentDidMount() {
-    this.props.fetchPins()
-    this.updateContainerDimensions();
-    actions.forEach( event => 
-      window.addEventListener(event, this.updateContainerDimensions)
-      )
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions)
   }
 
   componentWillUnmount() {
@@ -43,38 +40,9 @@ class DocumentGrid extends React.Component {
     this.props.setCols(this.state.numCols)
   }
 
-  columnConstructor() {
-    const { columns, content } = this.props
-    let divCols = []
-    let localContent = content
-    if(columns && content ) {
-      let contentSlice = Math.floor(content.length / columns)
-      for(let i = 0; i < columns; i++ ) {
-        divCols.push(
-          <DocumentColumnContainer
-            id={i}
-            key={`div-col-${i}`} 
-            content={localContent.slice(0, contentSlice)}
-            />
-        )
-        localContent = localContent.slice(contentSlice)
-      }
-    }
-    return divCols;
-  }
-
-  renderContent() {
-    return(
-      <div style={docStyles.docGrid}>
-        {this.columnConstructor()}
-      </div>
-      )
-  }
-
   render() {
-    return (
-      <div style={docStyles.docContainer} ref={(el) => (this.container = el)}>
-        {this.renderContent()}
+    return(
+      <div style={styles.pin_container}>
       </div>
     );
   }

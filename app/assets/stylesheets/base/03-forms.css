@@ -1,6 +1,7 @@
 .session-form-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin: 50px auto 50px auto;
   position: relative;
   width: 484px;
@@ -118,4 +119,30 @@
 
 .session-form-link:hover {
   text-decoration: underline;
+}
+
+.session-form-logo {
+  height: 64px;
+  width: 64px;
+  margin: auto;
+  padding: 10px 0 20px 0;
+}
+
+.close-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 10px;
+  margin: 5px 5px 5px auto;
+  border-radius: 8px;
+  transition: all 1s; 
+}
+
+.close-button:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+.close-button-icon {
+  color: gray;
 }
