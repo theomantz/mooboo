@@ -27,7 +27,7 @@ export const docStyles = {
     flexDirection: "column"
   },
   docCard: {
-    height: "250px"
+    width: "240px"
   },
   docColWidth: 250,
 };

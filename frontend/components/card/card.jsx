@@ -13,8 +13,9 @@ class DocumentCard extends React.Component {
     return ( 
     <div style={docStyles.docCard} id={uuid()}>
       <div className='content-card'>
-        {content.title}
-        {content.description}
+        <div className="content-image">
+          <img src={content.photoUrl} alt={content.title} />
+        </div>
       </div>
     </div> 
     )

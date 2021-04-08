@@ -70,3 +70,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 gem "faker", "~> 2.17"
+
+gem "aws-sdk-rails", "~> 3.6"
+
+gem "aws-sdk-s3"

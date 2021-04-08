@@ -10330,7 +10330,12 @@ var DocumentCard = /*#__PURE__*/function (_React$Component) {
         id: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "content-card"
-      }, content.title, content.description));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "content-image"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        src: content.photoUrl,
+        alt: content.title
+      }))));
     }
   }]);
 
@@ -10851,7 +10856,12 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
         ref: function ref(el) {
           return _this4.container = el;
         }
-      }, this.renderContent());
+      }, this.props.content.map(function (content) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+          src: content.photoUrl,
+          alt: content.title
+        });
+      }));
     }
   }]);
 

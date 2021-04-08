@@ -74,7 +74,8 @@ class DocumentGrid extends React.Component {
   render() {
     return (
       <div style={docStyles.docContainer} ref={(el) => (this.container = el)}>
-        {this.renderContent()}
+        {this.props.content.map(content => <img src={content.photoUrl} alt={content.title}/>)}
+        {/* {this.renderContent()} */}
       </div>
     );
   }
