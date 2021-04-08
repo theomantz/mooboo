@@ -6,10 +6,12 @@ class NoSessionNavBanner extends React.Component {
     return (
       <div className="banner">
         <div className="assets-container left-nav-container">
-          <div className="mooboo-icon-container">
-            <img src={window.moobooLarge} alt="logo" className="logo"></img>
-          </div>
-          <h3 className="welcome-title">mooboo</h3>
+          <Link to='/'>
+            <div className="mooboo-icon-container">
+              <img src={window.moobooLarge} alt="logo" className="logo"></img>
+            </div>
+          </Link>
+            <h3 className="welcome-title">mooboo</h3>
         </div>
         <div className="right-nav-container">
           <div className="developer-links-container">

@@ -16,8 +16,6 @@ class DemoUser extends React.Component {
     return <Redirect to='/home'/>
   }
 
-
-
   render() {
     return( <button
               onClick={this.handleClick}

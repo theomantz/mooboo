@@ -30,7 +30,7 @@ button {
   font-weight: 700;
   text-align: center;
   line-height: 20px;
-  transition: all 1s ease-in-out;
+  transition: all 1s;
   border-radius: 68px;
   background: #ffffff;
   box-shadow:  8px 8px 16px #dbdbdb,
@@ -41,6 +41,13 @@ button {
   height: 32px;
   width: 32px;
   padding: 15px;
+  border-radius: 50px;
+  margin: auto;
+  transition: all 1s;
+}
+
+.logo:hover {
+  background-color: lightgray;
 }
 
 .welcome-title {

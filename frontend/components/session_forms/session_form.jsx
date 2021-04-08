@@ -2,6 +2,8 @@ import React from 'react'
 import { Link, Redirect } from 'react-router-dom';
 import uuid from 'react-uuid';
 import DemoUserButtonContainer from '../demo_user/demo_user_button_container'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -44,8 +46,14 @@ class SessionForm extends React.Component {
     const { formType, linkTo, linkText } = this.props;
     return (
       <div className={`session-form-container ${formType}-form-container`}>
+        <div className='session-form close-button'>
+          <Link to="/" >
+            <FontAwesomeIcon icon={faWindowClose} size='2x' className='close-button-icon'/>
+          </Link>
+        </div>
+        <img src={window.moobooLarge} alt="logo" className="session-form-logo"></img>
         <form onSubmit={this.handleSubmit} className="session-form">
-          <div className='session-form-header'>
+          <div className="session-form-header">
             <h3 className="session-form-header-text">welcome to mooboo</h3>
             {this.renderErrors()}
           </div>
@@ -73,7 +81,7 @@ class SessionForm extends React.Component {
             </button>
           </div>
         </form>
-        <div className='session-form-divider'>
+        <div className="session-form-divider">
           <span>OR</span>
         </div>
         <div className="session-form-button-link-container">
