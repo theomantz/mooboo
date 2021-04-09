@@ -16,7 +16,9 @@ class NoSessionNavBanner extends React.Component {
         <div className="right-nav-container">
           <div className="developer-links-container">
             <div className="about-link-container link-container">
-              <span>About</span>
+            <Link to='/about'>
+              <span className='about-page-link'>About</span>
+            </Link>
             </div>
             <div className="socials-link-container link-container">
               <span>Socials</span>
