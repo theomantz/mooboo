@@ -15,10 +15,10 @@ demo2 = User.create!({ email: 'steve@moooboo.io', password: 'password' })
 demo3 = User.create!({ email: 'mary@moooboo.io', password: 'password' })
 
 
-# pin1 = Pin.new({ title: 'colin lloyd', description: 'available for hire', uploader_id: demo.id })
-# file = open('https://unsplash.com/photos/Opzn04Fsv1A/download?force=true')
-# pin1.photo.attach(io: file, filename: 'seed1.jpg')
-# pin1.save!
+pin1 = Pin.new({ title: 'colin lloyd', description: 'available for hire', uploader_id: demo.id })
+file = open('https://unsplash.com/photos/Opzn04Fsv1A/download?force=true')
+pin1.photo.attach(io: file, filename: 'seed1.jpg')
+pin1.save!
 
 pin2 = Pin.new({ title: 'eric mclean', description: 'another sample', uploader_id: demo.id })
 file2 = open('https://unsplash.com/photos/Gur1H1B4t5s/download?force=true')
