@@ -18,15 +18,12 @@ class DocumentGrid extends React.Component {
       numCols: null,
     }
 
-    this.updateContainerDimensions = this.updateContainerDimensions.bind(this)
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
   componentDidMount() {
-    this.props.fetchPins()
-    this.updateContainerDimensions();
-    actions.forEach( event => 
-      window.addEventListener(event, this.updateContainerDimensions)
-      )
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions)
   }
 
   componentWillUnmount() {
@@ -78,7 +75,6 @@ class DocumentGrid extends React.Component {
   render() {
     return (
       <div style={docStyles.docContainer} ref={(el) => (this.container = el)}>
-        {/* {this.props.content.map(content => <img src={content.photoUrl} alt={content.title}/>)} */}
         {this.renderContent()}
       </div>
     );
