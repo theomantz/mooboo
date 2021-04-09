@@ -16,11 +16,6 @@ class DocumentCard extends React.Component {
         <div key={uuid()}>
           <div className="content-card">
             <div className="content-card-image">
-              <div className="content-card-save-button">
-                <button>
-                  Save
-                </button> 
-              </div>
               <img
                 src={content.photoUrl}
                 alt={content.title}

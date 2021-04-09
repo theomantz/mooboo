@@ -1,5 +1,6 @@
 import React from 'react'
 import uuid from 'react-uuid';
+import SaveButtonContainer from '../save_button/save_button_container'
 
 
 class CardShow extends React.Component {
@@ -26,9 +27,12 @@ class CardShow extends React.Component {
             className="content-show-image"
           />
         </div>
-        <div className="content-show-card-text-container">
-          <h3>{title}</h3>
-          <p>{description}</p>
+        <div className="content-card-right-container">
+          <div>{SaveButtonContainer}</div>
+          <div className="content-show-card-text-container">
+            <h3>{title}</h3>
+            <p>{description}</p>
+          </div>
         </div>
       </div>
     );
