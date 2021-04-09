@@ -13,7 +13,7 @@ class DocumentCard extends React.Component {
     const { content } = this.props
     return (
       <Link to={`/pins/${content.id}`}>
-        <div id={uuid()}>
+        <div key={uuid()}>
           <div className="content-card">
             <div className="content-card-image">
               <div className="content-card-save-button">

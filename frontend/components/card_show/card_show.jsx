@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'react-uuid';
 
 
 class CardShow extends React.Component {
@@ -8,7 +9,6 @@ class CardShow extends React.Component {
       photoUrl: null,
       title: null,
       description: null,
-
     }
   }
   
@@ -16,44 +16,26 @@ class CardShow extends React.Component {
     this.props.fetchContent(this.props.match.params.pinId)
   }
 
-  updateContentDetails() {
-    const { photoUrl, title, description } = this.props.content
-    this.setState({
-      photoUrl: photoUrl,
-      title: title,
-      description: description
-    })
-  }
-
-  renderCardDetails() {
-    const { title, description } = this.state
-    if(this.title) {
-      <div>
-        {title}
-        {description}
-      </div>
-    }
-  }
 
   renderContent() {
-    const { photoUrl, title, description } = this.props.content
-    debugger
+    if (!this.props.content) return null;
+    const { photoUrl, title, description, id } = this.props.content
     return (
-      <div className="content-show-card">
+      <div className="content-show-card" key={`content-show-key-${id}`}>
         <div className="content-show-image-container">
-          <img src={this.props.content.photoUrl} alt={title}/>
+          <img src={photoUrl} alt={title}/>
           <p>{title}</p>
+          <p>{description}</p>
         </div>
       </div>
     );
   }
 
   render() {
-    if(!this.props.content) return null;
+    debugger
     return (
-      <div className="content-show-card-container">
+      <div className="content-show-card-container" key={uuid()}>
         {this.renderContent()}
-        {this.renderCardDetails()}
       </div>
     );
   }
