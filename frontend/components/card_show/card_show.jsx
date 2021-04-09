@@ -16,15 +16,18 @@ class CardShow extends React.Component {
     this.props.fetchContent(this.props.match.params.pinId)
   }
 
-
   renderContent() {
     if (!this.props.content) return null;
     const { photoUrl, title, description, id } = this.props.content
     return (
       <div className="content-show-card" key={`content-show-key-${id}`}>
         <div className="content-show-image-container">
-          <img src={photoUrl} alt={title}/>
-          <p>{title}</p>
+          <img src={photoUrl} alt={title}
+            className="content-show-image"
+          />
+        </div>
+        <div className="content-show-card-text-container">
+          <h3>{title}</h3>
           <p>{description}</p>
         </div>
       </div>
@@ -32,7 +35,6 @@ class CardShow extends React.Component {
   }
 
   render() {
-    debugger
     return (
       <div className="content-show-card-container" key={uuid()}>
         {this.renderContent()}

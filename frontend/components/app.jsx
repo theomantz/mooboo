@@ -12,13 +12,15 @@ const App = () => (
   <div style={{height: "100vw"}}>
     <header>
       <NavBannerContainer />
-      <AuthRoute exact path='/' component={LandingPageContainer} />
-      <AuthRoute exact path='/login' component={LoginFormContainer} />
-      <AuthRoute exact path='/signup' component={SignupFormContainer} />
+      {/* <AuthRoute exact path='/' component={LandingPageContainer} /> */}
+      {/* <AuthRoute exact path='/login' component={LoginFormContainer} /> */}
+      {/* <AuthRoute exact path='/signup' component={SignupFormContainer} /> */}
     </header>
-      <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
+    <Switch>
       <ProtectedRoute exact path='/pins/:pinId' component={PinCardShowContainer} />
-      <Redirect exact from='*' to='/' />
+      <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
+    </Switch>
+      {/* <Redirect exact from='*' to='/' /> */}
   </div>
 )
 

@@ -4,7 +4,7 @@ import CardShow from './card_show'
 
 const mapStateToProps = ( state, ownProps ) => {
   return({
-    content: state.entities.pins[ownProps.match.params.id]
+    content: state.entities.pins[ownProps.match.params.pinId]
   })
 };
 
