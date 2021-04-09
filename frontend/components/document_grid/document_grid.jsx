@@ -18,17 +18,19 @@ class DocumentGrid extends React.Component {
       numCols: null,
     }
 
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+    this.updateContainerDimensions = this.updateContainerDimensions.bind(this)
   }
 
   componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener("resize", this.updateWindowDimensions)
+    this.props.fetchPins()
+    this.updateContainerDimensions();
+    actions.forEach(event =>
+      window.addEventListener(event, this.updateContainerDimensions))
   }
 
   componentWillUnmount() {
     actions.forEach((event) =>
-      window.removeEventListener( event, this.addEventListener)
+      window.removeEventListener( event, this.updateContainerDimensions)
     );
   }
 
@@ -45,7 +47,6 @@ class DocumentGrid extends React.Component {
     const { columns, content } = this.props
     let divCols = []
     let localContent = content
-    let contentArray = []
     if(columns && content.length > 0 ) {
       let contentSlice = Math.ceil(content.length / columns)
       for(let i = 0; i < columns; i++ ) {
