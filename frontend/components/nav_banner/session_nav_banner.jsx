@@ -19,12 +19,14 @@ class SessionNavBanner extends React.Component {
           <input type="text" className="search-bar"></input>
         </div>
         <div className="right-nav-container">
-          <button
-            onClick={() => this.props.logOut()}
-            className="sign-out-button button-link"
-          >
-            Sign Out
-          </button>
+          <Link to='/'>
+            <button
+              onClick={() => this.props.logOut()}
+              className="sign-out-button button-link"
+            >
+              Sign Out
+            </button>
+          </Link>
         </div>
       </div>
     );

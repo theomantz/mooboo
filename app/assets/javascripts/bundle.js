@@ -11295,12 +11295,14 @@ var SessionNavBanner = /*#__PURE__*/function (_React$Component) {
         className: "search-bar"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "right-nav-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+        to: "/"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         onClick: function onClick() {
           return _this.props.logOut();
         },
         className: "sign-out-button button-link"
-      }, "Sign Out")));
+      }, "Sign Out"))));
     }
   }]);
 
