@@ -1,6 +1,10 @@
 import React from 'react'
 import uuid from 'react-uuid';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import SaveButtonContainer from '../save_button/save_button_container'
+import DocumentGridContainer from '../document_grid/document_grid_container'
+import { Link } from 'react-router-dom';
 
 
 class CardShow extends React.Component {
@@ -28,11 +32,20 @@ class CardShow extends React.Component {
           />
         </div>
         <div className="content-card-right-container">
-          <div>{SaveButtonContainer}</div>
+          <div className="content-card-save-button-container">
+            <SaveButtonContainer />
+            <div className="content-card-show-close-button">
+              <Link to='/home'>
+                <FontAwesomeIcon icon={faWindowClose} size='2x' className='close-button-icon' />
+              </Link>
+            </div>
+          </div>
           <div className="content-show-card-text-container">
             <h3>{title}</h3>
             <p>{description}</p>
           </div>
+        </div>
+        <div className="document-grid-show-page-container">
         </div>
       </div>
     );

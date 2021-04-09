@@ -9,4 +9,4 @@ const mapDispatchToProps = dispatch => ({
   savePin: null
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SaveButton)
+export default connect(null, null)(SaveButton)
