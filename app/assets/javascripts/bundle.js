@@ -10326,15 +10326,17 @@ var DocumentCard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var content = this.props.content;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_2__.docStyles.docCard,
         id: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "content-card"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "content-image"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        className: "content-card-image"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "content-card-save-button"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", null, "Save")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         src: content.photoUrl,
-        alt: content.title
+        alt: content.title,
+        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_2__.docStyles.docCard
       }))));
     }
   }]);
@@ -10346,10 +10348,10 @@ var DocumentCard = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./frontend/components/card/card_container.js":
-/*!****************************************************!*\
-  !*** ./frontend/components/card/card_container.js ***!
-  \****************************************************/
+/***/ "./frontend/components/card/pin_card_container.js":
+/*!********************************************************!*\
+  !*** ./frontend/components/card/pin_card_container.js ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10372,7 +10374,20 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchPin: function fetchPin(pinId) {
       return dispatch((0,_actions_pins_actions__WEBPACK_IMPORTED_MODULE_1__.fetchPin)(pinId));
-    }
+    },
+    savePin: function (_savePin) {
+      function savePin(_x) {
+        return _savePin.apply(this, arguments);
+      }
+
+      savePin.toString = function () {
+        return _savePin.toString();
+      };
+
+      return savePin;
+    }(function (pinId) {
+      return dispatch(savePin(pinId));
+    })
   };
 };
 
@@ -10408,8 +10423,7 @@ var docStyles = {
     position: "absolute",
     left: "50%",
     transform: "translateX(-50%)",
-    justifyContent: "center",
-    backgroundColor: "lightgray"
+    justifyContent: "center"
   },
   docColumn: {
     height: "100%",
@@ -10420,7 +10434,10 @@ var docStyles = {
     flexDirection: "column"
   },
   docCard: {
-    height: "250px"
+    width: "100%",
+    height: "auto",
+    borderRadius: "16px",
+    padding: "8px 0 2px 0"
   },
   docColWidth: 250
 };
@@ -10558,7 +10575,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _card_card_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../card/card_container */ "./frontend/components/card/card_container.js");
+/* harmony import */ var _card_pin_card_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../card/pin_card_container */ "./frontend/components/card/pin_card_container.js");
 /* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -10644,7 +10661,7 @@ var DocumentColumn = /*#__PURE__*/function (_React$Component) {
       if (this.props.content.length) {
         var content = this.props.content;
         docCards = content.map(function (item, index) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_card_card_container__WEBPACK_IMPORTED_MODULE_1__.default, {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_card_pin_card_container__WEBPACK_IMPORTED_MODULE_1__.default, {
             content: item,
             key: "doc-card-".concat(index)
           });
@@ -10762,7 +10779,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var actions = ["scroll", "resize"];
+var actions = ["DOMContentLoaded", "scroll", "resize"];
 
 var DocumentGrid = /*#__PURE__*/function (_React$Component) {
   _inherits(DocumentGrid, _React$Component);
@@ -10823,21 +10840,22 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
           content = _this$props.content;
       var divCols = [];
       var localContent = content;
+      var contentArray = [];
 
-      if (columns && content) {
-        var contentSlice = Math.floor(content.length / columns);
+      if (columns && content.length > 0) {
+        var contentSlice = Math.ceil(content.length / columns);
 
         for (var i = 0; i < columns; i++) {
           divCols.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_document_col_document_col_container__WEBPACK_IMPORTED_MODULE_2__.default, {
             id: i,
             key: "div-col-".concat(i),
-            content: localContent.slice(0, contentSlice)
+            content: i + 1 === columns ? localContent : localContent.slice(0, contentSlice)
           }));
           localContent = localContent.slice(contentSlice);
         }
-      }
 
-      return divCols;
+        return divCols;
+      }
     }
   }, {
     key: "renderContent",
@@ -10856,12 +10874,7 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
         ref: function ref(el) {
           return _this4.container = el;
         }
-      }, this.props.content.map(function (content) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-          src: content.photoUrl,
-          alt: content.title
-        });
-      }));
+      }, this.renderContent());
     }
   }]);
 

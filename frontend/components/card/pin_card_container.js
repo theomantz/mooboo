@@ -7,7 +7,8 @@ const mapStateToProps = ( state, ownProps ) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchPin: pinId => dispatch(fetchPin(pinId))
+  fetchPin: pinId => dispatch(fetchPin(pinId)),
+  savePin: pinId => dispatch(savePin(pinId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentCard)

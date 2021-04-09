@@ -10,15 +10,24 @@ class DocumentCard extends React.Component {
 
   render() {
     const { content } = this.props
-    return ( 
-    <div style={docStyles.docCard} id={uuid()}>
-      <div className='content-card'>
-        <div className="content-image">
-          <img src={content.photoUrl} alt={content.title} />
+    return (
+      <div id={uuid()}>
+        <div className="content-card">
+          <div className="content-card-image">
+            <div className="content-card-save-button">
+              <button>
+                Save
+              </button> 
+            </div>
+            <img
+              src={content.photoUrl}
+              alt={content.title}
+              style={docStyles.docCard}
+            />
+          </div>
         </div>
       </div>
-    </div> 
-    )
+    );
   }
 }
 

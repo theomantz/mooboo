@@ -3,8 +3,9 @@ import { docStyles } from '../config/document_grid'
 import DocumentColumnContainer from '../document_col/document_col_container'
 
 const actions = [
+  "DOMContentLoaded",
   "scroll",
-  "resize"
+  "resize",
 ]
 
 class DocumentGrid extends React.Component {
@@ -47,20 +48,23 @@ class DocumentGrid extends React.Component {
     const { columns, content } = this.props
     let divCols = []
     let localContent = content
-    if(columns && content ) {
-      let contentSlice = Math.floor(content.length / columns)
+    let contentArray = []
+    if(columns && content.length > 0 ) {
+      let contentSlice = Math.ceil(content.length / columns)
       for(let i = 0; i < columns; i++ ) {
         divCols.push(
           <DocumentColumnContainer
             id={i}
             key={`div-col-${i}`} 
-            content={localContent.slice(0, contentSlice)}
+            content={
+              (i + 1) === columns ? localContent : localContent.slice(0, contentSlice)
+              }
             />
         )
         localContent = localContent.slice(contentSlice)
       }
-    }
     return divCols;
+    }
   }
 
   renderContent() {
@@ -74,8 +78,8 @@ class DocumentGrid extends React.Component {
   render() {
     return (
       <div style={docStyles.docContainer} ref={(el) => (this.container = el)}>
-        {this.props.content.map(content => <img src={content.photoUrl} alt={content.title}/>)}
-        {/* {this.renderContent()} */}
+        {/* {this.props.content.map(content => <img src={content.photoUrl} alt={content.title}/>)} */}
+        {this.renderContent()}
       </div>
     );
   }

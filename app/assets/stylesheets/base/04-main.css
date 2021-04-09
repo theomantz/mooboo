@@ -1,0 +1,15 @@
+.content-card-image {
+  transition: all 1.5s;
+}
+
+.content-card-image:hover {
+  transform: scale(1.05);
+  cursor: zoom-in;
+}
+
+.content-card-save-button {
+  position: ab;
+  top: 60px;
+  left: 145px;
+  padding: 7px 5px 7px 5px;
+}

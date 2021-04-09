@@ -1,5 +1,5 @@
 import React from 'react'
-import DocumentCardContainer from '../card/card_container'
+import PinCardContainer from '../card/pin_card_container'
 import { docStyles } from '../config/document_grid'
 
 const actions = [
@@ -40,7 +40,7 @@ class DocumentColumn extends React.Component {
     let docCards
     if( this.props.content.length ) {
       const { content } = this.props
-      docCards = content.map((item, index) => <DocumentCardContainer content={item} key={`doc-card-${index}`} /> )
+      docCards = content.map((item, index) => <PinCardContainer content={item} key={`doc-card-${index}`} /> )
     }
     return docCards
   }

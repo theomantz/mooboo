@@ -16,7 +16,6 @@ export const docStyles = {
     left: "50%",
     transform: "translateX(-50%)",
     justifyContent: "center",
-    backgroundColor: "lightgray",
   },
   docColumn: {
     height: "100%",
@@ -27,7 +26,10 @@ export const docStyles = {
     flexDirection: "column"
   },
   docCard: {
-    width: "240px"
+    width: "100%",
+    height: "auto",
+    borderRadius: "16px",
+    padding: "8px 0 2px 0"
   },
   docColWidth: 250,
 };
