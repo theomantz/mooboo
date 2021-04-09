@@ -6,10 +6,10 @@ const mapStateToProps = ( { session } ) => {
   return {
     currentUser: Boolean(session.id),
     demoUser: {
-      email: 'demo@mooboo.io',
-      password: 'mooboo4ever'
-    }
-  }
+      email: "demo@moooboo.io",
+      password: "password"
+    },
+  };
 }
 
 const mapDispatchToProps = dispatch => ({
