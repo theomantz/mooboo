@@ -10696,8 +10696,8 @@ var mapStateToProps = function mapStateToProps(_ref) {
   return {
     currentUser: Boolean(session.id),
     demoUser: {
-      email: 'demo@mooboo.io',
-      password: 'mooboo4ever'
+      email: "demo@moooboo.io",
+      password: "password"
     }
   };
 };
@@ -11442,12 +11442,20 @@ var SessionNavBanner = /*#__PURE__*/function (_React$Component) {
         className: "search-bar"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "right-nav-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+        to: "/",
+        style: {
+          textDecoration: "none"
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         onClick: function onClick() {
           return _this.props.logOut();
         },
-        className: "sign-out-button button-link"
-      }, "Sign Out")));
+        className: "sign-out-button button-link",
+        style: {
+          textDecoration: "none"
+        }
+      }, "Sign Out"))));
     }
   }]);
 
