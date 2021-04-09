@@ -9,10 +9,10 @@
 User.destroy_all
 Pin.destroy_all
 
-demo = User.create!({ email: 'demo@moooboo.io', password: 'mooboo4ever' })
-demo1 = User.create!({ email: 'theo@moooboo.io', password: 'mooboo4ever' })
-demo2 = User.create!({ email: 'steve@moooboo.io', password: 'mooboo4ever' })
-demo3 = User.create!({ email: 'mary@moooboo.io', password: 'mooboo4ever' })
+demo = User.create!({ email: 'demo@moooboo.io', password: 'password' })
+demo1 = User.create!({ email: 'theo@moooboo.io', password: 'password' })
+demo2 = User.create!({ email: 'steve@moooboo.io', password: 'password' })
+demo3 = User.create!({ email: 'mary@moooboo.io', password: 'password' })
 
 
 # pin1 = Pin.new({ title: 'colin lloyd', description: 'available for hire', uploader_id: demo.id })
