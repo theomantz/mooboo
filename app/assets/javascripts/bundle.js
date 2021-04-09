@@ -10435,7 +10435,8 @@ var docStyles = {
     width: "100%",
     height: "auto",
     borderRadius: "16px",
-    padding: "8px 0 2px 0"
+    padding: "0 8px 16px 8px",
+    boxSizing: "border-box"
   },
   docColWidth: 250
 };
@@ -12000,10 +12001,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var middlewares = [redux_thunk__WEBPACK_IMPORTED_MODULE_2__.default];
+
+if (true) {
+  var _require = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js"),
+      _logger = _require.logger;
+
+  middlewares.push(_logger);
+}
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_0__.default, preloadedState, (0,redux__WEBPACK_IMPORTED_MODULE_3__.applyMiddleware)((redux_logger__WEBPACK_IMPORTED_MODULE_1___default()), redux_thunk__WEBPACK_IMPORTED_MODULE_2__.default));
+  return (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_0__.default, preloadedState, redux__WEBPACK_IMPORTED_MODULE_3__.applyMiddleware.apply(void 0, middlewares));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (configureStore);

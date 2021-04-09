@@ -1,5 +1,10 @@
+.content-card {
+  border-radius: 16px;
+  width: 250px;
+}
 .content-card-image {
   transition: all 1.5s;
+  border-radius: 16px;
 }
 
 .content-card-image:hover {
@@ -8,8 +13,9 @@
 }
 
 .content-card-save-button {
-  position: ab;
-  top: 60px;
-  left: 145px;
-  padding: 7px 5px 7px 5px;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  margin-left: 100px;
+  justify-content: flex-start;
 }

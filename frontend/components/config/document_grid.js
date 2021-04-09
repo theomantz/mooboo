@@ -29,7 +29,8 @@ export const docStyles = {
     width: "100%",
     height: "auto",
     borderRadius: "16px",
-    padding: "8px 0 2px 0"
+    padding: "0 8px 16px 8px",
+    boxSizing: "border-box"
   },
   docColWidth: 250,
 };
