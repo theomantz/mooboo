@@ -10252,7 +10252,7 @@ var App = function App() {
     exact: true,
     path: "/signup",
     component: _session_forms_signup_form_container__WEBPACK_IMPORTED_MODULE_5__.default
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.ProtectedRoute, {
     exact: true,
     path: "/home",
     component: _document_grid_document_grid_container__WEBPACK_IMPORTED_MODULE_2__.default
@@ -11296,12 +11296,18 @@ var SessionNavBanner = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "right-nav-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-        to: "/"
+        to: "/",
+        style: {
+          textDecoration: "none"
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         onClick: function onClick() {
           return _this.props.logOut();
         },
-        className: "sign-out-button button-link"
+        className: "sign-out-button button-link",
+        style: {
+          textDecoration: "none"
+        }
       }, "Sign Out"))));
     }
   }]);
@@ -11806,7 +11812,7 @@ var pinsReducer = function pinsReducer() {
       return action.pins;
 
     case _actions_pins_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PIN:
-      return Object.assign({}, _defineProperty({}, action.pin.id, action.pin));
+      return Object.assign({}, state, _defineProperty({}, action.pin.id, action.pin));
 
     default:
       return state;
@@ -12003,10 +12009,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var middlewares = [redux_thunk__WEBPACK_IMPORTED_MODULE_2__.default];
+
+if (true) {
+  var _require = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js"),
+      _logger = _require.logger;
+
+  middlewares.push(_logger);
+}
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_0__.default, preloadedState, (0,redux__WEBPACK_IMPORTED_MODULE_3__.applyMiddleware)((redux_logger__WEBPACK_IMPORTED_MODULE_1___default()), redux_thunk__WEBPACK_IMPORTED_MODULE_2__.default));
+  return (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_0__.default, preloadedState, redux__WEBPACK_IMPORTED_MODULE_3__.applyMiddleware.apply(void 0, middlewares));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (configureStore);
@@ -12023,8 +12037,7 @@ var configureStore = function configureStore() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AuthRoute": () => (/* binding */ AuthRoute),
-/* harmony export */   "ProtectedRoute": () => (/* binding */ ProtectedRoute),
-/* harmony export */   "AuthRedirect": () => (/* binding */ AuthRedirect)
+/* harmony export */   "ProtectedRoute": () => (/* binding */ ProtectedRoute)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
@@ -12065,17 +12078,6 @@ var Protected = function Protected(_ref2) {
   });
 };
 
-var ConditionalRedirect = function ConditionalRedirect(_ref3) {
-  var loggedIn = _ref3.loggedIn,
-      from = _ref3.from,
-      exact = _ref3.exact;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Redirect, {
-    exact: exact,
-    from: from,
-    to: loggedIn ? '/home' : '/'
-  });
-};
-
 var mapStateToProps = function mapStateToProps(state) {
   return {
     loggedIn: Boolean(state.session.id)
@@ -12084,7 +12086,6 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var AuthRoute = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, null)(Auth));
 var ProtectedRoute = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, null)(Protected));
-var AuthRedirect = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, null)(ConditionalRedirect));
 
 /***/ }),
 

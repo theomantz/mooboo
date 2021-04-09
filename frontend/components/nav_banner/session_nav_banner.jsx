@@ -9,20 +9,25 @@ class SessionNavBanner extends React.Component {
     return (
       <div className="banner flex-nav">
         <div className="links-container left-nav-container">
-          <Link to="/home" className="button-link home-button">Home</Link>
-          <Link to="/today" className="button-link today-button">Today</Link>
+          <Link to="/home" className="button-link home-button">
+            Home
+          </Link>
+          <Link to="/today" className="button-link today-button">
+            Today
+          </Link>
         </div>
         <div className="nav search-bar-container flex-nav">
           <div className="search-bar-icon">
-            <FontAwesomeIcon icon={faSearch} /> 
+            <FontAwesomeIcon icon={faSearch} />
           </div>
           <input type="text" className="search-bar"></input>
         </div>
         <div className="right-nav-container">
-          <Link to='/'>
+          <Link to="/" style={{ textDecoration: "none" }}>
             <button
               onClick={() => this.props.logOut()}
               className="sign-out-button button-link"
+              style={{ textDecoration: "none" }}
             >
               Sign Out
             </button>
