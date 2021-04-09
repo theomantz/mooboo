@@ -52,7 +52,10 @@
 }
 
 .content-show-image:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow:  20px 20px 60px #d9d9d9,
+             -20px -20px 60px #ffffff;
 }
 
 .content-card-right-container {
@@ -66,6 +69,21 @@
 .content-show-card-text-container {
   font-size: 24px;
   font-weight: 600;
+  margin-left: 25px;
+  min-height: 300px;
+}
+
+.content-show-card-arrow-close {
+  color: gray;
+  padding: 15px;
+  transition: all 2s;
+  border-radius: 50px;
+}
+
+.content-show-card-arrow-close:hover {
+  background-color: lightgrey;
+  color: black;
+  transform: scale(1.1);
 }
 
 .content-show-card-text-container h3 {

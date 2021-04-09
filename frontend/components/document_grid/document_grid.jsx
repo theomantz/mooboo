@@ -22,6 +22,7 @@ class DocumentGrid extends React.Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0)
     this.props.fetchPins()
     this.updateContainerDimensions();
     actions.forEach(event =>
@@ -47,7 +48,7 @@ class DocumentGrid extends React.Component {
     const { columns, content } = this.props
     let divCols = []
     let localContent = content
-    if(columns && content.length > 0 ) {
+    if(content.length > 0 ) {
       let contentSlice = Math.ceil(content.length / columns)
       for(let i = 0; i < columns; i++ ) {
         divCols.push(
