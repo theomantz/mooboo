@@ -5,9 +5,17 @@ export const fetchPin = pinId => (
   })
 );
 
-export const fetchPins = (numCols) => (
+export const fetchPins = () => (
   $.ajax({
     url: 'api/pins',
     method: 'GET',
   })
 );
+
+export const updatePin = pin => (
+  $.ajax({
+    url: `api/pins/${pin.id}`,
+    method: 'PATCH',
+    data: { pin }
+  })
+)

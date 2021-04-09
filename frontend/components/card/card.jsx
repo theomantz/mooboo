@@ -1,5 +1,6 @@
 import React from 'react';
 import uuid from 'react-uuid'
+import { Link } from 'react-router-dom'
 import { docStyles } from '../config/document_grid'
 
 class DocumentCard extends React.Component {
@@ -11,22 +12,24 @@ class DocumentCard extends React.Component {
   render() {
     const { content } = this.props
     return (
-      <div id={uuid()}>
-        <div className="content-card">
-          <div className="content-card-image">
-            <div className="content-card-save-button">
-              <button>
-                Save
-              </button> 
+      <Link to={`/pins/${content.id}`}>
+        <div id={uuid()}>
+          <div className="content-card">
+            <div className="content-card-image">
+              <div className="content-card-save-button">
+                <button>
+                  Save
+                </button> 
+              </div>
+              <img
+                src={content.photoUrl}
+                alt={content.title}
+                style={docStyles.docCard}
+              />
             </div>
-            <img
-              src={content.photoUrl}
-              alt={content.title}
-              style={docStyles.docCard}
-            />
           </div>
         </div>
-      </div>
+      </Link>
     );
   }
 }

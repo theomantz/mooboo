@@ -3,7 +3,6 @@ import {
 } from '../actions/ui_actions';
 
 const contentReducer = ( state = {} , action ) => {
-  // debugger
   Object.freeze(state) 
   switch(action.type) {
     case RECEIVE_CONTENT:

@@ -11,7 +11,6 @@ class Api::PinsController < ApplicationController
 
   def show
     @pin = Pin.find_by(id: params[:id])
-    @numCols = params[:numCols]
     render 'api/pins/show'
   end
 
@@ -19,6 +18,15 @@ class Api::PinsController < ApplicationController
     @pins_unshuffled = Pin.all
     @pins = @pins_unshuffled.shuffle
     render 'api/pins/index'
+  end
+
+  def update
+    @pin = Pin.find_by(id: params[:id])
+    if @pin.update(pin_params)
+      render 'api/pins/show'
+    else
+      reunder json: @pin.error.full_messages, status: 400
+    end
   end
 
   def destroy

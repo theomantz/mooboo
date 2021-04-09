@@ -70,7 +70,7 @@ class DocumentGrid extends React.Component {
       <div style={docStyles.docGrid}>
         {this.columnConstructor()}
       </div>
-      )
+    )
   }
 
   render() {
