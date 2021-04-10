@@ -29,7 +29,7 @@ class SessionNavBanner extends React.Component {
         </NavLink>
           <Link to="/" style={{ textDecoration: "none" }}>
             <button
-              onClick={() => this.props.logOut()}
+              onClick={() => logOut()}
               className="sign-out-button button-link"
               style={{ textDecoration: "none" }}
             >

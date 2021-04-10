@@ -11564,8 +11564,6 @@ var SessionNavBanner = /*#__PURE__*/function (_React$Component) {
   _createClass(SessionNavBanner, [{
     key: "render",
     value: function render() {
-      var _this = this;
-
       var _this$props = this.props,
           user = _this$props.user,
           logOut = _this$props.logOut;
@@ -11602,7 +11600,7 @@ var SessionNavBanner = /*#__PURE__*/function (_React$Component) {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         onClick: function onClick() {
-          return _this.props.logOut();
+          return logOut();
         },
         className: "sign-out-button button-link",
         style: {
@@ -11669,6 +11667,7 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   _createClass(Profile, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      // debugger
       var userId = this.props.match.params.userId;
       this.props.fetchBoards(userId);
       this.props.fetchUser(userId);

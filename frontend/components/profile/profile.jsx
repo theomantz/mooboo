@@ -8,6 +8,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    // debugger
     const { userId } = this.props.match.params
     this.props.fetchBoards(userId)
     this.props.fetchUser(userId)
