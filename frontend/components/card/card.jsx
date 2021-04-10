@@ -17,7 +17,7 @@ class DocumentCard extends React.Component {
           <div className="content-card">
             <div className="content-card-image">
               <img
-                src={content.photoUrl}
+              src={content.photoUrl}
                 alt={content.title}
                 style={docStyles.docCard}
               />

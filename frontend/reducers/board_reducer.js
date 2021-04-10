@@ -3,7 +3,7 @@ import {
   RECEIVE_BOARD
 } from '../actions/board_actions'
 
-const boardReducer = (state = {}, action) => {
+const boardsReducer = (state = {}, action) => {
   Object.freeze(state)
   switch(action.type) {
     case RECEIVE_ALL_BOARDS:
@@ -15,4 +15,4 @@ const boardReducer = (state = {}, action) => {
   }
 }
 
-export default boardReducer
+export default boardsReducer

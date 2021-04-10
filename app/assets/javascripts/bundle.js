@@ -10005,6 +10005,69 @@ var convertCurry = convert.bind(null, react__WEBPACK_IMPORTED_MODULE_2__.createE
 
 /***/ }),
 
+/***/ "./frontend/actions/board_actions.js":
+/*!*******************************************!*\
+  !*** ./frontend/actions/board_actions.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RECEIVE_BOARD": () => (/* binding */ RECEIVE_BOARD),
+/* harmony export */   "RECEIVE_ALL_BOARDS": () => (/* binding */ RECEIVE_ALL_BOARDS),
+/* harmony export */   "RECEIVE_BOARD_ERRORS": () => (/* binding */ RECEIVE_BOARD_ERRORS),
+/* harmony export */   "fetchBoard": () => (/* binding */ fetchBoard),
+/* harmony export */   "fetchBoards": () => (/* binding */ fetchBoards)
+/* harmony export */ });
+/* harmony import */ var _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/board_api_util */ "./frontend/util/board_api_util.js");
+
+var RECEIVE_BOARD = 'RECEIVE_BOARD';
+var RECEIVE_ALL_BOARDS = 'RECEIVE_ALL_BOARDS';
+var RECEIVE_BOARD_ERRORS = 'RECEIVE_BOARD_ERRORS';
+
+var receiveBoard = function receiveBoard(board) {
+  return {
+    type: RECEIVE_BOARD,
+    board: board
+  };
+};
+
+var receiveAllBoards = function receiveAllBoards(boards) {
+  return {
+    type: RECEIVE_ALL_BOARDS,
+    boards: boards
+  };
+};
+
+var receiveBoardErrors = function receiveBoardErrors(errors) {
+  return {
+    type: RECEIVE_BOARD_ERRORS,
+    errors: errors
+  };
+};
+
+var fetchBoard = function fetchBoard(boardId) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchBoard(boardId).then(function (board) {
+      return dispatch(receiveBoard(board));
+    }, function (errors) {
+      return dispatch(receiveBoardErrors(errors));
+    });
+  };
+};
+var fetchBoards = function fetchBoards(userId) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchBoards(userId).then(function (boards) {
+      return dispatch(receiveAllBoards(boards));
+    }, function (errors) {
+      return dispatch(receiveBoardErrors(errors));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/pins_actions.js":
 /*!******************************************!*\
   !*** ./frontend/actions/pins_actions.js ***!
@@ -11922,6 +11985,43 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/reducers/board_reducer.js":
+/*!********************************************!*\
+  !*** ./frontend/reducers/board_reducer.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/board_actions */ "./frontend/actions/board_actions.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var boardsReducer = function boardsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_ALL_BOARDS:
+      return action.boards;
+
+    case _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_BOARD:
+      return Object.assign({}, state, _defineProperty({}, action.board.id, action.board));
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (boardsReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/cols_reducer.js":
 /*!*******************************************!*\
   !*** ./frontend/reducers/cols_reducer.js ***!
@@ -12028,16 +12128,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _pins_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pins_reducer */ "./frontend/reducers/pins_reducer.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
+/* harmony import */ var _board_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./board_reducer */ "./frontend/reducers/board_reducer.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
-var entitesReducer = (0,redux__WEBPACK_IMPORTED_MODULE_2__.combineReducers)({
-  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
-  pins: _pins_reducer__WEBPACK_IMPORTED_MODULE_0__.default
-});
+
+
+var entitesReducer = (0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)(_defineProperty({
+  users: usersReducer,
+  pins: _pins_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
+  boards: _board_reducer__WEBPACK_IMPORTED_MODULE_2__.default
+}, "users", _users_reducer__WEBPACK_IMPORTED_MODULE_1__.default));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (entitesReducer);
 
 /***/ }),
@@ -12367,6 +12472,46 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/board_api_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/util/board_api_util.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fetchBoards": () => (/* binding */ fetchBoards),
+/* harmony export */   "fetchBoard": () => (/* binding */ fetchBoard),
+/* harmony export */   "updateBoard": () => (/* binding */ updateBoard)
+/* harmony export */ });
+var fetchBoards = function fetchBoards(userId) {
+  return {
+    url: 'api/boards',
+    method: 'GET',
+    data: {
+      userId: userId
+    }
+  };
+};
+var fetchBoard = function fetchBoard(boardId) {
+  return {
+    url: "api/boards/".concat(boardId),
+    method: 'GET'
+  };
+};
+var updateBoard = function updateBoard(board) {
+  return {
+    url: "api/boards/".concat(board.id),
+    method: 'PATCH',
+    data: {
+      board: board
+    }
+  };
+};
 
 /***/ }),
 
