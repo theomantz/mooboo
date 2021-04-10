@@ -3,5 +3,36 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  margin-top: 20px;
+  margin: 20px auto 20px auto;
+}
+
+.profile-page-avatar {
+  padding: 30px 24px 30px 24px;
+  border-radius: 100px;
+  width: fit-content;
+  margin: 30px auto 50px auto;
+  font-size: 30px;
+  font-weight: 700;
+  color: white;
+}
+
+.profile-page-container {
+  padding: 30px;
+  margin: 50px auto 50px auto;
+  box-sizing: content-box;
+  width: 75%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  background: #ffffff;
+  box-shadow:  20px 20px 60px #d9d9d9,
+             -20px -20px 60px #ffffff;
+}
+
+.profile-page-username {
+  font-size: 24px;
+  font-weight: 700;
+  
 }
