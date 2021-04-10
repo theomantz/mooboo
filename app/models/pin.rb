@@ -8,5 +8,8 @@ class Pin < ApplicationRecord
   belongs_to :user,
     foreign_key: :uploader_id,
     class_name: :User
+
+  has_many :boards,
+    through: :pin_boards
   
 end

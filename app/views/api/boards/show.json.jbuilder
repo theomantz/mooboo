@@ -1,0 +1,1 @@
+json.render! 'api/boards/board', board: @board
