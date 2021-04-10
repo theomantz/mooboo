@@ -172,3 +172,4 @@ pin30 = Pin.new({ title: 'eberhard grossgasteiger', description: 'another sample
 file30 = open('https://unsplash.com/photos/4AWDA2WWCn0/download?force=true')
 pin30.photo.attach(io: file30, filename: 'seed30.jpg')
 pin30.save!
+

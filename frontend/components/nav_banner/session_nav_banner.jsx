@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 class SessionNavBanner extends React.Component {
-  render() {
-
+  render() {  
+    const { user, logOut } = this.props
     return (
       <div className="banner flex-nav">
         <div className="links-container left-nav-container">
@@ -23,9 +23,12 @@ class SessionNavBanner extends React.Component {
           <input type="text" className="search-bar"></input>
         </div>
         <div className="right-nav-container">
+          <Link to={`/users/${user.id}`} style={{textDecoration: "none"}}>
+            <button>P</button>
+          </Link>
           <Link to="/" style={{ textDecoration: "none" }}>
             <button
-              onClick={() => this.props.logOut()}
+              onClick={() => logOut()}
               className="sign-out-button button-link"
               style={{ textDecoration: "none" }}
             >

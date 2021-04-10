@@ -8,14 +8,15 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    // debugger
     const { userId } = this.props.match.params
     this.props.fetchBoards(userId)
     this.props.fetchUser(userId)
   }
 
   render() {
-    if( !this.props.entities.user ) return null;
-    const { user } = this.props.entities
+    if( !this.props.user ) return null;
+    const { user } = this.props
     return(
       <div className="profile-page-container">
 
