@@ -7,10 +7,6 @@ class Board < ApplicationRecord
     primary_key: :id,
     foreign_key: :user_id
 
-  has_many :pins,
-    through: :pin_boards
-
-  has_many_attached :photos,
-    through: :pins
-  
+  has_and_belongs_to_many :pins
+    
 end

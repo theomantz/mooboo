@@ -7,6 +7,7 @@ import LoginFormContainer from './session_forms/login_form_container'
 import SignupFormContainer from './session_forms/signup_form_container'
 import LandingPageContainer from './landing/landing_page_container';
 import PinCardShowContainer from './card_show/pin_card_show_container';
+import ProfileContainer from './profile/profile_container'
 import AboutPage from './about_page/about'
 
 
@@ -19,11 +20,12 @@ const App = () => (
       <AuthRoute exact path='/signup' component={SignupFormContainer} />
     </header>
     <Switch>
-      <ProtectedRoute exact path='/pins/:pinId' component={PinCardShowContainer} />
-      <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
-      <Route exact path='/about' component={AboutPage} />
+      {/* <ProtectedRoute exact path='/pins/:pinId' component={PinCardShowContainer} /> */}
+      <ProtectedRoute exact path='/users/:userId' component={ProfileContainer} />
+      {/* <ProtectedRoute exact path='/home' component={DocumentGridContainer} /> */}
+      {/* <Route exact path='/about' component={AboutPage} /> */}
     </Switch>
-      <Redirect exact from='*' to='/' />
+      {/* <Redirect exact from='*' to='/' /> */}
   </div>
 )
 

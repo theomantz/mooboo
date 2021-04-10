@@ -172,3 +172,11 @@ pin30 = Pin.new({ title: 'eberhard grossgasteiger', description: 'another sample
 file30 = open('https://unsplash.com/photos/4AWDA2WWCn0/download?force=true')
 pin30.photo.attach(io: file30, filename: 'seed30.jpg')
 pin30.save!
+
+
+# Boards
+
+board1 = Board.create({ user_id: demo.id, title: 'Scenery' })
+board2 = Board.create({ user_id: demo.id, title: 'Architecture' })
+board3 = Board.create({ user_id: demo.id, title: 'Plants' })
+board4 = Board.create({ user_id: demo.id, title: 'Birds' })

@@ -45,6 +45,27 @@
   justify-content: space-between;
   margin-right: 10px;
   max-width: 50%;
+  align-items: center;
+}
+
+.profile-link-button {
+  padding: 8px 12px 8px 12px;
+  margin: 10px 12px 10px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #F3BA8D;
+  transition: all 0.5s;
+  border-radius: 68px;
+  background: #ffffff;
+  box-shadow:  8px 8px 16px #dbdbdb,
+              -8px -8px 16px #ffffff;
+}
+
+.profile-link-button:hover {
+  background-color: #6E9885;
+  color: white;
+  /* box-shadow: 8px 8px 16px lightseagreen,
+              -8px -8px 16px lightslategray; */
 }
 
 .developer-links-container {
@@ -141,3 +162,4 @@
   transform: scale3d(1.05);
   background-color: #6E9885;
 }
+

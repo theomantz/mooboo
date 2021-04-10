@@ -3,7 +3,7 @@ class Api::BoardsController < ApplicationController
   def create
     @board = Board.new(board_params)
     if @board.save
-      render :show
+      render 'api/boards/show'
     else
       render json: @board.error.full_messages, status: 404
     end
@@ -12,15 +12,19 @@ class Api::BoardsController < ApplicationController
   def update
     @board = Board.find_by(id: params[:id])
     if @board.update(board_params)
-      render :show
+      render 'api/boards/show'
     else
       render json: @board.error.full_messages
     end
   end
 
   def index
-    @boards = Board.find_by(user_id: params[:userId])
-    render :index
+    @boards = Board.where(user_id: params[:userId])
+    unless @boards
+      @board = Board.create(user_id: :userId, title: 'First Board!')
+      render 'api/boards/show'
+    end
+    render 'api/boards/index'
   end
 
   private

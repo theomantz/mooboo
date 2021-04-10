@@ -15,8 +15,7 @@ class Api::PinsController < ApplicationController
   end
 
   def index
-    @pins_unshuffled = Pin.all
-    @pins = @pins_unshuffled.shuffle
+    @pins = Pin.all
     render 'api/pins/index'
   end
 

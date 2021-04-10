@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_10_011956) do
+ActiveRecord::Schema.define(version: 2021_04_10_182242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,13 +45,11 @@ ActiveRecord::Schema.define(version: 2021_04_10_011956) do
     t.index ["user_id"], name: "index_boards_on_user_id"
   end
 
-  create_table "pin_boards", force: :cascade do |t|
-    t.bigint "pins_id"
-    t.bigint "boards_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["boards_id"], name: "index_pin_boards_on_boards_id"
-    t.index ["pins_id"], name: "index_pin_boards_on_pins_id"
+  create_table "boards_pins", force: :cascade do |t|
+    t.bigint "pin_id"
+    t.bigint "board_id"
+    t.index ["board_id"], name: "index_boards_pins_on_board_id"
+    t.index ["pin_id"], name: "index_boards_pins_on_pin_id"
   end
 
   create_table "pins", force: :cascade do |t|
@@ -78,6 +76,6 @@ ActiveRecord::Schema.define(version: 2021_04_10_011956) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "pin_boards", "boards", column: "boards_id"
-  add_foreign_key "pin_boards", "pins", column: "pins_id"
+  add_foreign_key "boards_pins", "boards"
+  add_foreign_key "boards_pins", "pins"
 end

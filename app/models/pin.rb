@@ -9,7 +9,6 @@ class Pin < ApplicationRecord
     foreign_key: :uploader_id,
     class_name: :User
 
-  has_many :boards,
-    through: :pin_boards
-  
+  has_and_belongs_to_many :boards  
+    
 end
