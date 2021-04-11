@@ -19,7 +19,7 @@ class Api::BoardsController < ApplicationController
   end
 
   def index
-    @boards = Board.where(user_id: params[:userId])
+    @boards = Board.where(user_id: params[:userId]).includes(:pins)
     unless @boards
       @board = Board.create(user_id: :userId, title: 'First Board!')
       render 'api/boards/show'

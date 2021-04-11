@@ -1,1 +1,1 @@
-json.render! 'api/boards/board', board: @board
+json.render! 'api/boards/board', board: @board, pins: @board.pins

@@ -23,7 +23,6 @@ class Profile extends React.Component {
 
   componentDidMount() {
     const { userId } = this.props.match.params
-    this.props.fetchBoards(userId)
     this.props.fetchUser(userId)
   }
 
@@ -64,14 +63,27 @@ class Profile extends React.Component {
     const { user } = this.props
     const { activePath } = this.state
     return(
-      <div className="profile-page-container">
+      <div className="profile-container">
         <div className="profile-page-avatar-container">
           {this.renderAvatar()}
           {this.renderUsername()}
         </div>
         <div className='profile-page-content-container'>
           <div className="profile-page-navlink-container">
-              <BoardNavButtonContainer activePath={ activePath } />
+            <NavLink 
+            to={`/users/${user.id}/boards`}
+            className='profile-page-link'
+            activeClassName='profile-page-active-link'
+            >
+              Boards
+            </NavLink>
+            <NavLink 
+            to={`/users/${user.id}/pins`}
+            className='profile-page-link'
+            activeClassName='profile-page-active-link'
+            >
+              Pins
+            </NavLink>
           </div>
         </div>
       </div>

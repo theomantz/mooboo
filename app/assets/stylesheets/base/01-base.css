@@ -30,7 +30,7 @@ button {
   font-weight: 700;
   text-align: center;
   line-height: 20px;
-  transition: all 1s;
+  transition: all 0.3s;
   border-radius: 68px;
   background: #ffffff;
   box-shadow:  8px 8px 16px #dbdbdb,

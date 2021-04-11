@@ -8,6 +8,7 @@
 
 User.destroy_all
 Pin.destroy_all
+Board.destroy_all
 
 demo = User.create({ email: 'demo@moooboo.io', password: 'password' })
 demo1 = User.create({ email: 'theo@moooboo.io', password: 'password' })
@@ -180,3 +181,12 @@ board1 = Board.create({ user_id: demo.id, title: 'Scenery' })
 board2 = Board.create({ user_id: demo.id, title: 'Architecture' })
 board3 = Board.create({ user_id: demo.id, title: 'Plants' })
 board4 = Board.create({ user_id: demo.id, title: 'Birds' })
+
+# Add pins to boards
+
+pins = Pin.all
+boards = Board.all
+
+pins.each do |pin|
+  boards.sample().pins << pin
+end

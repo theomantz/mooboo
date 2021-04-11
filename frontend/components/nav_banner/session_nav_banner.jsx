@@ -10,10 +10,17 @@ class SessionNavBanner extends React.Component {
     return (
       <div className="banner flex-nav">
         <div className="links-container left-nav-container">
-          <NavLink to="/home" className="button-link home-button">
+          <NavLink to="/home" 
+            className="button-link home-button"
+            activeClassName="active-link"
+            >
             Home
           </NavLink>
-          <NavLink to="/today" className="button-link today-button">
+          <NavLink 
+            to="/today" 
+            className="button-link today-button"
+            activeClassName='active-link'
+            >
             Today
           </NavLink>
         </div>
@@ -24,7 +31,11 @@ class SessionNavBanner extends React.Component {
           <input type="text" className="search-bar"></input>
         </div>
         <div className="right-nav-container">
-        <NavLink to={`/users/${user.id}`} className="profile-link-button">
+        <NavLink 
+          to={`/users/${user.id}`} 
+          className="profile-link-button"
+          activeClassName='active-link'
+          >
           <FontAwesomeIcon icon={faUser} />
         </NavLink>
           <Link to="/" style={{ textDecoration: "none" }}>

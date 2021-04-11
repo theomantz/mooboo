@@ -35,8 +35,17 @@
   color: #14613B;
 }
 
+.home-button:hover {
+  background-color: #14613B;
+  color: white;
+}
+
 .today-button {
   color: #6E9885;
+}
+.today-button:hover {
+  background-color: #14613B;
+  color: white;
 }
 
 .right-nav-container {
@@ -54,7 +63,7 @@
   font-size: 16px;
   font-weight: 700;
   color: #F3BA8D;
-  transition: all 0.5s;
+  transition: all 0.3s;
   border-radius: 68px;
   background: #ffffff;
   box-shadow:  8px 8px 16px #dbdbdb,
@@ -62,10 +71,8 @@
 }
 
 .profile-link-button:hover {
-  background-color: #6E9885;
+  background-color: #14613B;
   color: white;
-  /* box-shadow: 8px 8px 16px lightseagreen,
-              -8px -8px 16px lightslategray; */
 }
 
 .developer-links-container {
@@ -103,13 +110,28 @@
   color: #14613B;
 }
 
+.login-button:hover {
+  background-color: #14613B;
+  color: white;
+}
+
 
 .signup-button {
   color: #6E9885;
 }
 
+.signup-button:hover {
+  background-color: #14613B;
+  color: white;
+}
+
 .sign-out-button {
   color: #F55845;
+}
+
+.sign-out-button:hover {
+  background-color: #14613B;
+  color: white;
 }
 
 .search-bar-container {
@@ -161,5 +183,10 @@
   color: white;
   transform: scale3d(1.05);
   background-color: #6E9885;
+}
+
+.active-link {
+  background-color: #14613B;
+  color: white;
 }
 
