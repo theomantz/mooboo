@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/root';
 import configureStore from './store/store'
-import { fetchPins } from './actions/pins_actions'
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById('root')
@@ -19,10 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     store = configureStore()
   }
-  // test section
-  window.dispatch = store.dispatch
-  window.getState = store.dispatch
-  window.fetchPins = fetchPins
 
   ReactDOM.render(<Root store={store} />, root)
 })
