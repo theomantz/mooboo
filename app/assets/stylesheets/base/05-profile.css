@@ -28,12 +28,14 @@
 
 .fa-user-edit {
   border-radius: 60px;
-  padding: 10px 6px 10px 10px ;
-  transition: all 2s;
+  padding: 10px 5px 10px 10px ;
+  transition: all 0.5s;
+  color: gray;
 }
 
 .fa-user-edit:hover {
-  background-color: lightgray;
+  background-color: gray;
+  color: white;
 }
 
 .profile-page-container {
@@ -205,6 +207,10 @@
 .content-card {
   display: inline-block;
   width: 100%;
+}
+
+.user-description-container {
+  margin: 10px auto 0 auto;
 }
 
 @media screen and (min-width:0 ){

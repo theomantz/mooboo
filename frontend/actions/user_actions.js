@@ -7,7 +7,7 @@ const receiveUser = user => ({
   user
 });
 
-const receiveUserErrors = errprs => ({
+const receiveUserErrors = errors => ({
   type: RECEIVE_USER_ERRORS,
   errors
 })

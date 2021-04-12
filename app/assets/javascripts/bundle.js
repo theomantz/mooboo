@@ -10318,7 +10318,7 @@ var receiveUser = function receiveUser(user) {
   };
 };
 
-var receiveUserErrors = function receiveUserErrors(errprs) {
+var receiveUserErrors = function receiveUserErrors(errors) {
   return {
     type: RECEIVE_USER_ERRORS,
     errors: errors
@@ -11524,6 +11524,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -11580,10 +11581,21 @@ var EditUser = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "saveFormData",
+    value: function saveFormData() {
+      this.props.updateUser(this.state);
+
+      if (this.props.errors) {
+        this.setState({
+          errors: this.props.errors
+        });
+      }
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.updateUser(this.state);
+      this.props.updateUser(this.state).then(this.props.history.push("/users/".concat(this.props.user.id)));
     }
   }, {
     key: "renderErrors",
@@ -11655,7 +11667,7 @@ var EditUser = /*#__PURE__*/function (_React$Component) {
   return EditUser;
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditUser);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.withRouter)(EditUser));
 
 /***/ }),
 
@@ -13285,6 +13297,9 @@ var uiReducer = (0,redux__WEBPACK_IMPORTED_MODULE_1__.combineReducers)({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
 
 
@@ -13301,6 +13316,8 @@ var userErrorsReducer = function userErrorsReducer() {
       return state;
   }
 };
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (userErrorsReducer);
 
 /***/ }),
 

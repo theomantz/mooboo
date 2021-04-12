@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 class EditUser extends React.Component {
   constructor(props) {
@@ -16,9 +16,17 @@ class EditUser extends React.Component {
     return e => this.setState({ [type]: e.currentTarget.value })
   }
 
+  saveFormData() {
+    this.props.updateUser(this.state)
+    if( this.props.errors ) {
+      this.setState({ errors: this.props.errors })
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault()
     this.props.updateUser(this.state)
+      .then(this.props.history.push(`/users/${this.props.user.id}`))
   }
 
   renderErrors() {
@@ -88,4 +96,4 @@ class EditUser extends React.Component {
   }
 }
 
-export default EditUser
+export default withRouter(EditUser)

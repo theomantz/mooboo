@@ -12,12 +12,16 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find_by(session_token: session[:session_token])
+    # debugger
     if !@user.nil?
-      @user.update!(user_params)
-      @user
-      render 'api/users/show'
+      if @user.update(user_params)
+        @user
+        render 'api/users/show'
+      else
+        render json: @user.errors.full_messages, status: 404
+      end
     else
-      render json: ['Incorrect email and password combination'] , status: 404
+      render json: ['You must be logged in to do that'] , status: 404
     end
   end
 
