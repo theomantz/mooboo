@@ -22,7 +22,7 @@ const App = () => (
         <AuthRoute exact path='/' component={LandingPageContainer} />
         <AuthRoute exact path='/login' component={LoginFormContainer} />
         <AuthRoute exact path='/signup' component={SignupFormContainer} />
-        {/* <AuthRedirect from='*' /> */}
+        <AuthRedirect from='*' />
       </Switch>
     </header>
     <Switch>
@@ -36,9 +36,9 @@ const App = () => (
         </div>
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
-      {/* <Route exact path='/about' component={AboutPage} /> */}
+      <Route exact path='/about' component={AboutPage} />
     </Switch>
-      {/* <Redirect exact from='*' to='/' /> */}
+      <Redirect exact from='*' to='/' />
   </div>
 )
 
