@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   after_save :first_board
 
+  has_one_attached :photo
+
   has_many :pins,
     class_name: :Pin,
     foreign_key: :uploader_id

@@ -3,10 +3,11 @@ import {
 } from '../actions/board_actions'
 
 const messagesReducer = ( state = [], action ) => {
+  debugger
   Object.freeze(state)
   switch(action.type) {
     case RECEIVE_SUCCESS_MESSAGE:
-      return action.message.responseJSON
+      return action.message
     default:
       return []
   }

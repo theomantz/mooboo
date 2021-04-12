@@ -10086,11 +10086,13 @@ var createBoard = function createBoard(board) {
   };
 };
 var addPinToBoard = function addPinToBoard(boardId, pinId) {
-  return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.addPin(boardId, pinId).then(function (message) {
-    return dispatch(receiveSuccessMessage(message));
-  }, function (errors) {
-    return dispatch(receiveBoardErrors(errors));
-  });
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.addPin(boardId, pinId).then(function (message) {
+      return dispatch(receiveSuccessMessage(message));
+    }, function (errors) {
+      return dispatch(receiveBoardErrors(errors));
+    });
+  };
 };
 
 /***/ }),
@@ -12734,9 +12736,8 @@ var SaveButton = /*#__PURE__*/function (_React$Component) {
     key: "handleDefaultSave",
     value: function handleDefaultSave() {
       var allPinsBoard = Object.values(this.props.boards).filter(function (board) {
-        return console.log(board);
+        return board.title === 'Quick Save';
       });
-      console.log(allPinsBoard);
       return this.props.addPinToBoard(allPinsBoard.id, this.props.pinId);
     }
   }, {
@@ -13367,11 +13368,12 @@ __webpack_require__.r(__webpack_exports__);
 var messagesReducer = function messagesReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  debugger;
   Object.freeze(state);
 
   switch (action.type) {
     case _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SUCCESS_MESSAGE:
-      return action.message.responseJSON;
+      return action.message;
 
     default:
       return [];

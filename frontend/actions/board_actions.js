@@ -49,7 +49,7 @@ export const createBoard = board => dispatch => {
   )
 }
 
-export const addPinToBoard = ( boardId, pinId ) => {
+export const addPinToBoard = ( boardId, pinId ) => dispatch => {
   return(
     BoardApiUtils.addPin(boardId, pinId)
       .then(message => dispatch(receiveSuccessMessage(message)),

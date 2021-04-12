@@ -27,10 +27,9 @@ class SaveButton extends React.Component {
   }
 
   handleDefaultSave() {
-    const allPinsBoard = Object.values(this.props.boards).filter(
-      (board) => console.log(board)
+    let allPinsBoard = Object.values(this.props.boards).filter(
+      (board) => board.title === 'Quick Save'
     );
-    console.log(allPinsBoard)
     return this.props.addPinToBoard(allPinsBoard.id, this.props.pinId);
   }
 
