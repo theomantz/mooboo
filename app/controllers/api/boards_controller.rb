@@ -27,6 +27,22 @@ class Api::BoardsController < ApplicationController
     render 'api/boards/index'
   end
 
+  def show
+    @board = Board.find_by(id: params[:id]).includes(:pins)
+    render 'api/boards/show'
+  end
+
+  def add_to_board
+    @pin = Pin.find_by(id: params[:pin_id])
+    @board = Board.find_by(id: params[:board_id])
+    if (!@pin.nil? && !@board.nil? & !@pin.boards.include?(@board))
+      @pin.boards << @board
+      render json: ['Pin added successfully'], status: 201
+    else
+      render json: ['Invalid request parameters'], status: 400
+    end
+  end
+
   private
 
   def board_params

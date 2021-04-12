@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { faPen } from '@fortawesome/free-solid-svg-icons'
 import BoardsIndexContainer from '../boards_profile_index/boards_index_container'
 
 
@@ -86,7 +86,7 @@ class Profile extends React.Component {
       <div className="profile-container">
         <Link to={`/users/${user.id}/edit`}>
           <div className="edit-user-button-container">
-            <FontAwesomeIcon icon={faUserEdit} size="lg" />
+            <FontAwesomeIcon icon={faPen} size="lg" className='profile-edit-button'/>
           </div>
         </Link>
         <div className="profile-page-avatar-container">

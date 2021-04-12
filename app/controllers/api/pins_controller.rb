@@ -11,7 +11,11 @@ class Api::PinsController < ApplicationController
 
   def show
     @pin = Pin.find_by(id: params[:id])
-    render 'api/pins/show'
+    if !@pin.nil?
+      render 'api/pins/show'
+    else
+      render json: ["invalud request"], status: 400
+    end
   end
 
   def index

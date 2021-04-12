@@ -27,4 +27,11 @@ export const createBoard = board => (
     method: 'POST',
     data: { board }
   })
+);
+
+export const addPin = (boardId, pinId) => (
+  $.ajax({
+    url: `/api/boards/${boardId}/${pinId}`,
+    method: 'POST'
+  })
 )

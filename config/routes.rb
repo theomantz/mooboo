@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :boards, only: [:create, :index, :show, :update]
     resource :session, only: [:create, :destroy]
     get 'users/pins/:id' => 'users#pins_by_user', as: :pins_by_user
+    post 'boards/:board_id/:pin_id' => 'boards#add_to_board', as: :add_pin_to_board
   end
   
 end

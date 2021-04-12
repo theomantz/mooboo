@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   after_initialize :ensure_session_token, :username
 
+  after_save :first_board
+
   has_many :pins,
     class_name: :Pin,
     foreign_key: :uploader_id
@@ -18,7 +20,6 @@ class User < ApplicationRecord
   has_many :boards,
     class_name: :Board,
     foreign_key: :user_id
-
 
   def self.find_by_credentials(user_params)
     user = User.find_by(email: user_params[:email])
@@ -50,6 +51,10 @@ class User < ApplicationRecord
     self.session_token = SecureRandom::urlsafe_base64
     self.save
     self.session_token
+  end
+
+  def first_board
+    self.boards << Board.create(user_id: self.id, title: 'All Pins')
   end
 
 

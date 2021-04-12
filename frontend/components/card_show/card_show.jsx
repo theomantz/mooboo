@@ -25,6 +25,7 @@ class CardShow extends React.Component {
   renderContent() {
     if (!this.props.content) return null;
     const { photoUrl, title, description, id } = this.props.content
+    const { pinId } = this.props.match.params
     return (
       <div className="content-show-card" key={`content-show-key-${id}`}>
         <div className="content-card-show-close-button">
@@ -37,7 +38,7 @@ class CardShow extends React.Component {
         </div>
         <div className="content-card-right-container">
           <div className="content-card-save-button-container">
-            <SaveButtonContainer />
+            <SaveButtonContainer pinId={pinId}/>
           </div>
           <div className="content-show-card-text-container">
             <h3>{title}</h3>

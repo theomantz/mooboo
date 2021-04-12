@@ -70,20 +70,18 @@
   font-size: 24px;
   font-weight: 600;
   margin-left: 25px;
-  min-height: 300px;
 }
 
 .content-show-card-arrow-close {
   color: gray;
   padding: 15px;
-  transition: all 2s;
+  transition: all 0.5s;
   border-radius: 50px;
 }
 
 .content-show-card-arrow-close:hover {
-  background-color: lightgrey;
-  color: black;
-  transform: scale(1.1);
+  background-color: gray;
+  color: white;
 }
 
 .content-show-card-text-container h3 {
@@ -136,17 +134,42 @@
 
 .save-button-dropdown {
   padding: 18px 18px 18px 24px;
-  background: #ffffff;
   border: none;
   color: #14613B;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   font-size: 16px;
   font-weight: 600;
   margin-right: 0px;
-  background: #f5f2f2;
+  background: #ffffff;
   box-shadow:  20px 20px 60px #c8c8c8,
              -20px -20px 60px #ffffff;
+}
+
+.dropdown-list-icon {
+  padding-left: 10px;
+  color: gray;
+}
+
+.save-button-true {
+  background-color: #14613B;
+  color: white;
+  width: 230px;
+  border-radius: 50px;
+  box-shadow: none;
+  margin-right: 15px;
+}
+
+.save-button-true > svg {
+  padding-left: 20px;
+  color: white;
+}
+
+.save-button-container-true {
+  border: 1px solid lightgray;
+  border-radius: 18px;
 }
 
 .save-button-dropdown:active {
@@ -154,3 +177,56 @@
   box-shadow:  20px 20px 60px #c8c8c8,
              -20px -20px 60px #ffffff;
 }
+
+.save-button-dropdown-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.drop-down-list-container {
+  padding: 18px 24px 18px 24px;
+  width: 80%;
+}
+
+.dropdown-list-text {
+  padding: ;
+}
+
+.dropdown-list-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 700;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 18px;
+  box-sizing: border-box;
+  transition: all 0.5s;
+}
+
+.dropdown-list-text {
+  padding: 16px 0 16px 18px;
+}
+
+.dropdown-list-item > button.dropdown-list-save-button  {
+  display: none;
+}
+
+.dropdown-list-item:hover {
+  background-color: lightgray;
+}
+
+.dropdown-list-save-button {
+  font-size: 14px;
+  font-weight: 700;
+  color: #F55845;
+}
+
+.dropdown-list-item:hover > button {
+  display: block;
+  border: none;
+}
+
