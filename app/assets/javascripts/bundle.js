@@ -10441,11 +10441,44 @@ var App = function App() {
     exact: true,
     path: "/signup",
     component: _session_forms_signup_form_container__WEBPACK_IMPORTED_MODULE_6__.default
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.AuthRedirect, {
+    from: "*"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.ProtectedRoute, {
     exact: true,
     path: "/pins/:pinId",
     component: _card_show_pin_card_show_container__WEBPACK_IMPORTED_MODULE_8__.default
-  })));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+    exact: true,
+    path: "/users/:userId/edit",
+    component: _edit_user_edit_user_container__WEBPACK_IMPORTED_MODULE_11__.default
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+    path: "/users/:userId"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "profile-page-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+    path: "/users/:userId",
+    component: _profile_profile_container__WEBPACK_IMPORTED_MODULE_10__.default
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+    exact: true,
+    path: "/users/:userId/boards",
+    component: _boards_profile_index_boards_index_container__WEBPACK_IMPORTED_MODULE_3__.default
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+    exact: true,
+    path: "/users/:userId/pins",
+    component: _pins_pin_index_container__WEBPACK_IMPORTED_MODULE_9__.default
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.ProtectedRoute, {
+    exact: true,
+    path: "/home",
+    component: _document_grid_document_grid_container__WEBPACK_IMPORTED_MODULE_2__.default
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+    exact: true,
+    path: "/about",
+    component: _about_page_about__WEBPACK_IMPORTED_MODULE_12__.default
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Redirect, {
+    exact: true,
+    from: "*",
+    to: "/home"
+  }));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -10506,6 +10539,28 @@ var BoardCard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var board = this.props.board;
       var pins = Object.values(board.pins);
+
+      if (pins.length < 3) {
+        var pin = pins[0];
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "board-card-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "board-image-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "board-single-image"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+          src: pin.photoUrl,
+          alt: "board-single-image",
+          className: "board-only-image"
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "board-card-text-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+          className: "board-title"
+        }, board.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+          className: "pin-count"
+        }, pins.length, " ", pins.length > 1 ? "Pins" : "Pin")));
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "board-card-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -11518,34 +11573,107 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (_ref) {
-  var data = _ref.data,
-      show = _ref.show;
-  if (!show || !data) return null;
-  var dropdownList = data.map(function (item, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
-      className: "dropdown-list-item",
-      key: "board-list-item-".concat(index)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-      className: "dropdown-list-text"
-    }, item.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      className: "dropdown-list-save-button button-link"
-    }, "Save"));
-  });
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "drop-down-list-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
-    className: "board-list"
-  }, dropdownList));
-});
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var DropdownCard = /*#__PURE__*/function (_React$Component) {
+  _inherits(DropdownCard, _React$Component);
+
+  var _super = _createSuper(DropdownCard);
+
+  function DropdownCard(props) {
+    var _this;
+
+    _classCallCheck(this, DropdownCard);
+
+    _this = _super.call(this, props);
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(DropdownCard, [{
+    key: "handleClick",
+    value: function handleClick(item) {
+      var _this2 = this;
+
+      return function (e) {
+        var pinId = _this2.props.pinId;
+        return _this2.props.addPinToBoard(item.id, pinId);
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var _this$props = this.props,
+          show = _this$props.show,
+          data = _this$props.data,
+          pinId = _this$props.pinId;
+      if (!show || !data) return null;
+      var availableBoards = data.filter(function (board) {
+        return Object.values(board.pins).includes(pinId);
+      });
+
+      if (availableBoards.length <= 1) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+          className: "all-boards-message"
+        }, "This pin is on all your boards! Wow!", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+          className: "all-boards-message-span"
+        }, "Don't worry, we won't judge. We love this one too."));
+      }
+
+      var dropdownList = availableBoards.map(function (item, index) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+          className: "dropdown-list-item",
+          key: "board-list-item-".concat(index)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+          className: "dropdown-list-text"
+        }, item.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          className: "dropdown-list-save-button button-link",
+          onClick: _this3.handleClick(item)
+        }, "Save"));
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "drop-down-list-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+        className: "board-list"
+      }, dropdownList));
+    }
+  }]);
+
+  return DropdownCard;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DropdownCard);
 
 /***/ }),
 
-/***/ "./frontend/components/dropdown_card/dropdown_card_container.jsx":
-/*!***********************************************************************!*\
-  !*** ./frontend/components/dropdown_card/dropdown_card_container.jsx ***!
-  \***********************************************************************/
+/***/ "./frontend/components/dropdown_card/dropdown_card_container.js":
+/*!**********************************************************************!*\
+  !*** ./frontend/components/dropdown_card/dropdown_card_container.js ***!
+  \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12539,7 +12667,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_uuid__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
-/* harmony import */ var _dropdown_card_dropdown_card_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dropdown_card/dropdown_card_container */ "./frontend/components/dropdown_card/dropdown_card_container.jsx");
+/* harmony import */ var _dropdown_card_dropdown_card_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dropdown_card/dropdown_card_container */ "./frontend/components/dropdown_card/dropdown_card_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12584,6 +12712,7 @@ var SaveButton = /*#__PURE__*/function (_React$Component) {
       open: false
     };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.handleDefaultSave = _this.handleDefaultSave.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -12602,13 +12731,23 @@ var SaveButton = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "handleDefaultSave",
+    value: function handleDefaultSave() {
+      var allPinsBoard = Object.values(this.props.boards).filter(function (board) {
+        return console.log(board);
+      });
+      console.log(allPinsBoard);
+      return this.props.addPinToBoard(allPinsBoard.id, this.props.pinId);
+    }
+  }, {
     key: "renderSaveButton",
     value: function renderSaveButton() {
       if (this.state.open) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "save-button-button-container button"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "save-button-button"
+        className: "save-button-button",
+        onClick: this.handleDefaultSave
       }, "Save"));
     }
   }, {
@@ -12971,7 +13110,7 @@ var boardErrorsReducer = function boardErrorsReducer() {
 
   switch (action.type) {
     case _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_BOARD_ERRORS:
-      return action.errors.responseJSON;
+      return Object.values(action.errors.responseJSON);
 
     case _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_ALL_BOARDS:
       return [];

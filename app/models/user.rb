@@ -54,7 +54,7 @@ class User < ApplicationRecord
   end
 
   def first_board
-    self.boards << Board.create(user_id: self.id, title: 'All Pins')
+    self.boards << Board.create(user_id: self.id, title: 'Quick Save')
   end
 
 

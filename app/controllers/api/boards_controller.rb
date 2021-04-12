@@ -35,12 +35,23 @@ class Api::BoardsController < ApplicationController
   def add_to_board
     @pin = Pin.find_by(id: params[:pin_id])
     @board = Board.find_by(id: params[:board_id])
-    if (!@pin.nil? && !@board.nil? & !@pin.boards.include?(@board))
+
+    if @board.nil?
+      all_pins_board = Board.where(user_id: current_user.id, title: 'Quick Save')
+      if all_pins_board.empty?
+        @board = Board.create(user_id: current_user.id, title: 'Quick Save')
+      else
+        @board = all_pins_board
+      end
+    end
+    
+    if (!@pin.nil? & !@pin.boards.include?(@board))
       @pin.boards << @board
       render json: ['Pin added successfully'], status: 201
     else
       render json: ['Invalid request parameters'], status: 400
     end
+
   end
 
   private

@@ -11,6 +11,28 @@ class BoardCard extends React.Component {
   render() {
     const { board } = this.props
     const pins = Object.values(board.pins)
+    if( pins.length < 3 ) {
+      const pin = pins[0]
+      return (
+        <div className="board-card-container">
+          <div className="board-image-container">
+            <div className='board-single-image'>
+              <img
+                src={pin.photoUrl}
+                alt="board-single-image"
+                className="board-only-image"
+              />
+            </div>
+          </div>
+          <div className="board-card-text-container">
+            <span className="board-title">{board.title}</span>
+            <span className="pin-count">
+              {pins.length} {pins.length > 1 ? "Pins" : "Pin"}
+            </span>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="board-card-container">
         <div className='board-image-container'>

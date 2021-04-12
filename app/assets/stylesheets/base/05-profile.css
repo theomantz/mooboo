@@ -127,6 +127,13 @@
   flex-direction: row;
 }
 
+.board-only-image {
+  width: 236px;
+  height: 157px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
 .board-main-image {
   height: 158px;
   width: 157px;

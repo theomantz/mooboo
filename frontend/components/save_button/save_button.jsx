@@ -12,6 +12,7 @@ class SaveButton extends React.Component {
       open: false
     }
     this.handleClick = this.handleClick.bind(this)
+    this.handleDefaultSave = this.handleDefaultSave.bind(this)
   }
 
  
@@ -25,12 +26,22 @@ class SaveButton extends React.Component {
     this.state.open ? this.setState({ open: false }) : this.setState({ open: true })
   }
 
+  handleDefaultSave() {
+    const allPinsBoard = Object.values(this.props.boards).filter(
+      (board) => console.log(board)
+    );
+    console.log(allPinsBoard)
+    return this.props.addPinToBoard(allPinsBoard.id, this.props.pinId);
+  }
+
   renderSaveButton() {
     if( this.state.open ) return null
     return (
       <div className="save-button-button-container button">
         <button 
-          className={`save-button-button`}>
+          className={`save-button-button`}
+          onClick={this.handleDefaultSave}
+          >
           Save
         </button>
       </div>
