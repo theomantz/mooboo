@@ -29,7 +29,6 @@ export const docStyles = {
     width: "100%",
     height: "auto",
     borderRadius: "16px",
-    padding: "8px 0 2px 0"
   },
   docColWidth: 250,
 };

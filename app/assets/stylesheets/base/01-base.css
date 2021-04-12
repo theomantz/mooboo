@@ -78,3 +78,7 @@ button {
   font-size: 32px;
   font-weight: 500;
 }
+
+.content-card {
+  padding: 8px 0 16px 0;
+}

@@ -1,6 +1,6 @@
 import PinIndex from './pin_index';
 import { connect } from 'react-redux';
-import { fetchPins } from '../../actions/pins_actions'
+import { fetchPinByUser } from '../../actions/pins_actions'
 
 const mapStateToProps = ({ entities }) => {
   return {
@@ -10,7 +10,7 @@ const mapStateToProps = ({ entities }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchPins: () => dispatch(fetchPins())
+    fetchPins: (userId) => dispatch(fetchPinByUser(userId))
   }
 };
 

@@ -58,7 +58,7 @@
 }
 
 .profile-link-button {
-  padding: 8px 12px 8px 12px;
+  padding: 10px 12px 10px 12px;
   margin: 10px 12px 10px 16px;
   font-size: 16px;
   font-weight: 700;
@@ -73,6 +73,7 @@
 .profile-link-button:hover {
   background-color: #14613B;
   color: white;
+  box-shadow: none;
 }
 
 .developer-links-container {
@@ -188,5 +189,6 @@
 .active-link {
   background-color: #14613B;
   color: white;
+  box-shadow: none;
 }
 

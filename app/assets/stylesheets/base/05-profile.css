@@ -16,6 +16,26 @@
   color: white;
 }
 
+.edit-user-button-container {
+  display: flex;
+  flex-direction: row;
+  width: 104%;
+  justify-content: flex-end;
+  margin: 10px auto 0px auto;
+  border-radius: 60px;
+  box-sizing: border-box;
+}
+
+.fa-user-edit {
+  border-radius: 60px;
+  padding: 10px 6px 10px 10px ;
+  transition: all 2s;
+}
+
+.fa-user-edit:hover {
+  background-color: lightgray;
+}
+
 .profile-page-container {
   display: flex;
   flex-direction: column;
@@ -75,6 +95,7 @@
 .profile-page-link.profile-page-active-link {
   background-color: #6E9885;
   color: white;
+  box-shadow: none;
 }
 
 .board-index-component {
@@ -102,12 +123,6 @@
   border-radius: 16px;
   display: flex;
   flex-direction: row;
-  transition: all 3s;
-  box-sizing: content-box;
-}
-
-.board-image-container:hover {
-  transform: scale(1.05);
 }
 
 .board-main-image {
@@ -170,6 +185,7 @@
   flex-direction: row;
   width: 80%;
   justify-content: space-between;
+  align-items: baseline;
 }
 
 .board-title {
@@ -179,4 +195,56 @@
 
 .pin-count {
   font-size: 14px;
+}
+
+.profile-page-pin-index {
+  column-count: 3;
+  column-gap: 16px;
+}
+
+.content-card {
+  display: inline-block;
+  width: 100%;
+}
+
+@media screen and (min-width:0 ){
+  .profile-page-pin-index {
+    column-count: 1;
+  }
+}
+
+@media screen and (min-width:500px ){
+  .profile-page-pin-index {
+    column-count: 2;
+  }
+}
+
+@media screen and (min-width:750px ){
+  .profile-page-pin-index {
+    column-count: 3;
+  }
+}
+
+@media screen and (min-width:1000px ){
+  .profile-page-pin-index {
+    column-count: 4;
+  }
+}
+
+@media screen and (min-width:1250px ){
+  .profile-page-pin-index {
+    column-count: 5;
+  }
+}
+
+@media screen and (min-width:1500px ){
+  .profile-page-pin-index {
+    column-count: 6;
+  }
+}
+
+@media screen and (min-width:1750px ){
+  .profile-page-pin-index {
+    column-count: 7;
+  }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PinCardContainer from '../card/pin_card_container'
 
 class PinIndex extends React.Component {
   constructor(props) {
@@ -6,29 +7,25 @@ class PinIndex extends React.Component {
   }
 
   componentDidMount() {
-    console.log("mounted")
-    this.props.fetchPins()
+    this.props.fetchPins(this.props.match.params.userId)
   };
 
   pinsItemRender() {
     const { pins } = this.props;
     const PinItems = pins.map( (pin, index) => {
       return(
-        <li key={`pin-index-${index}`}>
-          <h4>{pin.title}</h4>
-          <p>{pin.description}</p>
-          <p>{pin.uploader_id}</p>
-        </li>
+        <PinCardContainer content={pin} key={`profile-page-pin-card-${index}`} />
       )
     })
     return PinItems
   }
 
   render() {
+    if( !this.props.pins ) return null
     return(
-      <ul>
+      <div className="profile-page-pin-index">
         {this.pinsItemRender()}
-      </ul>
+      </div>
     )
   }
 }

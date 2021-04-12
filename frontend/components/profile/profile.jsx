@@ -1,8 +1,9 @@
 import React from 'react'
-import { Nav } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import BoardsIndexContainer from '../boards_profile_index/boards_index_container'
-import BoardNavButtonContainer from '../nav_button/board_nav_button_container'
+
 
 const colors = [
   '#14613B',
@@ -52,42 +53,67 @@ class Profile extends React.Component {
     return (
       <div className="profile-page-username-container">
         <span className="profile-page-username">
-          welcome { user.username ? user.username : 'moo' }
+          welcome { user.username ? `@${user.username}` : '@moo' }
         </span>
+        
       </div>
     )
+  }
+
+  renderDetails() {
+    if( !this.props.user ) return null
+    const { user } = this.props
+    if( user.location || user.description ) {
+      return(
+        <div className="user-description-container">
+          {user.location ? <span 
+            className='user-location-span' >
+            {user.location}</span> : null }
+          {user.description ? <p 
+            className='user-description-p'>
+            {user.description}</p> : null }
+        </div>
+      )
+    } else {
+      return null
+    }
   }
 
   render() {
     if( !this.props.user ) return null;
     const { user } = this.props
-    const { activePath } = this.state
-    return(
+    return (
       <div className="profile-container">
+        <Link to={`/users/${user.id}/edit`}>
+          <div className="edit-user-button-container">
+            <FontAwesomeIcon icon={faUserEdit} size="lg" />
+          </div>
+        </Link>
         <div className="profile-page-avatar-container">
           {this.renderAvatar()}
           {this.renderUsername()}
+          {this.renderDetails()}
         </div>
-        <div className='profile-page-content-container'>
+        <div className="profile-page-content-container">
           <div className="profile-page-navlink-container">
-            <NavLink 
-            to={`/users/${user.id}/boards`}
-            className='profile-page-link'
-            activeClassName='profile-page-active-link'
+            <NavLink
+              to={`/users/${user.id}/boards`}
+              className="profile-page-link"
+              activeClassName="profile-page-active-link"
             >
               Boards
             </NavLink>
-            <NavLink 
-            to={`/users/${user.id}/pins`}
-            className='profile-page-link'
-            activeClassName='profile-page-active-link'
+            <NavLink
+              to={`/users/${user.id}/pins`}
+              className="profile-page-link"
+              activeClassName="profile-page-active-link"
             >
               Pins
             </NavLink>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

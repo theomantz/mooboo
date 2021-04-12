@@ -18,4 +18,11 @@ export const updatePin = pin => (
     method: 'PATCH',
     data: { pin }
   })
-)
+);
+
+export const fetchPinByUser = userId => (
+  $.ajax({
+    url: `api/users/pins/${userId}`,
+    method: 'GET'
+  })
+);

@@ -20,3 +20,11 @@ export const updateBoard = board => (
     data: { board }
   })
 );
+
+export const createBoard = board => (
+  $.ajax({
+    url: 'api/boards',
+    method: 'POST',
+    data: { board }
+  })
+)

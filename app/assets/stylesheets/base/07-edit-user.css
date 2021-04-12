@@ -1,0 +1,90 @@
+.update-user-form-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 450px;
+  height: fit-content;
+  padding: 20px;
+  margin: 10% auto auto auto;
+  border-radius: 50px;
+  background: #ffffff;
+  box-shadow:  20px 20px 60px #d9d9d9,
+             -20px -20px 60px #ffffff;
+}
+
+.update-user-back-arrow {
+  padding: 10px;
+  border-radius: 60px;
+  transition: all 2s;
+  color: black;
+}
+
+.update-user-back-arrow:hover {
+  background-color: lightgrey;
+}
+
+.update-user-form-header {
+  padding: 30px;
+}
+
+.update-user-form-header h1 {
+  font-size: 30px;
+  font-weight: 700;
+  padding-bottom: 25px;
+}
+
+.update-user-form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 70%;
+  margin: auto;
+  padding: 0px 0px 30px 0px;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.update-user-form > label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  padding-bottom: 10px;
+  padding-left: 35px;
+  width: 80%;
+}
+
+.update-user-form > label > input {
+  margin: 10px 0 10px 0;
+  padding: 10px 20px 10px 20px;
+  width: 100%;
+  text-align: left;
+  border-radius: 16px;
+  border: 0.5px solid lightgrey;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: normal;
+}
+.update-user-save-button-container {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  justify-content: flex-end;
+}
+
+.update-user-save-button {
+  padding: 15px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 68px;
+  background: #ffffff;
+  box-shadow: 8px 8px 16px #dbdbdb, -8px -8px 16px #ffffff;
+}
+
+.update-user-save-button:hover {
+    background-color: #14613B;
+    color: white;
+    box-shadow: none;
+}

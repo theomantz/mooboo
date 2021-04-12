@@ -11,9 +11,11 @@ class Api::UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by_credentials(user_params)
+    @user = User.find_by(session_token: session[:session_token])
     if !@user.nil?
-      render :update
+      @user.update!(user_params)
+      @user
+      render 'api/users/show'
     else
       render json: ['Incorrect email and password combination'] , status: 404
     end
@@ -27,8 +29,13 @@ class Api::UsersController < ApplicationController
   def destroy
   end
 
+  def pins_by_user
+    @pins = Pin.where(uploader_id: params[:id])
+    render 'api/pins/index'
+  end
+
   private
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, :username, :description, :location)
   end
 end

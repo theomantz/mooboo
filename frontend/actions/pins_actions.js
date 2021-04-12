@@ -22,13 +22,26 @@ const receiveErrors = errors => ({
 });
 
 export const fetchPins = () => dispatch => {
-  return ( PinsApiUtil.fetchPins() 
-    .then(pins => dispatch(receivePins(pins)),
-    errors => dispatch(receiveErrors(errors))))
+  return ( 
+    PinsApiUtil.fetchPins() 
+      .then(pins => dispatch(receivePins(pins)),
+      errors => dispatch(receiveErrors(errors)))
+  )
 };
 
 export const fetchPin = pinId => dispatch => {
-  return( PinsApiUtil.fetchPin(pinId)
-    .then(pin => dispatch(receivePin(pin))),
-    errors => dispatch(receiveErrors(errors)))
-}
+  return( 
+    PinsApiUtil.fetchPin(pinId)
+      .then(pin => dispatch(receivePin(pin))),
+      errors => dispatch(receiveErrors(errors))
+  )
+};
+
+
+export const fetchPinByUser = userId => dispatch => {
+  return(
+    PinsApiUtil.fetchPinByUser(userId)
+      .then(pins => dispatch(receivePins(pins)),
+      errors => dispatch(receiveErrors(errors)))
+  )
+};

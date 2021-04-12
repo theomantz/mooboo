@@ -8,7 +8,9 @@ import LoginFormContainer from './session_forms/login_form_container'
 import SignupFormContainer from './session_forms/signup_form_container'
 import LandingPageContainer from './landing/landing_page_container';
 import PinCardShowContainer from './card_show/pin_card_show_container';
+import PinIndexContainer from './pins/pin_index_container'
 import ProfileContainer from './profile/profile_container'
+import EditUserContainer from './edit_user/edit_user_container'
 import AboutPage from './about_page/about'
 
 
@@ -24,11 +26,13 @@ const App = () => (
       </Switch>
     </header>
     <Switch>
-      {/* <ProtectedRoute exact path='/pins/:pinId' component={PinCardShowContainer} /> */}
+      <ProtectedRoute exact path='/pins/:pinId' component={PinCardShowContainer} />
+      <Route exact path='/users/:userId/edit' component={EditUserContainer} />
       <Route path='/users/:userId'>
         <div className='profile-page-container'>
           <Route path='/users/:userId' component={ProfileContainer} />
-          <Route exact path='/users/:userId/boards' component={BoardsIndexContainer} />  
+          <Route exact path='/users/:userId/boards' component={BoardsIndexContainer} />
+          <Route exact path='/users/:userId/pins' component={PinIndexContainer} />
         </div>
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />

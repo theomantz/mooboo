@@ -35,3 +35,11 @@ export const fetchBoards = userId => dispatch => {
   )
 }
 
+export const createBoard = board => dispatch => {
+  return(
+    BoardApiUtils.createBoard(board)
+      .then(board => dispatch(receiveBoard(board)),
+      errors => dispatch(receiveBoardErrors(errors)))
+  )
+}
+
