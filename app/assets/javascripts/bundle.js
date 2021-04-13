@@ -10696,8 +10696,14 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, CreateBoard);
 
     _this = _super.call(this, props);
-    _this.state = _this.props.board;
+    var board = _this.props.board;
+    _this.state = {
+      title: board.title,
+      description: board.description,
+      "private": false
+    };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -10723,18 +10729,17 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleChange",
-    value: function handleChange(type) {
-      var _this2 = this;
-
-      return function (e) {
-        return _this2.setState(_defineProperty({}, type, e.currentTarget.value));
-      };
+    value: function handleChange(event) {
+      var target = event.target;
+      var value = target.type === 'checkbox' ? !this.state["private"] : target.value;
+      var name = target.name;
+      this.setState(_defineProperty({}, name, value));
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault();
-      this.props.CreateBoard(this.state);
+      this.props.submitBoard(this.state);
     }
   }, {
     key: "render",
@@ -10742,15 +10747,46 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
       if (!this.props.board) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-board-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", {
+        className: "board-form-header"
+      }, this.props.formType === 'Create' ? 'Lets get Creative!' : 'Always time for Edits'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "edit-board-form"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", null, "title", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-        type: "text",
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "board-form-inputs"
+      }, "title", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "textarea",
+        name: "title",
         value: this.state.title,
-        onChange: this.handleChange('title'),
-        placeholder: "Like 'travel' or 'recipes to make'.."
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", null, this.props.formType)));
+        onChange: this.handleChange,
+        placeholder: "Like 'travel' or 'recipes to make'..",
+        className: "board-form-input-textarea"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "board-form-inputs"
+      }, "description", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "textarea",
+        name: "description",
+        value: this.state.description,
+        onChange: this.handleChange,
+        placeholder: "Just a couple words will do",
+        className: "board-form-input-textarea"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "private-board-checkbox"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", _defineProperty({
+        type: "checkbox",
+        name: "private",
+        value: this.state["private"],
+        onChange: this.handleChange,
+        className: "board-form-private-checkbox"
+      }, "value", this.state["private"])), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "board-checkbox-text-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "board-form-private-bold"
+      }, "Keep this board private"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "board-form-private-subtext"
+      }, "Secrets worth keeping"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: "button-link board-form-button"
+      }, this.props.formType)));
     }
   }]);
 
@@ -10782,16 +10818,16 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state) {
   return {
     board: {
-      title: ''
+      title: '',
+      user_id: state.session.id
     },
-    formType: 'Create',
-    errors: Object.values(state.errors.board) || []
+    formType: 'Create'
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    createBoard: function createBoard(board) {
+    submitBoard: function submitBoard(board) {
       return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.createBoard)(board));
     }
   };
@@ -10828,7 +10864,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchBoard: function fetchBoard(boardId) {
+    submitBoard: function submitBoard(boardId) {
       return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.fetchBoard)(boardId));
     }
   };
@@ -12942,9 +12978,6 @@ var AddButton = /*#__PURE__*/function (_React$Component) {
         active: flag
       });
     }
-  }, {
-    key: "renderDropDown",
-    value: function renderDropDown() {}
   }, {
     key: "render",
     value: function render() {

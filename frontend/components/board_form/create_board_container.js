@@ -4,14 +4,14 @@ import { createBoard } from '../../actions/board_actions'
 
 const mapStateToProps = ( state ) => ({
   board: {
-    title: ''
+    title: '',
+    user_id: state.session.id
   },
   formType: 'Create',
-  errors: Object.values(state.errors.board) || []
 });
 
 const mapDispatchToProps = dispatch => ({
-  createBoard: board => dispatch(createBoard(board))
+  submitBoard: board => dispatch(createBoard(board))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoardForm)

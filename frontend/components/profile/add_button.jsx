@@ -20,9 +20,7 @@ class AddButton extends React.Component {
     this.setState( { active: flag } )
   }
 
-  renderDropDown() {
 
-  }
   
   render() {
     return (

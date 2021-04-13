@@ -10,7 +10,7 @@ const mapStateToProps = ( state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchBoard: boardId => dispatch(fetchBoard(boardId))
+  submitBoard: boardId => dispatch(fetchBoard(boardId))
 });
 
 export default connect( mapStateToProps, mapDispatchToProps )( BoardForm )

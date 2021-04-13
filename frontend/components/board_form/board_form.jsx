@@ -4,10 +4,15 @@ import PinCardContainer from '../card/pin_card_container'
 class CreateBoard extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = this.props.board
+    const { board } = this.props
+    this.state = {
+      title: board.title,
+      description: board.description,
+      private: false
+    }
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount(){
@@ -29,30 +34,63 @@ class CreateBoard extends React.Component {
     })
   }
 
-  handleChange(type) {
-    return(e =>
-        this.setState({ [type]: e.currentTarget.value })
-    )
+  handleChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? !this.state.private : target.value
+    const name = target.name
+    this.setState({
+      [name]: value
+    })
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.CreateBoard(this.state)
+    this.props.submitBoard(this.state)
   }
   
   render() {
     if( !this.props.board ) return null
     return(
       <div className="edit-board-container">
+        <header className="board-form-header">
+          {this.props.formType === 'Create' ? 'Lets get Creative!' : 'Always time for Edits'}
+        </header>
         <form onSubmit={this.handleSubmit} className='edit-board-form'>
-          <label>title
+          <label className='board-form-inputs'>title
             <input
-              type='text'
+              type='textarea'
+              name='title'
               value={this.state.title}
-              onChange={this.handleChange('title')}
-              placeholder="Like 'travel' or 'recipes to make'.." />
+              onChange={this.handleChange}
+              placeholder="Like 'travel' or 'recipes to make'.." 
+              className="board-form-input-textarea"
+              />
           </label>
-          <button>{this.props.formType}</button>
+          <label className='board-form-inputs'>description
+            <input
+              type='textarea'
+              name='description'
+              value={this.state.description}
+              onChange={this.handleChange}
+              placeholder="Just a couple words will do" 
+              className="board-form-input-textarea"
+              />
+          </label>
+          <label className='private-board-checkbox'>
+            <input
+              type='checkbox'
+              name='private'
+              value={this.state.private}
+              onChange={this.handleChange}
+              className='board-form-private-checkbox' 
+              value={this.state.private}
+              />
+            <div className='board-checkbox-text-container'>
+              <p className='board-form-private-bold'>Keep this board private</p>
+              <span className='board-form-private-subtext'>Secrets worth keeping</span>
+            </div>
+          </label>
+          <button className='button-link board-form-button'>{this.props.formType}</button>
         </form>
       </div>
     )

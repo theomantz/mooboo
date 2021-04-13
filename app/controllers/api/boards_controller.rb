@@ -5,7 +5,7 @@ class Api::BoardsController < ApplicationController
     if @board.save
       render 'api/boards/show'
     else
-      render json: @board.error.full_messages, status: 404
+      render json: @board.errors.full_messages, status: 404
     end
   end
 
@@ -52,7 +52,7 @@ class Api::BoardsController < ApplicationController
   private
 
   def board_params
-    params.require(:board).permit(:user_id, :title, :pin_ids)
+    params.require(:board).permit(:user_id, :title, :private)
   end
   
 end
