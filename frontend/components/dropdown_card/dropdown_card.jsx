@@ -10,10 +10,6 @@ class DropdownCard extends React.Component {
     this.filterBoards = this.filterBoards.bind(this)
   }
 
-  // componentDidMount() {
-  //   this.props.fetchBoards(this.props.userId)
-  // }
-
   handleClick(item) {
     return e => {
       const { pinId } = this.props;

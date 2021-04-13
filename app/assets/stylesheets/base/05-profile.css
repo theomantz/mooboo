@@ -30,6 +30,7 @@
   border-radius: 60px;
   padding: 10px 10px 10px 10px ;
   transition: all 0.5s;
+  margin-right: 30px;
   color: gray;
 }
 
@@ -51,8 +52,8 @@
   align-items: center;
   border-radius: 50px;
   background: #ffffff;
-  box-shadow:  20px 20px 60px #d9d9d9,
-             -20px -20px 60px #ffffff;
+  box-shadow:  5px 5px 10px #e6e6e6,
+             -5px -5px 10px #ffffff;
 }
 
 .profile-container {
@@ -76,6 +77,10 @@
 }
 
 .profile-page-link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   color: black;
   font-size: 20px;
   font-weight: 700;
@@ -83,10 +88,10 @@
   padding: 25px;
   border-radius: 100px;
   transition: all 0.3s;
-  border-radius: 68px;
+  border-radius: 131px;
   background: #ffffff;
-  box-shadow:  8px 8px 16px #dbdbdb,
-              -8px -8px 16px #ffffff;
+  box-shadow:  5px 5px 10px #e6e6e6,
+             -5px -5px 10px #ffffff;
 }
 
 .profile-page-link:hover {
@@ -97,6 +102,7 @@
 .profile-page-link.profile-page-active-link {
   background-color: #6E9885;
   color: white;
+  text-align: center;
   box-shadow: none;
 }
 
@@ -117,6 +123,12 @@
   height: fit-content;
   padding: 0px 8px 16px 8px;
   align-items: center;
+  transition: all 2s;
+}
+
+.board-card-container:hover {
+  cursor: zoom-in;
+  transform: scale(1.05);
 }
 
 .board-image-container {
@@ -188,6 +200,20 @@
   padding-right: 2px;
 }
 
+.board-title-card {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F3BA8D;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
 .board-card-text-container {
   padding: 15px;
   display: flex;
@@ -200,10 +226,12 @@
 .board-title {
   font-size: 18px;
   font-weight: 700;
+  color: black;
 }
 
 .pin-count {
   font-size: 14px;
+  color: black;
 }
 
 .profile-page-pin-index {
@@ -220,9 +248,54 @@
   margin: 10px auto 0 auto;
 }
 
-.update-user-back-arrow-container {
+/* .update-user-back-arrow-container {
   
+} */
+
+
+.board-pin-create-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 50px;
+  width: 100%;
 }
+
+.profile-add-icon {
+  padding: 10px 15px 10px 15px;
+  justify-content: flex-start;
+  color: gray;
+  transition: all 0.5s;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:  5px 5px 5px #e0e0e0,
+             -5px -5px 5px #ffffff;
+}
+
+.profile-add-icon:hover {
+  cursor: pointer;
+  background-color: #6E9885;
+  color: white;
+  box-shadow: none;
+}
+
+.board-show-page {
+  width: 80%;
+  padding: 50px;
+  margin: 50px auto auto auto;
+  border-radius: 59px;
+  background: #ffffff;
+  box-shadow:  5px 5px 5px #e0e0e0,
+             -5px -5px 5px #ffffff;
+}
+
+.board-show-header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 25px 25px 40px 25px;
+}
+
 
 @media screen and (min-width:0 ){
   .profile-page-pin-index {

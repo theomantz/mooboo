@@ -196,6 +196,7 @@
 .active-link {
   color: white;
   box-shadow: none;
+  background-color: #14613B;
 }
 
 .active-link-logo {

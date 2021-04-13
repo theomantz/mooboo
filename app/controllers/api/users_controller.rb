@@ -12,7 +12,6 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find_by(session_token: session[:session_token])
-    debugger
     if !@user.nil?
       if @user.update(user_params)
         @user

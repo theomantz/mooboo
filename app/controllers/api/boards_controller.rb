@@ -28,7 +28,7 @@ class Api::BoardsController < ApplicationController
   end
 
   def show
-    @board = Board.find_by(id: params[:id]).includes(:pins)
+    @board = Board.includes(:pins).find_by(id: params[:id])
     render 'api/boards/show'
   end
 

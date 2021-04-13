@@ -56,7 +56,10 @@ class User < ApplicationRecord
   end
 
   def first_board
-    self.boards << Board.create(user_id: self.id, title: 'Quick Save')
+    quick_save = self.boards.where(title: 'Quick Save')
+    if quick_save.empty?
+          self.boards << Board.create(user_id: self.id, title: 'Quick Save')
+    end
   end
 
 
