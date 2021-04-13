@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faPlus } from '@fortawesome/free-solid-svg-icons'
 import BoardsIndexContainer from '../boards_profile_index/boards_index_container'
+import AddButtonContainer from './add_button_container'
 
 
 const colors = [
@@ -18,7 +19,8 @@ class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      activePath: 'boards'
+      activePath: 'boards',
+      dropDown: false
     }
   }
 
@@ -105,13 +107,8 @@ class Profile extends React.Component {
     const { user, currentUser } = this.props
     if( user.id === currentUser.id ) {
       return (
-        <div className="board-pin-create-container">
-          <FontAwesomeIcon 
-            icon={faPlus} 
-            size='3x' 
-            className='profile-add-icon'
-            
-            />
+        <div className={`board-pin-create-container`}>
+          <AddButtonContainer />
         </div>
       )
     } else {

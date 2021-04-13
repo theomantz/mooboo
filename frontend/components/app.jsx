@@ -40,6 +40,7 @@ const App = () => (
           <Route path='/users/:userId' component={ProfileContainer} />
           <Route exact path='/users/:userId/boards' component={BoardsIndexContainer} />
           <Route exact path='/users/:userId/pins' component={PinIndexContainer} />
+          <Route exact path='/users/:userId/boards/new' component={CreateBoardContainer} />
         </div>
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />

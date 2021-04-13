@@ -6,6 +6,7 @@ const mapStateToProps = ( state ) => ({
   board: {
     title: ''
   },
+  formType: 'Create',
   errors: Object.values(state.errors.board) || []
 });
 

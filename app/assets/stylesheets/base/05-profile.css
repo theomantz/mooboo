@@ -261,6 +261,63 @@
   width: 100%;
 }
 
+.plus-icon-outer-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.plus-icon-outer-container.true {
+  border: 0.5px solid gray;
+  border-top-right-radius: 35px;
+  border-bottom-right-radius: 35px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-right: none;
+}
+
+.plus-icon-container-true {
+  width: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dropdown-list-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding-left: 15px;
+  padding-bottom: 4px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.dropdown-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+}
+
+.dropdown-list > a > li {
+  padding: 8px 40% 4px 4px;
+  width: 180px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: black;
+  text-align: left;
+}
+
+.dropdown-list > a > li:hover {
+  background-color: gray;
+  color: white;
+}
+
 .profile-add-icon {
   padding: 10px 15px 10px 15px;
   justify-content: flex-start;
@@ -277,6 +334,21 @@
   background-color: #6E9885;
   color: white;
   box-shadow: none;
+  transform: rotate(0.5turn);
+}
+
+.profile-add-icon:focus-within {
+  cursor: pointer;
+  background-color: #6E9885;
+  color: white;
+  box-shadow: none;
+  transform: rotate(0.5turn);
+}
+
+.profile-add-icon-true {
+  background-color: #6E9885;
+  color: white;
+  transform: rotate(0.5turn);
 }
 
 .board-show-page {
