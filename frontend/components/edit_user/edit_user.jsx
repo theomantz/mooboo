@@ -42,15 +42,24 @@ class EditUser extends React.Component {
     if ( !this.props.user ) return null
     return(
       <div className='update-user-form-container'>
-        <Link to={`/users/${this.props.user.id}`}>
-          <FontAwesomeIcon icon={faArrowLeft} className="update-user-back-arrow"/>
-        </Link>
+        <div className='update-user-back-arrow-container'>
+          <Link to={`/users/${this.props.user.id}`}>
+            <FontAwesomeIcon icon={faArrowLeft} className="update-user-back-arrow"/>
+          </Link>
+        </div>
         <div className='update-user-form-header'>
           <h1>Edit profile</h1>
           <span>People visiting your profile will see the following info</span>
           {this.renderErrors()}
         </div>
         <form onSubmit={this.handleSubmit} className='update-user-form'>
+          <label className='photo-label'>
+          <input
+            type='file'
+            value={this.state.photo}
+            onChange={this.handleChange('image')}
+            />
+          </label>
           <label className='email-label'>email
             <input
               type='text'

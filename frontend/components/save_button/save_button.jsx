@@ -24,6 +24,7 @@ class SaveButton extends React.Component {
 
   handleClick() {
     this.state.open ? this.setState({ open: false }) : this.setState({ open: true })
+    this.props.fetchBoards(this.props.userId)
   }
 
   handleDefaultSave() {
@@ -60,7 +61,7 @@ class SaveButton extends React.Component {
             {!this.state.open ? 'Quick Save' : 'Save to a Board'}
             <FontAwesomeIcon icon={faChevronCircleDown} className='dropdown-list-icon'/>
           </button>
-            <DropdownCardContainer data={boards} show={show} pinId={pinId} />
+            <DropdownCardContainer boards={boards} show={show} pinId={pinId} />
         </div>
         {this.renderSaveButton()}
       </div>

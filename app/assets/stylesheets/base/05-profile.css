@@ -220,6 +220,10 @@
   margin: 10px auto 0 auto;
 }
 
+.update-user-back-arrow-container {
+  
+}
+
 @media screen and (min-width:0 ){
   .profile-page-pin-index {
     column-count: 1;

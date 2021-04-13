@@ -3,25 +3,54 @@ import React from 'react'
 class DropdownCard extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      addedBoards: []
+    }
     this.handleClick = this.handleClick.bind(this)
+    this.filterBoards = this.filterBoards.bind(this)
   }
+
+  // componentDidMount() {
+  //   this.props.fetchBoards(this.props.userId)
+  // }
 
   handleClick(item) {
     return e => {
       const { pinId } = this.props;
-      return( this.props.addPinToBoard(item.id, pinId))
+      this.props.addPinToBoard(item.id, pinId)
+      const addedBoards = this.state.addedBoards.push(item.id)
+      this.setState({ addedBoards: addedBoards })
+      this.filterBoards()
     }
   }
 
+  filterBoards() {
+    const { boards } = this.props
+    const addedBoards = this.state.addedBoards
+    if( !boards.length  ) return null
+    const { pinId } = this.props
+    const availableBoards = []
+    boards.forEach( board => {
+      if( !board.pins ) { 
+        if( board.title !== 'Quick Save') {
+          return availableBoards.push(board)
+        }
+      } else {
+        let test = Object.values(board.pins).every( pin => pin.id !== parseInt(pinId) )
+        if( test && board.title !== 'Quick Save') {
+            return availableBoards.push(board)
+        }
+      }
+    })
+    return availableBoards
+  }
+
   render() {
-    const { show, data, pinId } = this.props
-    if (!show || !data) return null;
-    const availableBoards = data.filter( board => {
-      return (
-        Object.values(board.pins).includes(pinId)
-      )
-    });
-    if( availableBoards.length <= 1 ) {
+    const { show, boards } = this.props
+    if( !boards.length ) return null
+    let availableBoards = this.filterBoards()
+    if ( !show || !availableBoards ) return null;
+    if( availableBoards.length < 1 ) {
       return( 
         <li className='all-boards-message'>
           This pin is on all your boards! Wow!

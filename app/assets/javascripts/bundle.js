@@ -10443,44 +10443,15 @@ var App = function App() {
     exact: true,
     path: "/signup",
     component: _session_forms_signup_form_container__WEBPACK_IMPORTED_MODULE_6__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.AuthRedirect, {
-    from: "*"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.ProtectedRoute, {
-    exact: true,
-    path: "/pins/:pinId",
-    component: _card_show_pin_card_show_container__WEBPACK_IMPORTED_MODULE_8__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-    exact: true,
-    path: "/users/:userId/edit",
-    component: _edit_user_edit_user_container__WEBPACK_IMPORTED_MODULE_11__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-    path: "/users/:userId"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "profile-page-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-    path: "/users/:userId",
-    component: _profile_profile_container__WEBPACK_IMPORTED_MODULE_10__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-    exact: true,
-    path: "/users/:userId/boards",
-    component: _boards_profile_index_boards_index_container__WEBPACK_IMPORTED_MODULE_3__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-    exact: true,
-    path: "/users/:userId/pins",
-    component: _pins_pin_index_container__WEBPACK_IMPORTED_MODULE_9__.default
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.ProtectedRoute, {
-    exact: true,
-    path: "/home",
-    component: _document_grid_document_grid_container__WEBPACK_IMPORTED_MODULE_2__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_1__.AuthRoute, {
     exact: true,
     path: "/about",
     component: _about_page_about__WEBPACK_IMPORTED_MODULE_12__.default
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Redirect, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     exact: true,
-    from: "*",
-    to: "/home"
-  }));
+    path: "/users/:userId/edit",
+    component: _edit_user_edit_user_container__WEBPACK_IMPORTED_MODULE_11__.default
+  })));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -11610,9 +11581,16 @@ var DropdownCard = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, DropdownCard);
 
     _this = _super.call(this, props);
+    _this.state = {
+      addedBoards: []
+    };
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.filterBoards = _this.filterBoards.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // componentDidMount() {
+  //   this.props.fetchBoards(this.props.userId)
+  // }
+
 
   _createClass(DropdownCard, [{
     key: "handleClick",
@@ -11621,8 +11599,42 @@ var DropdownCard = /*#__PURE__*/function (_React$Component) {
 
       return function (e) {
         var pinId = _this2.props.pinId;
-        return _this2.props.addPinToBoard(item.id, pinId);
+
+        _this2.props.addPinToBoard(item.id, pinId);
+
+        var addedBoards = _this2.state.addedBoards.push(item.id);
+
+        _this2.setState({
+          addedBoards: addedBoards
+        });
+
+        _this2.filterBoards();
       };
+    }
+  }, {
+    key: "filterBoards",
+    value: function filterBoards() {
+      var boards = this.props.boards;
+      var addedBoards = this.state.addedBoards;
+      if (!boards.length) return null;
+      var pinId = this.props.pinId;
+      var availableBoards = [];
+      boards.forEach(function (board) {
+        if (!board.pins) {
+          if (board.title !== 'Quick Save') {
+            return availableBoards.push(board);
+          }
+        } else {
+          var test = Object.values(board.pins).every(function (pin) {
+            return pin.id !== parseInt(pinId);
+          });
+
+          if (test && board.title !== 'Quick Save') {
+            return availableBoards.push(board);
+          }
+        }
+      });
+      return availableBoards;
     }
   }, {
     key: "render",
@@ -11631,14 +11643,12 @@ var DropdownCard = /*#__PURE__*/function (_React$Component) {
 
       var _this$props = this.props,
           show = _this$props.show,
-          data = _this$props.data,
-          pinId = _this$props.pinId;
-      if (!show || !data) return null;
-      var availableBoards = data.filter(function (board) {
-        return Object.values(board.pins).includes(pinId);
-      });
+          boards = _this$props.boards;
+      if (!boards.length) return null;
+      var availableBoards = this.filterBoards();
+      if (!show || !availableBoards) return null;
 
-      if (availableBoards.length <= 1) {
+      if (availableBoards.length < 1) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
           className: "all-boards-message"
         }, "This pin is on all your boards! Wow!", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -11690,8 +11700,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-  return {// pin: state.entities.pins[ownProps.match.params.pinId]
+var mapStateToProps = function mapStateToProps(_ref) {
+  var entities = _ref.entities,
+      session = _ref.session;
+  return {
+    userId: session.id
   };
 };
 
@@ -11699,6 +11712,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchBoard: function fetchBoard(boardId) {
       return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.fetchBoard)(boardId));
+    },
+    fetchBoards: function fetchBoards(userId) {
+      return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.fetchBoards)(userId));
     },
     addPinToBoard: function addPinToBoard(boardId, pinId) {
       return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.addPinToBoard)(boardId, pinId));
@@ -11816,17 +11832,25 @@ var EditUser = /*#__PURE__*/function (_React$Component) {
       if (!this.props.user) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "update-user-form-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "update-user-back-arrow-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
         to: "/users/".concat(this.props.user.id)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__.faArrowLeft,
         className: "update-user-back-arrow"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "update-user-form-header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Edit profile"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "People visiting your profile will see the following info"), this.renderErrors()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "update-user-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "photo-label"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "file",
+        value: this.state.photo,
+        onChange: this.handleChange('image')
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "email-label"
       }, "email", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "text",
@@ -12151,7 +12175,7 @@ var NoSessionNavBanner = /*#__PURE__*/function (_React$Component) {
         className: "assets-container left-nav-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.NavLink, {
         to: "/",
-        activeClassName: "active-link"
+        activeClassName: "active-link active-link-logo"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "mooboo-icon-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
@@ -12731,6 +12755,7 @@ var SaveButton = /*#__PURE__*/function (_React$Component) {
       }) : this.setState({
         open: true
       });
+      this.props.fetchBoards(this.props.userId);
     }
   }, {
     key: "handleDefaultSave",
@@ -12771,7 +12796,7 @@ var SaveButton = /*#__PURE__*/function (_React$Component) {
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faChevronCircleDown,
         className: "dropdown-list-icon"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_dropdown_card_dropdown_card_container__WEBPACK_IMPORTED_MODULE_3__.default, {
-        data: boards,
+        boards: boards,
         show: show,
         pinId: pinId
       })), this.renderSaveButton());
@@ -13368,7 +13393,6 @@ __webpack_require__.r(__webpack_exports__);
 var messagesReducer = function messagesReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  debugger;
   Object.freeze(state);
 
   switch (action.type) {

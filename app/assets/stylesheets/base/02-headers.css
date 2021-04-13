@@ -186,9 +186,23 @@
   background-color: #6E9885;
 }
 
+.mooboo-icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .active-link {
-  background-color: #14613B;
   color: white;
   box-shadow: none;
 }
+
+.active-link-logo {
+  background-color: none;
+  border-radius: 70px;
+  padding: 1px;
+}
+
+
 
