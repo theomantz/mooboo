@@ -1,0 +1,135 @@
+.pin-form-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 880px;
+  height: fit-content;
+  padding: 20px;
+  margin: 10% auto auto auto;
+  border-radius: 50px;
+  background: #ffffff;
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 20px 0px;
+}
+
+
+.pin-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  min-height: 550px;
+}
+
+.pin-form-right-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 550px;
+}
+
+.pin-form-header {
+  padding: 30px;
+}
+
+.pin-form-header-text {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.pin-form-right-container > label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  padding-bottom: 10px;
+  padding-left: 35px;
+  width: 80%;
+}
+
+.pin-form-input-container > label > input {
+  margin: 10px 0 10px 0;
+  padding: 10px 20px 10px 20px;
+  width: 100%;
+  text-align: left;
+  border-radius: 16px;
+  border: 0.5px solid lightgrey;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: normal;
+}
+
+.pin-image-container {
+  width: 340px;
+  height: 550px;
+}
+
+.pin-title-input-label, .pin-description-input-label {
+  width: 100%;
+  margin: 20px auto;
+}
+
+.pin-image.placeholder {
+  background-color: rgb(239, 239, 239);
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+}
+
+.pin-title-input {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  padding-top: 25px;
+  width: 80%;
+}
+
+.pin-image-input-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 20px 0;
+  margin: 15px 0;
+  border-radius: 50px;
+  width: 340px;
+  box-sizing: border-box;
+  background-color: rgb(239, 239, 239);
+}
+
+.pin-image {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.pin-image > img {
+  width: inherit;
+  height: 100%;
+  object-fit: inherit;
+  border-radius: 50px;
+}
+
+.pin-form-header {
+  display: flex;
+  width: 85%;
+  justify-content: space-between;
+  padding-right: 50px;
+  align-items: center;
+}
+
+.pin-form-input-container {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+}
+

@@ -23,17 +23,30 @@ class AddButton extends React.Component {
 
   
   render() {
+    const { location } = this.props
     return (
-      <div className={`plus-icon-outer-container ${this.state.active}`}>
+      <div className={
+        `plus-icon-outer-container
+        ${location}
+        ${this.state.active}`
+        }>
         <div 
-          className={`plus-icon-container plus-icon-container-${this.state.active}`}
+          className={
+            `plus-icon-container
+            ${location}
+            plus-icon-container-${this.state.active}`
+            }
           onClick={this.handleClick}>
           <DropDownProfile active={this.state.active} />
         </div>
           <FontAwesomeIcon 
             icon={faPlus} 
             size="3x" 
-            className={`profile-add-icon profile-add-icon-${this.state.active}`}
+            className={
+              `profile-add-icon 
+              ${location}
+              profile-add-icon-${this.state.active}`
+              }
             onClick={this.handleClick}
             />
       </div>

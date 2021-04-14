@@ -22,6 +22,7 @@ const App = () => (
   <div style={{height: "100vw"}}>
     <header>
       <NavBannerContainer />
+      <Route exact path='/pins/new' component={CreatePinFormContainer} />
       <Switch>
         <AuthRoute exact path='/' component={LandingPageContainer} />
         <AuthRoute exact path='/login' component={LoginFormContainer} />
@@ -30,13 +31,13 @@ const App = () => (
         <AuthRoute exact path='*' component={LandingPageContainer}/>
       </Switch>
     </header>
-    <Switch>
-      <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
+    {/* <Switch> */}
+      {/* <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
       <Route exact path='/boards/:boardId' component={BoardShowContainer} />
       <Route exact path='/boards/:boardId/edit' component={EditBoardContainer} />
       <Route exact path='/users/:userId/edit' component={EditUserContainer} />
-      <Route exact path='/boards/new' component={CreateBoardContainer} />
-      <Route path='/users/:userId'>
+      <Route exact path='/boards/new' component={CreateBoardContainer} /> */}
+      {/* <Route path='/users/:userId'>
         <div className='profile-page-container'>
           <Route path='/users/:userId' component={ProfileContainer} />
           <Route exact path='/users/:userId/boards' component={BoardsIndexContainer} />
@@ -45,8 +46,7 @@ const App = () => (
         </div>
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
-      <Route exact path='/pins/new' component={CreatePinFormContainer} />
-    </Switch>
+    </Switch> */}
       {/* <Redirect exact from='*' to='/home' /> */}
   </div>
 )
