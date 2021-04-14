@@ -19,9 +19,9 @@ export const fetchUser = userId => dispatch => {
   )
 };
 
-export const updateUser = user => dispatch => {
+export const updateUser = (formData, user) => dispatch => {
   return(
-    UserApiUtil.updateUser(user)
+    UserApiUtil.updateUser(formData, user)
       .then(user => dispatch(receiveUser(user)),
       errors => dispatch(receiveUserErrors(errors)))
   )

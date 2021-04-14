@@ -5,10 +5,14 @@ export const fetchUser = userId => (
   })
 );
 
-export const updateUser = user => (
-  $.ajax({
-    url: `api/users/${user.id}`,
-    method: 'PUT',
-    data: { user }
-  })
-);
+export const updateUser = (userFormData, user) => {
+  return(
+    $.ajax({
+      url: `api/users/${user.id}`,
+      method: 'PUT',
+      data: userFormData,
+      contentType: false,
+      processData: false
+    })
+  )
+};

@@ -10415,9 +10415,9 @@ var fetchUser = function fetchUser(userId) {
     });
   };
 };
-var updateUser = function updateUser(user) {
+var updateUser = function updateUser(formData, user) {
   return function (dispatch) {
-    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.updateUser(user).then(function (user) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.updateUser(formData, user).then(function (user) {
       return dispatch(receiveUser(user));
     }, function (errors) {
       return dispatch(receiveUserErrors(errors));
@@ -12504,8 +12504,11 @@ var EditUser = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = _this.props.user;
+    _this.state.photoFile = _this.state.photoFile || null;
+    _this.state.filePreview = _this.state.filePreview || null;
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleFile = _this.handleFile.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -12530,15 +12533,28 @@ var EditUser = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "handleFile",
+    value: function handleFile(e) {
+      this.setState({
+        photoFile: e.currentTarget.files[0],
+        filePreview: URL.createObjectURL(e.currentTarget.files[0])
+      });
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      debugger;
-      this.props.updateUser(this.state);
+      var formData = new FormData();
 
-      if (!this.props.errors.length) {
-        this.props.history.push("/users/".concat(this.props.user.id));
+      if (this.state.photoFile) {
+        formData.append('user[photo]', this.state.photoFile);
       }
+
+      formData.append('user[email]', this.state.email);
+      formData.append('user[location]', this.state.location);
+      formData.append('user[username]', this.state.username);
+      formData.append('user[description]', this.state.description);
+      this.props.updateUser(formData, this.props.user).then(this.props.history.push("/users/".concat(this.props.user.id)));
     }
   }, {
     key: "renderErrors",
@@ -12551,6 +12567,18 @@ var EditUser = /*#__PURE__*/function (_React$Component) {
           className: "error"
         }, error);
       }));
+    }
+  }, {
+    key: "renderImage",
+    value: function renderImage() {
+      if (this.state.filePreview) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+          src: this.state.filePreview,
+          className: "profile-avatar-image-preview"
+        });
+      } else {
+        return null;
+      }
     }
   }, {
     key: "render",
@@ -12572,10 +12600,10 @@ var EditUser = /*#__PURE__*/function (_React$Component) {
         className: "update-user-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "photo-label"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      }, this.renderImage(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "file",
-        value: this.state.photo,
-        onChange: this.handleChange('image')
+        className: "image-input-file-area",
+        onChange: this.handleFile
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "email-label"
       }, "email", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
@@ -12649,8 +12677,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    updateUser: function updateUser(user) {
-      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.updateUser)(user));
+    updateUser: function updateUser(formData, user) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.updateUser)(formData, user));
     }
   };
 };
@@ -14956,13 +14984,13 @@ var fetchUser = function fetchUser(userId) {
     method: 'GET'
   });
 };
-var updateUser = function updateUser(user) {
+var updateUser = function updateUser(userFormData, user) {
   return $.ajax({
     url: "api/users/".concat(user.id),
     method: 'PUT',
-    data: {
-      user: user
-    }
+    data: userFormData,
+    contentType: false,
+    processData: false
   });
 };
 

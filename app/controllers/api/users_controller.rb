@@ -12,7 +12,7 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find_by(session_token: session[:session_token])
-    if !@user.nil?
+    if !@user.nil? && @user.id == current_user.id
       if @user.update(user_params)
         @user
         render 'api/users/show'
