@@ -10309,7 +10309,9 @@ var signUp = function signUp(user) {
   };
 };
 var clearSession = function clearSession() {
-  return dispatch(clearSessionErrors());
+  return function (dispatch) {
+    return dispatch(clearSessionErrors());
+  };
 };
 
 /***/ }),

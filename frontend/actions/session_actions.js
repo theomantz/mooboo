@@ -46,6 +46,6 @@ export const signUp = user => dispatch => {
 };
 
 
-export const clearSession = () => {
+export const clearSession = () => dispatch => {
   return dispatch(clearSessionErrors())
 }
