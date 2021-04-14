@@ -11920,6 +11920,7 @@ var DocumentColumn = /*#__PURE__*/function (_React$Component) {
         docCards = content.map(function (item, index) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_card_pin_card_container__WEBPACK_IMPORTED_MODULE_1__.default, {
             content: item,
+            location: "main-page",
             key: "doc-card-".concat(index)
           });
         });
