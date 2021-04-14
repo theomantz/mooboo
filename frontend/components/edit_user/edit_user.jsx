@@ -88,8 +88,8 @@ class EditUser extends React.Component {
           <input
             type='file'
             className='image-input-file-area'
-            onChange={this.handleFile}
-            />
+            onChange={this.handleFile}>
+            </input>
           </label>
           <label className='email-label'>email
             <input
