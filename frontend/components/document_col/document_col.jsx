@@ -40,7 +40,14 @@ class DocumentColumn extends React.Component {
     let docCards
     if( this.props.content.length ) {
       const { content } = this.props
-      docCards = content.map((item, index) => <PinCardContainer content={item} key={`doc-card-${index}`} /> )
+      docCards = content.map((item, index) =>{ 
+        return(
+          <PinCardContainer 
+            content={item} 
+            location='main-page' 
+            key={`doc-card-${index}`} /> 
+        ) 
+      })
     }
     return docCards
   }
