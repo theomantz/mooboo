@@ -10351,10 +10351,14 @@ var setNumColumns = function setNumColumns(numCols) {
   };
 };
 var setHeight = function setHeight(height) {
-  return dispatch(receiveHeight(height));
+  return function (dispatch) {
+    return dispatch(receiveHeight(height));
+  };
 };
 var setContent = function setContent(content) {
-  return dispatch(receiveContent(content));
+  return function (dispatch) {
+    return dispatch(receiveContent(content));
+  };
 };
 
 /***/ }),
@@ -11504,6 +11508,7 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
       title: null,
       description: null
     };
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 

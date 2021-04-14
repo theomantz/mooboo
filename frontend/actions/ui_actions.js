@@ -28,10 +28,10 @@ export const setNumColumns = numCols => dispatch => {
   return dispatch(receiveNumCols(numCols))
 }
 
-export const setHeight = height => {
+export const setHeight = height => dispatch => {
   return dispatch(receiveHeight(height))
 }
 
-export const setContent = content => {
+export const setContent = content => dispatch => {
   return dispatch(receiveContent(content))
 }

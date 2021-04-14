@@ -15,6 +15,7 @@ class CardShow extends React.Component {
       title: null,
       description: null,
     }
+    this.handleClick = this.handleClick.bind(this)
   }
   
   componentDidMount() {
