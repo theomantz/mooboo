@@ -10,6 +10,7 @@ import LoginFormContainer from './session_forms/login_form_container'
 import SignupFormContainer from './session_forms/signup_form_container'
 import LandingPageContainer from './landing/landing_page_container';
 import PinCardShowContainer from './card_show/pin_card_show_container';
+import CreatePinFormContainer from './pins_form/create_pin_form_container'
 import BoardShowContainer from './board_show/board_show_container'
 import PinIndexContainer from './pins/pin_index_container'
 import ProfileContainer from './profile/profile_container'
@@ -44,6 +45,7 @@ const App = () => (
         </div>
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
+      <Route exact path='/pins/new' component={CreatePinFormContainer} />
     </Switch>
       {/* <Redirect exact from='*' to='/home' /> */}
   </div>

@@ -42,7 +42,7 @@ class SaveButton extends React.Component {
   renderSaveButton() {
     if( this.state.open ) return null
     return (
-      <div className="save-button-button-container button">
+      <div className="button-link save-button-button-container button">
         <button 
           className={`save-button-button`}
           onClick={this.handleDefaultSave}

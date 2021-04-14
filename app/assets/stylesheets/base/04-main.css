@@ -184,15 +184,18 @@
 }
 
 .save-button-dropdown-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
+  z-index: 10;
 }
 
 .drop-down-list-container {
   padding: 18px 24px 18px 24px;
   width: 80%;
+
 }
 
 .content-nav-container {
@@ -299,4 +302,9 @@
   font-weight: 500;
   font-size: 18px;
   margin-top: 10px;
+}
+
+.main-page-pin-index {
+  width: 95%;
+  margin: 2% auto;
 }
