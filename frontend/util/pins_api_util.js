@@ -26,3 +26,10 @@ export const fetchPinByUser = userId => (
     method: 'GET'
   })
 );
+
+export const deletePin = pinId => (
+  $.ajax({
+    url: `api/pins/${pinId}`,
+    method: 'DELETE'
+  })
+);

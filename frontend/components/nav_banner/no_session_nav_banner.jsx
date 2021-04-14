@@ -8,7 +8,7 @@ class NoSessionNavBanner extends React.Component {
         <div className="assets-container left-nav-container">
           <NavLink 
             to='/'
-            activeClassName='active-link'>
+            activeClassName='active-link active-link-logo'>
             <div className="mooboo-icon-container">
               <img src={window.moobooLarge} alt="logo" className="logo"></img>
             </div>

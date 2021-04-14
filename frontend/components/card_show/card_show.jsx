@@ -22,9 +22,30 @@ class CardShow extends React.Component {
     window.scrollTo(0, 0)
   }
 
+  renderDeleteButton() {
+    if( !this.props.content || !this.props.userId ) return null
+    const { content, userId } = this.props
+    // debugger
+    if( content.uploader_id !== userId ) return null
+    return(
+      <div className='pin-card-delete-button-container'>
+        <Link to='/home'>
+          <button
+            className='button-link delete-button'
+            onClick={this.handleClick}>Delete Pin</button>
+        </Link>
+      </div>
+    )
+  }
+
+  handleClick() {
+    this.props.deletePin(this.props.content.id)
+  }
+
   renderContent() {
     if (!this.props.content) return null;
     const { photoUrl, title, description, id } = this.props.content
+    const { pinId } = this.props.match.params
     return (
       <div className="content-show-card" key={`content-show-key-${id}`}>
         <div className="content-card-show-close-button">
@@ -37,11 +58,14 @@ class CardShow extends React.Component {
         </div>
         <div className="content-card-right-container">
           <div className="content-card-save-button-container">
-            <SaveButtonContainer />
+            <SaveButtonContainer pinId={pinId}/>
           </div>
-          <div className="content-show-card-text-container">
-            <h3>{title}</h3>
-            <p>{description}</p>
+          <div className='content-nav-container'>
+            <div className="content-show-card-text-container">
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </div>
+            {this.renderDeleteButton()}
           </div>
         </div>
         <div className="document-grid-show-page-container"></div>

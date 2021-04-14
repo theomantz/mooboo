@@ -1,8 +1,9 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { faPen, faPlus } from '@fortawesome/free-solid-svg-icons'
 import BoardsIndexContainer from '../boards_profile_index/boards_index_container'
+import AddButtonContainer from './add_button_container'
 
 
 const colors = [
@@ -18,13 +19,15 @@ class Profile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      activePath: 'boards'
+      activePath: 'boards',
+      dropDown: false
     }
   }
 
   componentDidMount() {
-    const { userId } = this.props.match.params
-    this.props.fetchUser(userId)
+    const userId = this.props.match.params.userId
+    this.props.fetchBoards( userId )
+    this.props.fetchUser( userId )
   }
 
   renderAvatar() {
@@ -79,16 +82,46 @@ class Profile extends React.Component {
     }
   }
 
+  renderEdit() {
+    const { user, currentUser } = this.props
+    if( user.id === currentUser.id ) {
+      return (
+        <Link to={`/users/${user.id}/edit`}>
+          <div className="edit-user-button-container">
+            <FontAwesomeIcon
+              icon={faPen}
+              size="lg"
+              className="profile-edit-button"
+            />
+          </div>
+        </Link>
+      );
+    } else {
+      return null
+    }
+  }
+
+
+
+  renderAdd() {
+    const { user, currentUser } = this.props
+    if( user.id === currentUser.id ) {
+      return (
+        <div className={`board-pin-create-container`}>
+          <AddButtonContainer />
+        </div>
+      )
+    } else {
+      return null
+    }
+  }
+
   render() {
     if( !this.props.user ) return null;
     const { user } = this.props
     return (
-      <div className="profile-container">
-        <Link to={`/users/${user.id}/edit`}>
-          <div className="edit-user-button-container">
-            <FontAwesomeIcon icon={faUserEdit} size="lg" />
-          </div>
-        </Link>
+      <div className="profile-container" key={this.props.user}>
+        {this.renderEdit()}
         <div className="profile-page-avatar-container">
           {this.renderAvatar()}
           {this.renderUsername()}
@@ -98,7 +131,7 @@ class Profile extends React.Component {
           <div className="profile-page-navlink-container">
             <NavLink
               to={`/users/${user.id}/boards`}
-              className="profile-page-link"
+              className="profile-page-link button-link"
               activeClassName="profile-page-active-link"
             >
               Boards
@@ -111,6 +144,7 @@ class Profile extends React.Component {
               Pins
             </NavLink>
           </div>
+          {this.renderAdd()}
         </div>
       </div>
     );

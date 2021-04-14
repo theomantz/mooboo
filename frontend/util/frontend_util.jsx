@@ -19,7 +19,7 @@ const Protected = ({ component: Component, path, loggedIn, exact }) => (
       loggedIn ? <Component {...props} /> : <Redirect to='/' /> } />
 )
 
-const ConditionalRedirect = ({ loggedIn, from, exact }) => (
+const OwnUser = ({ loggedIn, from, exact }) => (
   <Redirect
     exact={exact}
     from={from}
@@ -43,11 +43,4 @@ export const ProtectedRoute = withRouter(
     mapStateToProps,
     null
   )(Protected)
-);
-
-export const AuthRedirect = withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(ConditionalRedirect)
 );

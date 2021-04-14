@@ -27,4 +27,26 @@ export const createBoard = board => (
     method: 'POST',
     data: { board }
   })
-)
+);
+
+export const addPin = (boardId, pinId) => (
+  $.ajax({
+    url: `/api/boards/${boardId}/${pinId}`,
+    method: 'POST'
+  })
+);
+
+export const deleteBoard = boardId => (
+  $.ajax({
+    url: `api/boards/${boardId}`,
+    method: 'DELETE'
+  })
+);
+
+
+export const removePin = (boardId, pinId) => (
+  $.ajax({
+    url: `api/boards/${boardId}/${pinId}`,
+    method: "DELETE",
+  })
+);

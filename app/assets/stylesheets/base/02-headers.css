@@ -98,13 +98,9 @@
   text-align: center;
 }
 
-
-
 .button-link:active {
-  border-radius: 68px;
-  background: linear-gradient(145deg, #e6e6e6, #ffffff);
-  box-shadow:  8px 8px 16px #dbdbdb,
-              -8px -8px 16px #ffffff;
+  background-color: #14613B;
+  color: white;
 }
 
 .login-button {
@@ -186,9 +182,24 @@
   background-color: #6E9885;
 }
 
+.mooboo-icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .active-link {
-  background-color: #14613B;
   color: white;
   box-shadow: none;
+  background-color: #14613B;
 }
+
+.active-link-logo {
+  background-color: none;
+  border-radius: 70px;
+  padding: 1px;
+}
+
+
 

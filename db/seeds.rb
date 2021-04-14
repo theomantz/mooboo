@@ -177,10 +177,14 @@ pin30.save!
 
 # Boards
 
-board1 = Board.create({ user_id: demo.id, title: 'Scenery' })
-board2 = Board.create({ user_id: demo.id, title: 'Architecture' })
-board3 = Board.create({ user_id: demo.id, title: 'Plants' })
-board4 = Board.create({ user_id: demo.id, title: 'Birds' })
+board1 = Board.new({ user_id: demo.id, title: 'Scenery', description: 'My favorite scenes', private: false })
+board1.save!
+board2 = Board.new({ user_id: demo.id, title: 'Architecture', description: 'Some cool buildings', private: false })
+board2.save!
+board3 = Board.new({ user_id: demo.id, title: 'Plants', description: 'Plants my mom would love', private: true })
+board3.save!
+board4 = Board.new({ user_id: demo.id, title: 'Birds', description: 'Kacaw!', private: false })
+board4.save!
 
 # Add pins to boards
 

@@ -6,7 +6,7 @@ class BoardsIndex extends React.Component {
 
   componentDidMount() {
     const { fetchBoards, match } = this.props
-    fetchBoards(this.props.match.params.userId)
+    fetchBoards(match.params.userId)
   }
   render() {
     const { boards } = this.props

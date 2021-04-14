@@ -11,7 +11,11 @@ class Api::PinsController < ApplicationController
 
   def show
     @pin = Pin.find_by(id: params[:id])
-    render 'api/pins/show'
+    if !@pin.nil?
+      render 'api/pins/show'
+    else
+      render json: ["invalud request"], status: 400
+    end
   end
 
   def index
@@ -30,8 +34,10 @@ class Api::PinsController < ApplicationController
 
   def destroy
     @pin = Pin.find_by(id: params[:id])
-    if @pin.destroy
-      render json: {}
+    if @pin && ( @pin.user_id == current_user.id )
+      pin_id = @pin.id
+      @pin.destroy
+      render json: pin_id, status: 200 
     else
       render json: ['invalid request'], status: 404
     end

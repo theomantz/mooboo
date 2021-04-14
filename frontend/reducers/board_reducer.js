@@ -1,6 +1,7 @@
 import {
   RECEIVE_ALL_BOARDS,
-  RECEIVE_BOARD
+  RECEIVE_BOARD,
+  REMOVE_BOARD
 } from '../actions/board_actions'
 
 const boardsReducer = (state = {}, action) => {
@@ -10,6 +11,10 @@ const boardsReducer = (state = {}, action) => {
       return action.boards
     case RECEIVE_BOARD:
       return Object.assign({}, state, { [action.board.id]: action.board })
+    case REMOVE_BOARD:
+      let nextState = Object.assign({}, state)
+      delete nextState[action.boardId]
+      return nextState
     default:
       return state
   }
