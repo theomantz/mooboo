@@ -5,9 +5,11 @@ import { createBoard } from '../../actions/board_actions'
 const mapStateToProps = ( state ) => ({
   board: {
     title: '',
+    description: '',
     user_id: state.session.id
   },
   formType: 'Create',
+  errors: state.errors.board
 });
 
 const mapDispatchToProps = dispatch => ({

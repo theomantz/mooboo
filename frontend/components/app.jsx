@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthRoute, ProtectedRoute, AuthRedirect } from '../util/frontend_util'
+import { AuthRoute, ProtectedRoute } from '../util/frontend_util'
 import { Redirect, Switch, Route } from 'react-router-dom'
 import DocumentGridContainer from './document_grid/document_grid_container'
 import BoardsIndexContainer from './boards_profile_index/boards_index_container'
@@ -26,7 +26,6 @@ const App = () => (
         <AuthRoute exact path='/login' component={LoginFormContainer} />
         <AuthRoute exact path='/signup' component={SignupFormContainer} />
         <AuthRoute exact path='/about' component={AboutPage} />
-        {/* <AuthRedirect from='*' /> */}
       </Switch>
     </header>
     <Switch>
@@ -45,7 +44,7 @@ const App = () => (
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
     </Switch>
-      {/* <Redirect exact from='*' to='/home' /> */}
+      <Redirect exact from='*' to='/home' />
   </div>
 )
 

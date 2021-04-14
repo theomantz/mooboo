@@ -1,18 +1,26 @@
 import React from 'react';
+import uuid from 'react-uuid';
+import { Redirect, Link } from 'react-router-dom'
 import PinCardContainer from '../card/pin_card_container'
 
 class CreateBoard extends React.Component {
   constructor(props) {
     super(props)
     const { board } = this.props
-    this.state = {
-      title: board.title,
-      description: board.description,
-      private: false
+    if( this.props.formType === 'Create' ) {
+      this.state = {
+        title: board.title,
+        description: board.description,
+        private: board.private || false,
+        user_id: board.user_id
+      }
+    } else {
+      this.state = this.props.board
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleBoardDelete = this.handleBoardDelete.bind(this);
   }
 
   componentDidMount(){
@@ -24,14 +32,47 @@ class CreateBoard extends React.Component {
     }
   }
 
+  renderDelete() {
+    if( this.props.formType !== 'Edit' ) return null
+    debugger
+    return(
+      // <Link to={`users/${this.props.board.user_id}/boards`}>
+        <button 
+          className='button-link delete-button'
+          onClick={this.handleBoardDelete}>Delete</button>
+      // </Link>
+    )
+  }
+
   renderPins() {
     const { board } = this.props
     if( !board.pins ) return null
     const pinCards = Object.values(board.pins).map( pin => {
       return(
-        <PinCardContainer />
+        <PinCardContainer content={pin}/>
       )
     })
+    return(
+      <div className='profile-page-pin-index'>
+        {pinCards}
+      </div>
+    )
+  }
+
+  renderErrors() {
+    if( !this.props.errors.length ) return null
+    const boardErrors = this.props.errors.map( error => {
+      return( 
+        <li className='board-errors-list-item' key={uuid()}>{error}</li>
+      )
+    })
+    return(
+      <div className='board-errors-container'>
+        <ul className='board-errors-list'>
+          {boardErrors}
+        </ul>
+      </div>
+    )
   }
 
   handleChange(event) {
@@ -43,17 +84,25 @@ class CreateBoard extends React.Component {
     })
   }
 
+  handleBoardDelete(e) {
+    e.preventDefault()
+    const { deleteBoard, board } = this.props
+    this.props.history.replace(`users/${board.user_id}/boards`);
+    deleteBoard(board.id)
+  }
+
   handleSubmit(event) {
     event.preventDefault()
     this.props.submitBoard(this.state)
   }
   
   render() {
-    if( !this.props.board ) return null
+    if( !this.props.board || !this.state ) return null
     return(
-      <div className="edit-board-container">
+      <div className={`edit-board-container ${this.props.formType}`}>
         <header className="board-form-header">
           {this.props.formType === 'Create' ? 'Lets get Creative!' : 'Always time for Edits'}
+          {this.renderErrors()}
         </header>
         <form onSubmit={this.handleSubmit} className='edit-board-form'>
           <label className='board-form-inputs'>title
@@ -91,7 +140,9 @@ class CreateBoard extends React.Component {
             </div>
           </label>
           <button className='button-link board-form-button'>{this.props.formType}</button>
+          {this.renderDelete()}
         </form>
+        {this.renderPins()}
       </div>
     )
   }

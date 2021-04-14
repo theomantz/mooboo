@@ -10014,6 +10014,7 @@ var convertCurry = convert.bind(null, react__WEBPACK_IMPORTED_MODULE_2__.createE
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "REMOVE_BOARD": () => (/* binding */ REMOVE_BOARD),
 /* harmony export */   "RECEIVE_BOARD": () => (/* binding */ RECEIVE_BOARD),
 /* harmony export */   "RECEIVE_ALL_BOARDS": () => (/* binding */ RECEIVE_ALL_BOARDS),
 /* harmony export */   "RECEIVE_BOARD_ERRORS": () => (/* binding */ RECEIVE_BOARD_ERRORS),
@@ -10021,10 +10022,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchBoard": () => (/* binding */ fetchBoard),
 /* harmony export */   "fetchBoards": () => (/* binding */ fetchBoards),
 /* harmony export */   "createBoard": () => (/* binding */ createBoard),
-/* harmony export */   "addPinToBoard": () => (/* binding */ addPinToBoard)
+/* harmony export */   "addPinToBoard": () => (/* binding */ addPinToBoard),
+/* harmony export */   "deleteBoard": () => (/* binding */ deleteBoard)
 /* harmony export */ });
 /* harmony import */ var _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/board_api_util */ "./frontend/util/board_api_util.js");
 
+var REMOVE_BOARD = 'REMOVE_BOARD';
 var RECEIVE_BOARD = 'RECEIVE_BOARD';
 var RECEIVE_ALL_BOARDS = 'RECEIVE_ALL_BOARDS';
 var RECEIVE_BOARD_ERRORS = 'RECEIVE_BOARD_ERRORS';
@@ -10055,6 +10058,13 @@ var receiveSuccessMessage = function receiveSuccessMessage(message) {
   return {
     type: RECEIVE_SUCCESS_MESSAGE,
     message: message
+  };
+};
+
+var removeBoard = function removeBoard(boardId) {
+  return {
+    type: REMOVE_BOARD,
+    boardId: boardId
   };
 };
 
@@ -10089,6 +10099,15 @@ var addPinToBoard = function addPinToBoard(boardId, pinId) {
   return function (dispatch) {
     return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.addPin(boardId, pinId).then(function (message) {
       return dispatch(receiveSuccessMessage(message));
+    }, function (errors) {
+      return dispatch(receiveBoardErrors(errors));
+    });
+  };
+};
+var deleteBoard = function deleteBoard(boardId) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.deleteBoard(boardId).then(function (boardId) {
+      return dispatch(removeBoard(boardId));
     }, function (errors) {
       return dispatch(receiveBoardErrors(errors));
     });
@@ -10496,7 +10515,11 @@ var App = function App() {
     exact: true,
     path: "/home",
     component: _document_grid_document_grid_container__WEBPACK_IMPORTED_MODULE_2__.default
-  })));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Redirect, {
+    exact: true,
+    from: "*",
+    to: "/home"
+  }));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -10657,7 +10680,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _card_pin_card_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../card/pin_card_container */ "./frontend/components/card/pin_card_container.js");
+/* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-uuid */ "./node_modules/react-uuid/uuid.js");
+/* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_uuid__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _card_pin_card_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../card/pin_card_container */ "./frontend/components/card/pin_card_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -10685,6 +10710,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var CreateBoard = /*#__PURE__*/function (_React$Component) {
   _inherits(CreateBoard, _React$Component);
 
@@ -10697,13 +10724,21 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     var board = _this.props.board;
-    _this.state = {
-      title: board.title,
-      description: board.description,
-      "private": false
-    };
+
+    if (_this.props.formType === 'Create') {
+      _this.state = {
+        title: board.title,
+        description: board.description,
+        "private": board["private"] || false,
+        user_id: board.user_id
+      };
+    } else {
+      _this.state = _this.props.board;
+    }
+
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleBoardDelete = _this.handleBoardDelete.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -10719,13 +10754,49 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "renderDelete",
+    value: function renderDelete() {
+      if (this.props.formType !== 'Edit') return null;
+      debugger;
+      return (
+        /*#__PURE__*/
+        // <Link to={`users/${this.props.board.user_id}/boards`}>
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          className: "button-link delete-button",
+          onClick: this.handleBoardDelete
+        }, "Delete") // </Link>
+
+      );
+    }
+  }, {
     key: "renderPins",
     value: function renderPins() {
       var board = this.props.board;
       if (!board.pins) return null;
       var pinCards = Object.values(board.pins).map(function (pin) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_card_pin_card_container__WEBPACK_IMPORTED_MODULE_1__.default, null);
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_card_pin_card_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+          content: pin
+        });
       });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "profile-page-pin-index"
+      }, pinCards);
+    }
+  }, {
+    key: "renderErrors",
+    value: function renderErrors() {
+      if (!this.props.errors.length) return null;
+      var boardErrors = this.props.errors.map(function (error) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+          className: "board-errors-list-item",
+          key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
+        }, error);
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "board-errors-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+        className: "board-errors-list"
+      }, boardErrors));
     }
   }, {
     key: "handleChange",
@@ -10736,6 +10807,16 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
       this.setState(_defineProperty({}, name, value));
     }
   }, {
+    key: "handleBoardDelete",
+    value: function handleBoardDelete(e) {
+      e.preventDefault();
+      var _this$props = this.props,
+          deleteBoard = _this$props.deleteBoard,
+          board = _this$props.board;
+      this.props.history.replace("users/".concat(board.user_id, "/boards"));
+      deleteBoard(board.id);
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault();
@@ -10744,12 +10825,12 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.board) return null;
+      if (!this.props.board || !this.state) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "edit-board-container"
+        className: "edit-board-container ".concat(this.props.formType)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", {
         className: "board-form-header"
-      }, this.props.formType === 'Create' ? 'Lets get Creative!' : 'Always time for Edits'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      }, this.props.formType === 'Create' ? 'Lets get Creative!' : 'Always time for Edits', this.renderErrors()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "edit-board-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
@@ -10786,7 +10867,7 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
         className: "board-form-private-subtext"
       }, "Secrets worth keeping"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         className: "button-link board-form-button"
-      }, this.props.formType)));
+      }, this.props.formType), this.renderDelete()), this.renderPins());
     }
   }]);
 
@@ -10819,9 +10900,11 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     board: {
       title: '',
+      description: '',
       user_id: state.session.id
     },
-    formType: 'Create'
+    formType: 'Create',
+    errors: state.errors.board
   };
 };
 
@@ -10858,14 +10941,21 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     board: state.entities.boards[ownProps.match.params.boardId],
-    formType: 'Edit'
+    formType: 'Edit',
+    errors: state.errors.board
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    submitBoard: function submitBoard(boardId) {
+    fetchBoard: function fetchBoard(boardId) {
       return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.fetchBoard)(boardId));
+    },
+    submitBoard: function submitBoard(boardId) {
+      return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.updateBoard)(boardId));
+    },
+    deleteBoard: function deleteBoard(boardId) {
+      return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.deleteBoard)(boardId));
     }
   };
 };
@@ -13874,6 +13964,11 @@ var boardsReducer = function boardsReducer() {
     case _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_BOARD:
       return Object.assign({}, state, _defineProperty({}, action.board.id, action.board));
 
+    case _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__.REMOVE_BOARD:
+      var nextState = Object.assign({}, state);
+      delete nextState[action.boardId];
+      return nextState;
+
     default:
       return state;
   }
@@ -14420,7 +14515,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchBoard": () => (/* binding */ fetchBoard),
 /* harmony export */   "updateBoard": () => (/* binding */ updateBoard),
 /* harmony export */   "createBoard": () => (/* binding */ createBoard),
-/* harmony export */   "addPin": () => (/* binding */ addPin)
+/* harmony export */   "addPin": () => (/* binding */ addPin),
+/* harmony export */   "deleteBoard": () => (/* binding */ deleteBoard)
 /* harmony export */ });
 var fetchBoards = function fetchBoards(userId) {
   return $.ajax({
@@ -14459,6 +14555,12 @@ var addPin = function addPin(boardId, pinId) {
   return $.ajax({
     url: "/api/boards/".concat(boardId, "/").concat(pinId),
     method: 'POST'
+  });
+};
+var deleteBoard = function deleteBoard(boardId) {
+  return $.ajax({
+    url: "api/boards/".concat(boardId),
+    method: 'DELETE'
   });
 };
 

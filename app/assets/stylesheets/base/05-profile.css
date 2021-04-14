@@ -368,6 +368,16 @@
   padding: 25px 25px 40px 25px;
 }
 
+.edit-board-container.Edit {
+  margin: 30px auto auto auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: none;
+  width: 80%;
+  height: fit-content;
+}
+
 
 @media screen and (min-width:0 ){
   .profile-page-pin-index {

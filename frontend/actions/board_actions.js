@@ -1,5 +1,6 @@
 import * as BoardApiUtils from '../util/board_api_util';
 
+export const REMOVE_BOARD = 'REMOVE_BOARD';
 export const RECEIVE_BOARD = 'RECEIVE_BOARD';
 export const RECEIVE_ALL_BOARDS = 'RECEIVE_ALL_BOARDS';
 export const RECEIVE_BOARD_ERRORS = 'RECEIVE_BOARD_ERRORS';
@@ -23,6 +24,11 @@ const receiveBoardErrors = errors => ({
 const receiveSuccessMessage = message => ({
   type: RECEIVE_SUCCESS_MESSAGE,
   message
+})
+
+const removeBoard = (boardId) => ({
+  type: REMOVE_BOARD,
+  boardId
 })
 
 export const fetchBoard = boardId => dispatch => {
@@ -55,5 +61,12 @@ export const addPinToBoard = ( boardId, pinId ) => dispatch => {
       .then(message => dispatch(receiveSuccessMessage(message)),
       errors => dispatch(receiveBoardErrors(errors)) )
   )
-}
+};
 
+export const deleteBoard = boardId => dispatch => {
+  return(
+    BoardApiUtils.deleteBoard(boardId)
+      .then(boardId => dispatch(removeBoard(boardId)),
+      errors => dispatch(receiveBoardErrors(errors)))
+  )
+}

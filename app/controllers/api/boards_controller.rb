@@ -27,6 +27,18 @@ class Api::BoardsController < ApplicationController
     end
   end
 
+  def destroy
+    @board = Board.find_by(id: params[:id])
+    if @board.user_id == current_user.id
+      board_id = @board.id
+      if @board.destroy
+        render json: board_id, status: 200
+      else
+        render json: ['Invalid Request'], status: 404
+      end
+    end
+  end
+
   def show
     @board = Board.includes(:pins).find_by(id: params[:id])
     render 'api/boards/show'

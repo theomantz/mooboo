@@ -34,4 +34,11 @@ export const addPin = (boardId, pinId) => (
     url: `/api/boards/${boardId}/${pinId}`,
     method: 'POST'
   })
-)
+);
+
+export const deleteBoard = boardId => (
+  $.ajax({
+    url: `api/boards/${boardId}`,
+    method: 'DELETE'
+  })
+);
