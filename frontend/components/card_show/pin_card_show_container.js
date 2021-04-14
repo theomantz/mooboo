@@ -1,17 +1,23 @@
-import { connect } from 'react-redux'
-import { fetchPin, deletePin } from '../../actions/pins_actions'
 import CardShow from './card_show'
+import { connect } from 'react-redux'
+import { fetchUser } from '../../actions/user_actions'
+import { fetchPin, deletePin } from '../../actions/pins_actions'
 
 const mapStateToProps = ( state, ownProps ) => {
+  const { entities, session } = state
+  const { users, pins } = entities
+  const { match } = ownProps
   return({
-    content: state.entities.pins[ownProps.match.params.pinId],
-    userId: state.session.id
+    content: pins[match.params.pinId],
+    uploader: users[match.params.userId],
+    userId: session.id
   })
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchContent: pinId => dispatch(fetchPin(pinId)),
-  deletePin: pinId => dispatch(deletePin(pinId))
+  deletePin: pinId => dispatch(deletePin(pinId)),
+  fetchUser: userId => dispatch(fetchUser(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardShow)

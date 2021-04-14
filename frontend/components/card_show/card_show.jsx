@@ -19,8 +19,12 @@ class CardShow extends React.Component {
   }
   
   componentDidMount() {
-    this.props.fetchContent(this.props.match.params.pinId)
+    const { fetchContent, fetchUser, match, content } = this.props
+    fetchContent(match.params.pinId)
     window.scrollTo(0, 0)
+    if ( content ) {
+      fetchUser(content.uploader_id)
+    }
   }
 
   renderDeleteButton() {
@@ -34,6 +38,17 @@ class CardShow extends React.Component {
             className='button-link delete-button'
             onClick={this.handleClick}>Delete Pin</button>
         </Link>
+      </div>
+    )
+  }
+
+  renderFollow() {
+    if( !this.props.location || !this.props.userId ) return null
+    const { uploader, userId } = this.props
+    if( !this.props.uploader || uploader.id === userId ) return null
+    return(
+      <div>
+        <h1>Testing Follows</h1>
       </div>
     )
   }
@@ -66,6 +81,7 @@ class CardShow extends React.Component {
               <p>{description}</p>
             </div>
             {this.renderDeleteButton()}
+            {this.renderFollow()}
           </div>
         </div>
         <div className="document-grid-show-page-container"></div>

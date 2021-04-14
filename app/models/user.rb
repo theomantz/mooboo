@@ -32,8 +32,12 @@ class User < ApplicationRecord
     end
   end
 
+  private
+
   def username=(username)
-    username == '' ? self.username = nil : nil
+    if username = ''
+      self.username = 
+    end
   end
   
   def password=(password)
@@ -61,6 +65,10 @@ class User < ApplicationRecord
       quick_save = Board.create(user_id: self.id, title: 'Quick Save', description: 'A catchall board', private: false)
       self.boards << quick_save
     end
+  end
+
+  def find_unique_username(email)
+    
   end
 
 
