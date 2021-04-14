@@ -10023,6 +10023,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchBoards": () => (/* binding */ fetchBoards),
 /* harmony export */   "createBoard": () => (/* binding */ createBoard),
 /* harmony export */   "addPinToBoard": () => (/* binding */ addPinToBoard),
+/* harmony export */   "updateBoard": () => (/* binding */ updateBoard),
 /* harmony export */   "deleteBoard": () => (/* binding */ deleteBoard),
 /* harmony export */   "removePin": () => (/* binding */ removePin)
 /* harmony export */ });
@@ -10100,6 +10101,15 @@ var addPinToBoard = function addPinToBoard(boardId, pinId) {
   return function (dispatch) {
     return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.addPin(boardId, pinId).then(function (message) {
       return dispatch(receiveSuccessMessage(message));
+    }, function (errors) {
+      return dispatch(receiveBoardErrors(errors));
+    });
+  };
+};
+var updateBoard = function updateBoard(board) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.updateBoard(board).then(function (board) {
+      return dispatch(receiveBoard(board));
     }, function (errors) {
       return dispatch(receiveBoardErrors(errors));
     });
@@ -10798,7 +10808,7 @@ var CreateBoard = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         to: "users/".concat(this.props.board.user_id, "/boards")
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "button-link delete-button",
+        className: "button-link delete-button edit-form",
         onClick: this.handleBoardDelete
       }, "Delete"));
     }
@@ -10985,8 +10995,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchBoard: function fetchBoard(boardId) {
       return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.fetchBoard)(boardId));
     },
-    submitBoard: function submitBoard(boardId) {
-      return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.updateBoard)(boardId));
+    submitBoard: function submitBoard(board) {
+      return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.updateBoard)(board));
     },
     deleteBoard: function deleteBoard(boardId) {
       return dispatch((0,_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__.deleteBoard)(boardId));
@@ -11342,7 +11352,6 @@ var DocumentCard = /*#__PURE__*/function (_React$Component) {
   _createClass(DocumentCard, [{
     key: "handleRemoveFromBoard",
     value: function handleRemoveFromBoard() {
-      debugger;
       var _this$props = this.props,
           board = _this$props.board,
           content = _this$props.content;
@@ -11524,8 +11533,7 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
       if (!this.props.content || !this.props.userId) return null;
       var _this$props = this.props,
           content = _this$props.content,
-          userId = _this$props.userId; // debugger
-
+          userId = _this$props.userId;
       if (content.uploader_id !== userId) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "pin-card-delete-button-container"

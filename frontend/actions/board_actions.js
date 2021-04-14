@@ -63,6 +63,14 @@ export const addPinToBoard = ( boardId, pinId ) => dispatch => {
   )
 };
 
+export const updateBoard = board => dispatch => {
+  return(
+    BoardApiUtils.updateBoard(board)
+      .then(board => dispatch(receiveBoard(board)),
+      errors => dispatch(receiveBoardErrors(errors)))
+  )
+}
+
 export const deleteBoard = boardId => dispatch => {
   return(
     BoardApiUtils.deleteBoard(boardId)

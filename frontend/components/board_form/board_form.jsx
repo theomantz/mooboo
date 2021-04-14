@@ -37,7 +37,7 @@ class CreateBoard extends React.Component {
     return(
       <Link to={`users/${this.props.board.user_id}/boards`}>
         <button 
-          className='button-link delete-button'
+          className='button-link delete-button edit-form'
           onClick={this.handleBoardDelete}>Delete</button>
       </Link>
     )

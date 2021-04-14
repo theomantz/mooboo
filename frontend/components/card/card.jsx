@@ -12,7 +12,6 @@ class DocumentCard extends React.Component {
   }
 
   handleRemoveFromBoard() {
-    debugger
     const { board, content } = this.props
     this.props.removePin(board.id, content.id)
   }

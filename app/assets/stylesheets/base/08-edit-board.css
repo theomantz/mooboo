@@ -99,6 +99,10 @@ input.board-form-private-checkbox {
   color: white;
 }
 
+.button-link.delete-button.edit-form {
+  width: 175px;
+}
+
 .board-errors-list-item {
   color: #F55845;
   font-size: 16px;

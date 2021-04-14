@@ -14,7 +14,7 @@ class Api::BoardsController < ApplicationController
     if @board.update(board_params)
       render 'api/boards/show'
     else
-      render json: @board.error.full_messages
+      render json: @board.errors.full_messages, status: 404
     end
   end
 

@@ -26,7 +26,6 @@ class CardShow extends React.Component {
   renderDeleteButton() {
     if( !this.props.content || !this.props.userId ) return null
     const { content, userId } = this.props
-    // debugger
     if( content.uploader_id !== userId ) return null
     return(
       <div className='pin-card-delete-button-container'>

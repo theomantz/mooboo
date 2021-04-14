@@ -12,7 +12,7 @@ const mapStateToProps = ( state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchBoard: boardId => dispatch(fetchBoard(boardId)),
-  submitBoard: boardId => dispatch(updateBoard(boardId)),
+  submitBoard: board => dispatch(updateBoard(board)),
   deleteBoard: boardId => dispatch(deleteBoard(boardId))
 });
 
