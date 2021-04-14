@@ -26,3 +26,18 @@ export const fetchPinByUser = userId => (
     method: 'GET'
   })
 );
+
+export const deletePin = pinId => (
+  $.ajax({
+    url: `api/pins/${pinId}`,
+    method: 'DELETE'
+  })
+);
+
+
+export const removePin = (boardId, pinId) => (
+  $.ajax({
+    url: `api/boards/${boardId}/${pinId}`,
+    method: 'DELETE'
+  })
+)

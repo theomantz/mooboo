@@ -44,7 +44,7 @@ const App = () => (
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
     </Switch>
-      <Redirect exact from='*' to='/home' />
+      {/* <Redirect exact from='*' to='/home' /> */}
   </div>
 )
 

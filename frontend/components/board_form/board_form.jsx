@@ -34,13 +34,12 @@ class CreateBoard extends React.Component {
 
   renderDelete() {
     if( this.props.formType !== 'Edit' ) return null
-    debugger
     return(
-      // <Link to={`users/${this.props.board.user_id}/boards`}>
+      <Link to={`users/${this.props.board.user_id}/boards`}>
         <button 
           className='button-link delete-button'
           onClick={this.handleBoardDelete}>Delete</button>
-      // </Link>
+      </Link>
     )
   }
 
@@ -49,7 +48,7 @@ class CreateBoard extends React.Component {
     if( !board.pins ) return null
     const pinCards = Object.values(board.pins).map( pin => {
       return(
-        <PinCardContainer content={pin}/>
+        <PinCardContainer content={pin} delete={true} board={board}/>
       )
     })
     return(
@@ -87,7 +86,6 @@ class CreateBoard extends React.Component {
   handleBoardDelete(e) {
     e.preventDefault()
     const { deleteBoard, board } = this.props
-    this.props.history.replace(`users/${board.user_id}/boards`);
     deleteBoard(board.id)
   }
 

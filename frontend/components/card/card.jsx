@@ -2,11 +2,21 @@ import React from 'react';
 import uuid from 'react-uuid'
 import { Link } from 'react-router-dom'
 import { docStyles } from '../config/document_grid'
+import pin_card_container from './pin_card_container';
 
 class DocumentCard extends React.Component {
   constructor(props) {
     super(props)
 
+  }
+
+  renderDelete() {
+    if( !this.delete || !this.props.userId ) return null
+    return(
+      <button
+        className='button-link delete-button'
+        onClick={this.handleRemoveFromBoard()}>Remove</button>
+    )
   }
 
   render() {

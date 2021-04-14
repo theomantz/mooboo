@@ -58,7 +58,8 @@ class User < ApplicationRecord
   def first_board
     quick_save = self.boards.where(title: 'Quick Save')
     if quick_save.empty?
-          self.boards << Board.create(user_id: self.id, title: 'Quick Save')
+      quick_save = Board.create(user_id: self.id, title: 'Quick Save', description: 'A catchall board', private: false)
+      self.boards << quick_save
     end
   end
 
