@@ -22,7 +22,6 @@
   max-height: 100%;
   margin: 50px 50px 50px 50px;
   box-sizing: border-box;
-  /* border: 2px solid #6E9885; */
   padding: 50px;
   border-radius: 16px;
   display: flex;
@@ -66,6 +65,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  margin-left: 25px;
 }
 
 
@@ -73,6 +73,11 @@
   font-size: 24px;
   font-weight: 600;
   margin-left: 25px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .content-show-card-arrow-close {
@@ -198,6 +203,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  height: 100%;
+  width: 100%;
 }
 
 .dropdown-list-item {
@@ -236,6 +243,13 @@
   border: none;
 }
 
+.profile-page-avatar.card-show-profile-avatar {
+  width: 45px;
+  height: 45px;
+  font-size: 22px;
+  margin: 20px 0;
+}
+
 .all-boards-message {
   display: flex;
   flex-direction: column;
@@ -251,6 +265,41 @@
 .all-boards-message-span {
   padding-top: 15px;
   font-weight: 700;
-  
 }
 
+.follow-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.follow-username-avatar-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  text-decoration: none;
+}
+
+.username-profile-link-container {
+  margin: auto auto auto 30px;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username-profile-link {
+  color: black;
+  transition: all 0.5s;
+}
+
+.username-profile-link:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+.follow-header-text {
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 10px;
+}

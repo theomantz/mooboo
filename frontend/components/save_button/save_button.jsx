@@ -18,6 +18,7 @@ class SaveButton extends React.Component {
 
  
   componentDidMount() {
+    // debugger
     this.props.fetchBoards(this.props.userId)
   }
 
@@ -27,8 +28,8 @@ class SaveButton extends React.Component {
   }
 
   handleClick() {
-    this.state.open ? this.setState({ open: false }) : this.setState({ open: true })
     this.props.fetchBoards(this.props.userId)
+    this.setState( { open: !this.state.open } )
   }
 
   handleDefaultSave() {
@@ -57,21 +58,31 @@ class SaveButton extends React.Component {
     const { boards, pinId } = this.props
     const show = this.state.open
     return (
-      <div className={`save-button-container save-button-container-${this.state.open}`} key={uuid()}>
-        <div 
-          className="save-button-dropdown-container"
-          onClick={this.handleDivClick}>
+      <div
+        className={`save-button-container save-button-container-${this.state.open}`}
+        key={uuid()}
+      >
+        <div className="save-button-dropdown-container">
           <button
             className={`save-button-dropdown save-button-${this.state.open}`}
-            onClick={this.handleClick}>
-            {!this.state.open ? 'Quick Save' : 'Save to a Board'}
-            <FontAwesomeIcon icon={faChevronCircleDown} className='dropdown-list-icon'/>
+            onClick={this.handleClick}
+          >
+            {!this.state.open ? "Quick Save" : "Save to a Board"}
+            <FontAwesomeIcon
+              icon={faChevronCircleDown}
+              className="dropdown-list-icon"
+            />
           </button>
-            <DropdownCardContainer boards={boards} show={show} pinId={pinId} />
+          <DropdownCardContainer
+            boards={boards}
+            show={show}
+            pinId={pinId}
+            onClick={this.handleDivClick}
+          />
         </div>
         {this.renderSaveButton()}
       </div>
-    )
+    );
   }
 }
 

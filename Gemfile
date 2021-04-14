@@ -74,3 +74,5 @@ gem "faker", "~> 2.17"
 gem "aws-sdk-rails", "~> 3.6"
 
 gem "aws-sdk-s3"
+
+gem "email_validator", "~> 2.2"

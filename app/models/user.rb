@@ -9,9 +9,9 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6, allow_nil: true }
   # has_secure_password
 
-  after_initialize :ensure_session_token, :username
+  after_initialize :ensure_session_token
 
-  after_save :first_board
+  after_save :first_board, :assign_username
 
   has_one_attached :photo
 
@@ -32,8 +32,11 @@ class User < ApplicationRecord
     end
   end
 
-  def username=(username)
-    username == '' ? self.username = nil : nil
+  def assign_username
+    if self.username == '' || !self.username
+      self.username = find_unique_username('moo')
+      return self.save!
+    end
   end
   
   def password=(password)
@@ -60,6 +63,22 @@ class User < ApplicationRecord
     if quick_save.empty?
       quick_save = Board.create(user_id: self.id, title: 'Quick Save', description: 'A catchall board', private: false)
       self.boards << quick_save
+      self.save
+    end
+  end
+
+  def find_unique_username(username)
+    taken_usernames = User
+      .where("username LIKE ?", "#{username}%")
+      .pluck(:username)
+
+    return username if ! taken_usernames.include?(username)
+
+    count = 2
+    while true
+      new_username = "#{username}_#{count}"
+      return new_username if !taken_usernames.include?(new_username)
+      count += 1
     end
   end
 

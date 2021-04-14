@@ -30,7 +30,7 @@ const App = () => (
       </Switch>
     </header>
     <Switch>
-      <Route exact path='/pins/:pinId' component={PinCardShowContainer} />
+      <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
       <Route exact path='/boards/:boardId' component={BoardShowContainer} />
       <Route exact path='/boards/:boardId/edit' component={EditBoardContainer} />
       <Route exact path='/users/:userId/edit' component={EditUserContainer} />
@@ -45,7 +45,7 @@ const App = () => (
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
     </Switch>
-      <Redirect exact from='*' to='/home' />
+      {/* <Redirect exact from='*' to='/home' /> */}
   </div>
 )
 

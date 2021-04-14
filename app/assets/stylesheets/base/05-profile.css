@@ -7,13 +7,18 @@
 }
 
 .profile-page-avatar {
-  padding: 30px 24px 30px 24px;
-  border-radius: 100px;
-  width: fit-content;
-  margin: 30px auto 50px auto;
-  font-size: 30px;
-  font-weight: 700;
-  color: white;
+    border-radius: 100px;
+    margin: 30px auto 50px auto;
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    box-sizing: border-box;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .edit-user-button-container {

@@ -4,7 +4,8 @@ class DropdownCard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      addedBoards: []
+      addedBoards: [],
+      open: this.props.show
     }
     this.handleClick = this.handleClick.bind(this)
     this.filterBoards = this.filterBoards.bind(this)

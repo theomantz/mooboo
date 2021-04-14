@@ -30,7 +30,7 @@ class DocumentCard extends React.Component {
   render() {
     const { content } = this.props
     return (
-      <Link to={`/pins/${content.id}`}>
+      <Link to={`/pins/${content.uploader_id}/${content.id}`}>
         <div key={uuid()}>
           <div className="content-card">
             <div className="content-card-image">

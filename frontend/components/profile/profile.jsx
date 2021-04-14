@@ -45,7 +45,7 @@ class Profile extends React.Component {
         <div 
           className='profile-page-avatar'
           style={{backgroundColor: color}}>
-          { user.username ? user.username[0] : 'MB' }
+          { user.username ? user.username.slice(0, 2) : 'MB' }
         </div>
       )
     }
@@ -53,14 +53,23 @@ class Profile extends React.Component {
 
   renderUsername() {
     const { user } = this.props
-    return (
-      <div className="profile-page-username-container">
-        <span className="profile-page-username">
-          welcome { user.username ? `@${user.username}` : '@moo' }
-        </span>
-        
-      </div>
-    )
+    if( this.props.currentUser.id === this.props.match.params.userId ) {
+      return (
+        <div className="profile-page-username-container">
+          <span className="profile-page-username">
+            welcome { user.username ? `@${user.username}` : '@moo' }
+          </span>
+        </div>
+      )
+    } else {
+      return(
+        <div className="profile-page-username-container">
+          <span className="profile-page-username">
+            {user.username ? `@${user.username}'s` : "@moo's"} Profile
+          </span>
+        </div>
+      )
+    }
   }
 
   renderDetails() {
