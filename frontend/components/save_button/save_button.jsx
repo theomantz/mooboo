@@ -13,6 +13,7 @@ class SaveButton extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleDefaultSave = this.handleDefaultSave.bind(this)
+    this.handleDivClick = this.handleDivClick.bind(this)
   }
 
  
@@ -20,7 +21,10 @@ class SaveButton extends React.Component {
     this.props.fetchBoards(this.props.userId)
   }
 
-
+  handleDivClick() {
+    let flag = !this.state.open
+    this.setState( { open: flag } )
+  }
 
   handleClick() {
     this.state.open ? this.setState({ open: false }) : this.setState({ open: true })
@@ -54,7 +58,9 @@ class SaveButton extends React.Component {
     const show = this.state.open
     return (
       <div className={`save-button-container save-button-container-${this.state.open}`} key={uuid()}>
-        <div className="save-button-dropdown-container">
+        <div 
+          className="save-button-dropdown-container"
+          onClick={this.handleDivClick}>
           <button
             className={`save-button-dropdown save-button-${this.state.open}`}
             onClick={this.handleClick}>

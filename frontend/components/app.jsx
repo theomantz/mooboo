@@ -26,14 +26,15 @@ const App = () => (
         <AuthRoute exact path='/login' component={LoginFormContainer} />
         <AuthRoute exact path='/signup' component={SignupFormContainer} />
         <AuthRoute exact path='/about' component={AboutPage} />
+        <AuthRoute exact path='*' component={LandingPageContainer}/>
       </Switch>
     </header>
     <Switch>
-      <ProtectedRoute exact path='/pins/:pinId' component={PinCardShowContainer} />
-      <ProtectedRoute exact path='/boards/:boardId' component={BoardShowContainer} />
-      <ProtectedRoute exact path='/boards/:boardId/edit' component={EditBoardContainer} />
+      <Route exact path='/pins/:pinId' component={PinCardShowContainer} />
+      <Route exact path='/boards/:boardId' component={BoardShowContainer} />
+      <Route exact path='/boards/:boardId/edit' component={EditBoardContainer} />
       <Route exact path='/users/:userId/edit' component={EditUserContainer} />
-      <ProtectedRoute exact path='/boards/new' component={CreateBoardContainer} />
+      <Route exact path='/boards/new' component={CreateBoardContainer} />
       <Route path='/users/:userId'>
         <div className='profile-page-container'>
           <Route path='/users/:userId' component={ProfileContainer} />
@@ -44,7 +45,7 @@ const App = () => (
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
     </Switch>
-      {/* <Redirect exact from='*' to='/home' /> */}
+      <Redirect exact from='*' to='/home' />
   </div>
 )
 

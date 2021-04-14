@@ -2,20 +2,29 @@ import React from 'react';
 import uuid from 'react-uuid'
 import { Link } from 'react-router-dom'
 import { docStyles } from '../config/document_grid'
-import pin_card_container from './pin_card_container';
+
 
 class DocumentCard extends React.Component {
   constructor(props) {
     super(props)
 
+    this.handleRemoveFromBoard = this.handleRemoveFromBoard.bind(this)
+  }
+
+  handleRemoveFromBoard() {
+    debugger
+    const { board, content } = this.props
+    this.props.removePin(board.id, content.id)
   }
 
   renderDelete() {
-    if( !this.delete || !this.props.userId ) return null
+    if( !this.props.board || !this.props.userId ) return null
     return(
-      <button
-        className='button-link delete-button'
-        onClick={this.handleRemoveFromBoard()}>Remove</button>
+      <Link to={`/boards/${this.props.board.id}/edit`}>
+        <button
+          className='button-link delete-button remove-from-board-button'
+          onClick={this.handleRemoveFromBoard}>Remove</button>
+      </Link>
     )
   }
 
@@ -31,6 +40,7 @@ class DocumentCard extends React.Component {
                 alt={content.title}
                 style={docStyles.docCard}
               />
+              {this.renderDelete()}
             </div>
           </div>
         </div>

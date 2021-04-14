@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
     get 'users/pins/:id' => 'users#pins_by_user', as: :pins_by_user
     post 'boards/:board_id/:pin_id' => 'boards#add_to_board', as: :add_pin_to_board
-    delete 'boards/:board_id/:pin_id' => 'board#remove', as: :remove
+    delete 'boards/:board_id/:pin_id' => 'boards#remove', as: :remove
   end
   
 end

@@ -48,7 +48,7 @@ class CreateBoard extends React.Component {
     if( !board.pins ) return null
     const pinCards = Object.values(board.pins).map( pin => {
       return(
-        <PinCardContainer content={pin} delete={true} board={board}/>
+        <PinCardContainer content={pin} board={board}/>
       )
     })
     return(

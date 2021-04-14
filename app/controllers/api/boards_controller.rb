@@ -44,7 +44,7 @@ class Api::BoardsController < ApplicationController
     @pin = @board.pins.find_by(id: params[:pin_id])
     if @board && @pin && ( @board.user_id == current_user.id )
       @board.pins.delete(@pin)
-      render json: ['Pin removed'], status: 200
+      render 'api/boards/show'
     else
       render json: @board.errors.full_messages, status: 404
     end

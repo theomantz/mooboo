@@ -12,10 +12,11 @@
   padding: 50px;
   font-size: 24px;
   font-weight: 700;
+  margin: auto;
 }
 
 .edit-board-form {
-  height: 70%;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -48,7 +49,7 @@
   display: flex;
   flex-direction: row;
   width: 90%;
-  margin: auto;
+  margin: 30px auto 30px auto;
   justify-content: flex-start;
 }
 
@@ -102,4 +103,20 @@ input.board-form-private-checkbox {
   color: #F55845;
   font-size: 16px;
   margin-top: 15px;
+}
+
+.remove-from-board-button {
+  color: #F55845;
+}
+
+.remove-from-board-button:hover {
+  background-color: #14613B;
+  color: white;
+  
+}
+
+.remove-from-board-button:active {
+  background-color: #14613B;
+  color: white;
+
 }

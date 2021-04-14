@@ -69,4 +69,12 @@ export const deleteBoard = boardId => dispatch => {
       .then(boardId => dispatch(removeBoard(boardId)),
       errors => dispatch(receiveBoardErrors(errors)))
   )
-}
+};
+
+export const removePin = (boardId, pinId) => dispatch => {
+  return(
+    BoardApiUtils.removePin(boardId, pinId)
+      .then(board => dispatch(receiveBoard(board)),
+      errors => dispatch(receiveBoardErrors(errors)))
+  )
+};

@@ -33,11 +33,3 @@ export const deletePin = pinId => (
     method: 'DELETE'
   })
 );
-
-
-export const removePin = (boardId, pinId) => (
-  $.ajax({
-    url: `api/boards/${boardId}/${pinId}`,
-    method: 'DELETE'
-  })
-)

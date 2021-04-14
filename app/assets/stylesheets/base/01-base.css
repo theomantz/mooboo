@@ -37,6 +37,21 @@ button {
              -5px -5px 10px #ffffff;
 }
 
+.button-link.delete-button {
+  color: #F55845;
+  margin-bottom: 25px;
+}
+
+.button-link.delete-button:hover {
+  color: #ffffff;
+}
+
+.button-link:hover {
+  background-color: #14613B;
+  color: white;
+  box-shadow: none;
+}
+
 .logo {
   height: 32px;
   width: 32px;
