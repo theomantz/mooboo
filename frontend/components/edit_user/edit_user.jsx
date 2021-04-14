@@ -25,8 +25,11 @@ class EditUser extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    debugger
     this.props.updateUser(this.state)
-      .then(this.props.history.push(`/users/${this.props.user.id}`))
+    if( !this.props.errors.length ) {
+      this.props.history.push(`/users/${this.props.user.id}`)
+    }
   }
 
   renderErrors() {

@@ -6,6 +6,13 @@ import SaveButtonContainer from '../save_button/save_button_container'
 import DocumentGridContainer from '../document_grid/document_grid_container'
 import { Link } from 'react-router-dom';
 
+const colors = [
+  '#14613B',
+  '#6E9885',
+  '#DDE388',
+  '#F3BA8D',
+  '#F55845',
+]
 
 class CardShow extends React.Component {
   constructor(props) {
@@ -42,13 +49,47 @@ class CardShow extends React.Component {
     )
   }
 
+  renderAvatar() {
+    const { uploader } = this.props
+    const color = colors[Math.floor(Math.random() * colors.length)]
+    if( uploader.photoUrl ) {
+      return (
+        <img 
+          src={uploader.photoUrl} 
+          className='profile-page-avatar'
+          />
+      )
+    } else {
+      return (
+        <div 
+          className='profile-page-avatar card-show-profile-avatar'
+          style={{backgroundColor: color}}>
+          { uploader.username.slice(0, 2) }
+        </div>
+      )
+    }
+  }
+
   renderFollow() {
     if( !this.props.location || !this.props.userId ) return null
     const { uploader, userId } = this.props
     if( !this.props.uploader || uploader.id === userId ) return null
     return(
-      <div>
-        <h1>Testing Follows</h1>
+      <div className='follow-container'>
+        <span className='follow-header-text'>Posted by:</span>
+        <div className='follow-username-avatar-container'>
+          {this.renderAvatar()}
+          <div className='username-profile-link-container'>
+            <Link 
+            to={`/users/${uploader.id}`} 
+            className='username-profile-link'>
+              {uploader.username}
+            </Link>
+            <button 
+              className='button-link follow-button'
+              onClick={this.followUser}>Follow</button>
+          </div>
+        </div>
       </div>
     )
   }
@@ -77,11 +118,13 @@ class CardShow extends React.Component {
           </div>
           <div className='content-nav-container'>
             <div className="content-show-card-text-container">
-              <h3>{title}</h3>
-              <p>{description}</p>
+              <div className='content-card-text'>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </div>
+              {this.renderFollow()}
             </div>
             {this.renderDeleteButton()}
-            {this.renderFollow()}
           </div>
         </div>
         <div className="document-grid-show-page-container"></div>

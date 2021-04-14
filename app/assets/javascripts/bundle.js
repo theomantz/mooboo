@@ -11498,6 +11498,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+var colors = ['#14613B', '#6E9885', '#DDE388', '#F3BA8D', '#F55845'];
 
 var CardShow = /*#__PURE__*/function (_React$Component) {
   _inherits(CardShow, _React$Component);
@@ -11552,6 +11553,26 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
       }, "Delete Pin")));
     }
   }, {
+    key: "renderAvatar",
+    value: function renderAvatar() {
+      var uploader = this.props.uploader;
+      var color = colors[Math.floor(Math.random() * colors.length)];
+
+      if (uploader.photoUrl) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+          src: uploader.photoUrl,
+          className: "profile-page-avatar"
+        });
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "profile-page-avatar card-show-profile-avatar",
+          style: {
+            backgroundColor: color
+          }
+        }, uploader.username.slice(0, 2));
+      }
+    }
+  }, {
     key: "renderFollow",
     value: function renderFollow() {
       if (!this.props.location || !this.props.userId) return null;
@@ -11559,7 +11580,21 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
           uploader = _this$props3.uploader,
           userId = _this$props3.userId;
       if (!this.props.uploader || uploader.id === userId) return null;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Testing Follows"));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "follow-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "follow-header-text"
+      }, "Posted by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "follow-username-avatar-container"
+      }, this.renderAvatar(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "username-profile-link-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
+        to: "/users/".concat(uploader.id),
+        className: "username-profile-link"
+      }, uploader.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: "button-link follow-button",
+        onClick: this.followUser
+      }, "Follow"))));
     }
   }, {
     key: "handleClick",
@@ -11602,7 +11637,9 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
         className: "content-nav-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "content-show-card-text-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, description)), this.renderDeleteButton(), this.renderFollow())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "content-card-text"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, description)), this.renderFollow()), this.renderDeleteButton())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "document-grid-show-page-container"
       }));
     }
@@ -12496,7 +12533,12 @@ var EditUser = /*#__PURE__*/function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.updateUser(this.state).then(this.props.history.push("/users/".concat(this.props.user.id)));
+      debugger;
+      this.props.updateUser(this.state);
+
+      if (!this.props.errors.length) {
+        this.props.history.push("/users/".concat(this.props.user.id));
+      }
     }
   }, {
     key: "renderErrors",
@@ -13425,18 +13467,27 @@ var Profile = /*#__PURE__*/function (_React$Component) {
           style: {
             backgroundColor: color
           }
-        }, user.username ? user.username[0] : 'MB');
+        }, user.username ? user.username.slice(0, 2) : 'MB');
       }
     }
   }, {
     key: "renderUsername",
     value: function renderUsername() {
       var user = this.props.user;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "profile-page-username-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-        className: "profile-page-username"
-      }, "welcome ", user.username ? "@".concat(user.username) : '@moo'));
+
+      if (this.props.currentUser.id === this.props.match.params.userId) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "profile-page-username-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+          className: "profile-page-username"
+        }, "welcome ", user.username ? "@".concat(user.username) : '@moo'));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "profile-page-username-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+          className: "profile-page-username"
+        }, user.username ? "@".concat(user.username, "'s") : "@moo's", " Profile"));
+      }
     }
   }, {
     key: "renderDetails",

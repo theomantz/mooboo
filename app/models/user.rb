@@ -4,7 +4,7 @@ class User < ApplicationRecord
   
   validates :username, uniqueness: true, allow_nil: true
   validates :password_digest, presence: true
-  validates :email, email: true, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
   validates :session_token, presence: true, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
   # has_secure_password
@@ -34,7 +34,7 @@ class User < ApplicationRecord
 
   def assign_username
     if self.username == '' || !self.username
-      self.username = find_unique_username(self.email)
+      self.username = find_unique_username('moo')
       return self.save!
     end
   end
@@ -67,8 +67,7 @@ class User < ApplicationRecord
     end
   end
 
-  def find_unique_username(email)
-    username = email.match(/([^@]+)/)
+  def find_unique_username(username)
     taken_usernames = User
       .where("username LIKE ?", "#{username}%")
       .pluck(:username)
