@@ -43,6 +43,7 @@
 .today-button {
   color: #6E9885;
 }
+
 .today-button:hover {
   background-color: #14613B;
   color: white;
@@ -138,11 +139,15 @@
   align-items: center;
   justify-content: center;
   box-sizing: content-box;
-  border-style: none;
+  border: 0.5px solid lightgray;
   border-radius: 68px;
   background: #ffffff;
-  box-shadow: inset 9px 9px 12px #dedede,
-            inset -9px -9px 12px #ffffff;
+}
+
+.search-bar-container:hover, .search-bar-container:focus-within {
+    background-color: #fff;
+    box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+    border-color: rgba(223,225,229,0);
 }
 
 .search-bar {

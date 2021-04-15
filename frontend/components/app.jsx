@@ -16,6 +16,7 @@ import PinIndexContainer from './pins/pin_index_container'
 import ProfileContainer from './profile/profile_container'
 import EditUserContainer from './edit_user/edit_user_container'
 import AboutPage from './about_page/about'
+import TodayPageContainer from './today_page/today_page_container'
 
 
 const App = () => (
@@ -31,13 +32,13 @@ const App = () => (
         <AuthRoute exact path='*' component={LandingPageContainer}/>
       </Switch>
     </header>
-    {/* <Switch> */}
-      {/* <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
+    <Switch>
+      <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
       <Route exact path='/boards/:boardId' component={BoardShowContainer} />
       <Route exact path='/boards/:boardId/edit' component={EditBoardContainer} />
       <Route exact path='/users/:userId/edit' component={EditUserContainer} />
-      <Route exact path='/boards/new' component={CreateBoardContainer} /> */}
-      {/* <Route path='/users/:userId'>
+      <Route exact path='/boards/new' component={CreateBoardContainer} />
+      <Route path='/users/:userId'>
         <div className='profile-page-container'>
           <Route path='/users/:userId' component={ProfileContainer} />
           <Route exact path='/users/:userId/boards' component={BoardsIndexContainer} />
@@ -46,8 +47,9 @@ const App = () => (
         </div>
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
-    </Switch> */}
-      {/* <Redirect exact from='*' to='/home' /> */}
+      <ProtectedRoute exact path='/today' component={TodayPageContainer} />
+    </Switch>
+      <Redirect exact from='*' to='/home' />
   </div>
 )
 

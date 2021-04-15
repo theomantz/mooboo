@@ -6,7 +6,7 @@ class Api::PinsController < ApplicationController
     if @pin.save
       render 'api/pins/show'
     else
-      render json: @pin.error.full_messages, status: 400
+      render json: @pin.errors.full_messages, status: 400
     end
   end
 

@@ -1,6 +1,7 @@
 import PinForm from './pin_form'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { createPin } from '../../actions/pins_actions'
 import { fetchBoards } from '../../actions/board_actions'
 
 const mapStateToProps = state => ({
@@ -18,7 +19,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchBoards: userId => dispatch(fetchBoards(userId)),
-  createPin: (formData, pin) => dispatch(createPin(formdata, pin))
+  createPin: formData => dispatch(createPin(formData))
 })
 
 export default withRouter(

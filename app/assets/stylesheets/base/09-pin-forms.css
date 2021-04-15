@@ -133,3 +133,19 @@
   margin: 20px;
 }
 
+.pin-form-errors {
+  font-size: 18px;
+  list-style: none;
+  font-weight: 700;
+  text-align: justify;
+  margin: 10px auto auto 0;
+  color: red;
+}
+
+.content-card-text-container {
+  width: 60%;
+}
+
+.pin-card-delete-button-container {
+  width: 200px;
+}
