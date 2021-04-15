@@ -16,3 +16,21 @@ export const updateUser = (userFormData, user) => {
     })
   )
 };
+
+export const followUser = (userId, followeeId) => {
+  return(
+    $.ajax({
+      url: `api/users/${userId}/${followeeId}`,
+      method: 'POST'
+    })
+  )
+};
+
+export const unfollowUser = (userId, followeeId) => {
+  return(
+    $.ajax({
+      url: `api/users/${userId}/${followeeId}`,
+      method: 'DELETE'
+    })
+  )
+};

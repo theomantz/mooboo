@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { faPen, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen } from '@fortawesome/free-solid-svg-icons'
 import AddButtonContainer from '../add_button/add_button_container'
 
 
@@ -71,10 +71,32 @@ class Profile extends React.Component {
     }
   }
 
+  renderFollowers() {
+    const { followers, followees } = this.props.user
+    let numFollowers = followers ? Object.values(followers).length : '0'
+    let numFollowees = followees ? Object.values(followers).length : '0'
+    return (
+      <div className="user-follow-container">
+        <span
+          className="Following"
+          onClick={() => this.props.openModal("Following")}
+        >
+          {numFollowees} Following
+        </span>
+        <span
+          className="Followers"
+          onClick={() => this.props.openModal("Followers")}
+        >
+          {numFollowers} Followers
+        </span>
+      </div>
+    );
+  }
+
   renderDetails() {
     if( !this.props.user ) return null
     const { user } = this.props
-    if( user.location || user.description ) {
+    if( user.location || user.description || user.followers ) {
       return(
         <div className="user-description-container">
           {user.location ? <span 
@@ -109,6 +131,17 @@ class Profile extends React.Component {
     }
   }
 
+  renderBackArrow() {
+    return(
+        <div className="update-user-back-arrow-container">
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            className="update-user-back-arrow"
+            onClick={() => this.props.history.goBack()}
+          />
+      </div>
+    )
+  }
 
 
   renderAdd() {
@@ -120,7 +153,7 @@ class Profile extends React.Component {
         </div>
       )
     } else {
-      return null
+      <AddButtonContainer user={user} location='profile-page' />
     }
   }
 
@@ -129,10 +162,12 @@ class Profile extends React.Component {
     const { user } = this.props
     return (
       <div className="profile-container" key={this.props.user}>
-        {this.renderEdit()}
+          {this.renderBackArrow()}
+          {this.renderEdit()}
         <div className="profile-page-avatar-container">
           {this.renderAvatar()}
           {this.renderUsername()}
+          {this.renderFollowers()}
           {this.renderDetails()}
         </div>
         <div className="profile-page-content-container">

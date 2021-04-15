@@ -135,12 +135,11 @@ class PinForm extends React.Component {
     return (
       <div className="pin-form-container">
         <div className="update-user-back-arrow-container">
-          <Link to={`/home`}>
-            <FontAwesomeIcon
-              icon={faArrowLeft}
-              className="update-user-back-arrow"
-            />
-          </Link>
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          className="update-user-back-arrow"
+          onClick={() => this.props.closeModal()}
+        />
         </div>
         <form className="pin-form" onSubmit={this.handleSubmit}>
           <div className="pin-image-container pin-form-left-container">

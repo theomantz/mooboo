@@ -2,17 +2,17 @@ import React from "react";
 import { Link, NavLink } from 'react-router-dom';
 
 class NoSessionNavBanner extends React.Component {
+  
   render() {
     return (
       <div className="banner">
         <div className="assets-container left-nav-container">
-          <NavLink 
-            to='/'
-            activeClassName='active-link active-link-logo'>
+          <Link 
+            to='/'>
             <div className="mooboo-icon-container">
               <img src={window.moobooLarge} alt="logo" className="logo"></img>
             </div>
-          </NavLink>
+          </Link>
             <h3 className="welcome-title">mooboo</h3>
         </div>
         <div className="right-nav-container">
@@ -30,19 +30,16 @@ class NoSessionNavBanner extends React.Component {
             </div>
           </div>
           <nav className="button-container">
-            <NavLink 
-              to="/login" 
-              className="button-link login-button"
-              activeClassName='active-link'
-              >
+            <button 
+              onClick={() => this.props.openModal('login')}
+              className='login-button button-link'>
               Log In
-            </NavLink>
-            <NavLink 
-              to="/signup" 
-              className="button-link signup-button"
-              activeClassName='active-link'>
+            </button>
+            <button 
+              onClick={() => this.props.openModal('signup')}
+              className='signup-button button-link'>
               Sign Up
-            </NavLink>
+            </button>
           </nav>
         </div>
       </div>

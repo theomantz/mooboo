@@ -126,5 +126,8 @@ input.board-form-private-checkbox {
 .remove-from-board-button:active {
   background-color: #14613B;
   color: white;
+}
 
+.board-form-header-text {
+  margin-right: 75px;
 }

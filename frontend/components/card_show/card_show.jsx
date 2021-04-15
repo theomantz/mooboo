@@ -3,7 +3,7 @@ import uuid from 'react-uuid';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import SaveButtonContainer from '../save_button/save_button_container'
-import DocumentGridContainer from '../document_grid/document_grid_container'
+import FollowButtonContainer from '../follow_button/follow_button_container'
 import { Link } from 'react-router-dom';
 
 const colors = [
@@ -82,12 +82,14 @@ class CardShow extends React.Component {
           <div className='username-profile-link-container'>
             <Link 
             to={`/users/${uploader.id}`} 
-            className='username-profile-link'>
+            className='username-profile-link'
+            >
               {uploader.username}
             </Link>
-            <button 
-              className='button-link follow-button'
-              onClick={this.followUser}>Follow</button>
+            <FollowButtonContainer  
+            user={uploader} 
+            location='card-show' 
+            />
           </div>
         </div>
       </div>

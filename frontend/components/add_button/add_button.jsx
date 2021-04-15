@@ -37,7 +37,11 @@ class AddButton extends React.Component {
             plus-icon-container-${this.state.active}`
             }
           onClick={this.handleClick}>
-          <DropDownProfile active={this.state.active} />
+          <DropDownProfile 
+            active={this.state.active} 
+              openModal={this.props.openModal}
+              closeModal={this.props.closeModal}
+            />
         </div>
           <FontAwesomeIcon 
             icon={faPlus} 

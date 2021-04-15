@@ -25,7 +25,10 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(id: params[:id])
+    @user = User
+    .where(id: params[:id])
+    .includes(:followers, :followees)
+    .first
     render :show
   end
 
@@ -35,6 +38,28 @@ class Api::UsersController < ApplicationController
   def pins_by_user
     @pins = Pin.where(uploader_id: params[:id])
     render 'api/pins/index'
+  end
+
+  def follow
+    @user = User.find_by(id: params[:id])
+    @followee = User.find_by(id: params[:followee_id])
+    if !@user.nil? && !@followee.nil? && @followee.id == current_user.id 
+      @followee.followers << @user
+      render json: ['Followed!'], status: 200
+    else
+      render json: @user.errors.full_messages, status: 400
+    end
+  end
+
+  def unfollow
+    @user = User.find_by(id: params[:id])
+    @followee = User.find_by(id: params[:followee_id])
+    if !@user.nil? && !@followee.nil? && @user.id == current_user.id 
+      @followee.followers.delete(@user)
+      render ['Unfollowed'], status: 200
+    else
+      render json: @user.errors.full_messages, status: 400
+    end
   end
 
   private

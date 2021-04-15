@@ -1,3 +1,5 @@
+
+
 .content-card-image {
   display: flex;
   flex-direction: column;
@@ -104,11 +106,12 @@
 
 .content-card-save-button-container {
   display: flex;
-  position: fixed;
+  position: relative;
   flex-direction: row;
   justify-content: center;
   margin-bottom: 40px;
-  top: 20%;
+  top: -4%;
+  right: 26%;
 }
 
 .save-button-container {
@@ -218,8 +221,9 @@
 }
 
 .drop-down-list-container {
-  padding: 18px 0;
   width: 100%;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   background-color: white;
 }
 
@@ -357,5 +361,5 @@
 .edit-board-container.Create {
   display: flex;
   flex-direction: column;
-  margin: 50px auto;
+  background-color: white;
 }

@@ -5,6 +5,18 @@ import { faSearch} from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 class SessionNavBanner extends React.Component {
+  renderAvatar() {
+    const { user } = this.props
+    if( user.photoUrl ) {
+      return(
+        <img src={user.photoUrl} 
+        style={{ width: "32px", height: "32px", borderRadius: "100%", objectFit: "cover" }} />
+      )
+    } else {
+     return <FontAwesomeIcon icon={faUser} />
+    }
+  }
+  
   render() {
     const { user, logOut } = this.props
     return (
@@ -36,7 +48,7 @@ class SessionNavBanner extends React.Component {
           className="profile-link-button"
           activeClassName='active-link'
           >
-          <FontAwesomeIcon icon={faUser} />
+          {this.renderAvatar()}
         </NavLink>
           <Link to="/" style={{ textDecoration: "none" }}>
             <button

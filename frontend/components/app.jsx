@@ -1,4 +1,5 @@
 import React from 'react'
+import Modal from './modal/modal'
 import { AuthRoute, ProtectedRoute } from '../util/frontend_util'
 import { Redirect, Switch, Route } from 'react-router-dom'
 import DocumentGridContainer from './document_grid/document_grid_container'
@@ -21,9 +22,11 @@ import TodayPageContainer from './today_page/today_page_container'
 
 const App = () => (
   <div style={{height: "100vw"}}>
+    <Modal />
     <header>
       <NavBannerContainer />
       <Route exact path='/pins/new' component={CreatePinFormContainer} />
+      <Route exact path='/boards/new' component={CreateBoardContainer} />
       <Switch>
         <AuthRoute exact path='/' component={LandingPageContainer} />
         <AuthRoute exact path='/login' component={LoginFormContainer} />
@@ -33,7 +36,6 @@ const App = () => (
       </Switch>
     </header>
     <Switch>
-      <Route exact path='/boards/new' component={CreateBoardContainer} />
       <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
       <Route exact path='/boards/:boardId' component={BoardShowContainer} />
       <Route exact path='/boards/:boardId/edit' component={EditBoardContainer} />

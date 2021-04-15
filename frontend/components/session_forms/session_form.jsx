@@ -4,6 +4,7 @@ import uuid from 'react-uuid';
 import DemoUserButtonContainer from '../demo_user/demo_user_button_container'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
+import { AiOutlineClose } from 'react-icons/ai'
 
 class SessionForm extends React.Component {
   constructor(props) {
@@ -26,8 +27,8 @@ class SessionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.processForm(this.state);
-    <Redirect to='/home'/>
+    this.props.processForm(this.state)
+      .then(this.props.closeModal())
   }
 
   renderErrors() {
@@ -46,9 +47,7 @@ class SessionForm extends React.Component {
     return (
       <div className={`session-form-container ${formType}-form-container`}>
         <div className='session-form close-button'>
-          <Link to="/" >
-            <FontAwesomeIcon icon={faWindowClose} size='2x' className='close-button-icon'/>
-          </Link>
+          <AiOutlineClose className='close-button-icon' onClick={() => this.props.closeModal()}/>
         </div>
         <img src={window.moobooLarge} alt="logo" className="session-form-logo"></img>
         <form onSubmit={this.handleSubmit} className="session-form">
