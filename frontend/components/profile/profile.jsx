@@ -1,11 +1,8 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { faPen } from '@fortawesome/free-solid-svg-icons'
+import { faPen, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AddButtonContainer from '../add_button/add_button_container'
-import FollowButtonContainer from '../follow_button/follow_button_container'
-import FollowersListContainer from '../follows_list/followers_list_container'
-import FolloweesListContainer from '../follows_list/followees_list_container'
 
 
 const colors = [
@@ -84,13 +81,13 @@ class Profile extends React.Component {
           className="Following"
           onClick={() => this.props.openModal("Following")}
         >
-          {numFollowees} Followers
+          {numFollowees} Following
         </span>
         <span
           className="Followers"
           onClick={() => this.props.openModal("Followers")}
         >
-          {numFollowers} Following
+          {numFollowers} Followers
         </span>
       </div>
     );
@@ -134,6 +131,17 @@ class Profile extends React.Component {
     }
   }
 
+  renderBackArrow() {
+    return(
+        <div className="update-user-back-arrow-container">
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            className="update-user-back-arrow"
+            onClick={() => this.props.history.goBack()}
+          />
+      </div>
+    )
+  }
 
 
   renderAdd() {
@@ -154,7 +162,8 @@ class Profile extends React.Component {
     const { user } = this.props
     return (
       <div className="profile-container" key={this.props.user}>
-        {this.renderEdit()}
+          {this.renderBackArrow()}
+          {this.renderEdit()}
         <div className="profile-page-avatar-container">
           {this.renderAvatar()}
           {this.renderUsername()}

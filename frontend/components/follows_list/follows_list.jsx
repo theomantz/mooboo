@@ -1,25 +1,21 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import uuid from 'react-uuid'
+import { Link } from 'react-router-dom'
+import { AiOutlineClose } from 'react-icons/ai'
+import FollowButtonContainer from '../follow_button/follow_button_container'
 
 class FollowersList extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      active: false,
-    }
-    
-    this.handleClick = this.handleClick.bind(this)
-    
   }
 
   componentDidMount() {
     debugger
     const {
-      match,
+      location,
       fetchUser } = this.props
-    fetchUser(match.params.userId)
+    const userId = location.pathname.slice(7);
+    fetchUser(userId)
   }
 
   assignRelations() {
@@ -28,13 +24,29 @@ class FollowersList extends React.Component {
     if( this.props.listType === 'Followers') {
       users = user.followers
     } else {
-      users = user.following
+      users = user.followees
+    }
+    if( !users ) {
+      return (
+        <li key={uuid()} className="relation-list-item">
+          None Yet!
+        </li>
+      );
     }
     const relationships = Object.values(users).map( user => {
       if( user.id !== currentUserId) {
         return (
-          <Link to={`users/${user.id}`} key={uuid()}>
-            <li key={`follow-page-link-${user.id}`}>@{user.username}</li>
+          <Link 
+            to={`${user.id}`} 
+            key={uuid()}
+            onClick={() => this.props.closeModal()}>
+            <li key={`follow-page-link-${user.id}`}
+            className='relation-list-item'>
+              <span className='relation-list-link'>
+                @{user.username} 
+              </span>
+                <FollowButtonContainer user={user}/>
+            </li>
           </Link>
         );
       }
@@ -42,34 +54,26 @@ class FollowersList extends React.Component {
     return relationships.filter( relation => relation !== undefined )
   }
 
-  handleClick() {
-    const active = !this.state.active
-    this.setState({ active: active })
-  }
-
   renderDropdown() {
-    if( !this.state.active ) {
-      return(
-        <span className={this.props.relationship}>
-          {this.assignRelations().length} {this.props.relationship}
-        </span>
-      )
-    } else {
-      return (
-        <div className={`follow-drop-down ${this.props.relationship}`}>
-          <h1>{this.props.relationship}</h1>
-          <ul className="relations-list">{this.assignRelations()}</ul>
-        </div>
-      );
-    }
+    return (
+      <div className={`follow-drop-down`}>
+        <header className='follow-list-header'>
+          <div className='close-button-container'>
+            <AiOutlineClose onClick={() => this.props.closeModal()} />
+          </div>
+          <span className='close-header-text'>{this.props.listType}</span>  
+        </header>
+        <ul className="relations-list">{this.assignRelations()}</ul>
+      </div>
+    );
   }
 
   render() {
-    if( !this.props.users ) return null
+    debugger
+    if( !this.props.user ) return null
     return(
       <div 
-        className='follow-list-container'
-        onClick={this.handleClick}>
+        className='follow-list-container'>
         {this.renderDropdown()}
       </div>
     )

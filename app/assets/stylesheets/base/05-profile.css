@@ -395,52 +395,95 @@
   justify-content: center;
 }
 
-.Following {
-  margin-right: 10px;
-  color: black;
-  cursor: pointer;
-  position: absolute;
-  left: 40%;
+.Followers {
+  margin-left: 10px;
 }
 
+.Following {
+  margin-right: 10px;
+}
 
 .Following:hover {
   text-decoration: underline;
 }
 
-.Followers {
-  margin-left: 10px;
-  color: black;
-  cursor: pointer;
-  position: absolute;
-  right: 40%;
-}
-
-
 .Followers:hover {
   text-decoration: underline;
 }
 
-.follow-drop-down {
+.follow-list-container {
+  min-height: 550px;
+  min-width: 500px;
+  background-color: white;
   display: flex;
   flex-direction: column;
-  position: absolute;
-  border: 1px solid lightgray;
-  padding: 15px;
+  align-items: center;
+  border-radius: 32px;
 }
 
-.follow-drop-down.Following {
-  left: 38%;
-  bottom: 9%;
-  padding: 12px 10px 33px 40px;
-  border-radius: 16px;
+.follow-drop-down {
+  width: 500px;
+  min-height: 550px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.follow-drop-down.Followers {
-  border-radius: 16px;
-  padding: 12px 40px 33px 10px;
-  right: 38%;
-  bottom: 9%;
+.follow-list-header {
+  display: flex;
+  padding: 50px;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 50px;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+}
+
+.relation-list-item {
+  display: flex;
+  flex-direction: row;
+  width: 85%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+  margin: auto;
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  color: black;
+  border-radius: 17px;
+}
+
+.relation-list-item:hover {
+  background: lightgray;
+}
+
+.close-header-text {
+  margin-right: 140px;
+}
+
+.close-button-container:hover {
+    background-color: lightgray;
+}
+.close-button-container {
+    height: 35px;
+    width: 35px;
+    padding: 5px;
+    box-sizing: content-box;
+    border-radius: 50px;
+}
+
+.relation-list-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.update-user-back-arrow-container {
+    display: flex;
+    flex-direction: row;
+    width: 107%;
+    margin-right: 20px;
 }
 
 @media screen and (min-width:0 ){
