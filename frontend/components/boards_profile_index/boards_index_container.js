@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { fetchBoards } from '../../actions/board_actions'
 import BoardsIndex from './boards_index'
+import { withRouter } from 'react-router-dom'
 
 const mapStateToProps = (state, ownProps) => ({
   boards: Object.values(state.entities.boards),
@@ -12,4 +13,4 @@ const mapDispatchToProps = dispatch => ({
   fetchBoards: userId => dispatch(fetchBoards(userId))
 })
 
-export default connect( mapStateToProps, mapDispatchToProps)(BoardsIndex)
+export default withRouter(connect( mapStateToProps, mapDispatchToProps)(BoardsIndex))

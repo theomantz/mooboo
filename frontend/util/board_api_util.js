@@ -6,6 +6,15 @@ export const fetchBoards = userId => (
   })
 );
 
+export const fetchAllBoards = () => {
+  return(
+    $.ajax({
+      url: 'api/boards',
+      method: 'GET'
+    })
+  )
+}
+
 export const fetchBoard = boardId => (
   $.ajax({
     url: `api/boards/${boardId}`,

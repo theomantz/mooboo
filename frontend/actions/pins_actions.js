@@ -35,6 +35,14 @@ export const fetchPins = () => dispatch => {
   )
 };
 
+export const createPin = formData => dispatch => {
+  return(
+    PinsApiUtil.createPin(formData)
+      .then( pin => dispatch(receivePin(pin)),
+      errors => dispatch(receiveErrors(errors)))
+  )
+};
+
 export const fetchPin = pinId => dispatch => {
   return( 
     PinsApiUtil.fetchPin(pinId)

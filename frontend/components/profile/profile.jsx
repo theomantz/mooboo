@@ -1,9 +1,8 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faPlus } from '@fortawesome/free-solid-svg-icons'
-import BoardsIndexContainer from '../boards_profile_index/boards_index_container'
-import AddButtonContainer from './add_button_container'
+import { faPen } from '@fortawesome/free-solid-svg-icons'
+import AddButtonContainer from '../add_button/add_button_container'
 
 
 const colors = [
@@ -117,7 +116,7 @@ class Profile extends React.Component {
     if( user.id === currentUser.id ) {
       return (
         <div className={`board-pin-create-container`}>
-          <AddButtonContainer />
+          <AddButtonContainer location='profile'/>
         </div>
       )
     } else {

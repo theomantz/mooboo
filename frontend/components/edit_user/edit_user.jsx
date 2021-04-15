@@ -6,10 +6,12 @@ import { Link, withRouter } from 'react-router-dom'
 class EditUser extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = this.props.user
+    this.state.photoFile = this.state.photoFile || null
+    this.state.filePreview = this.state.filePreview || null
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleFile = this.handleFile.bind(this)
   }
 
   handleChange(type) {
@@ -23,13 +25,25 @@ class EditUser extends React.Component {
     }
   }
 
+  handleFile(e) {
+    this.setState({ 
+      photoFile: e.currentTarget.files[0],
+      filePreview: URL.createObjectURL(e.currentTarget.files[0])
+    })
+  }
+
   handleSubmit(e) {
     e.preventDefault()
-    debugger
-    this.props.updateUser(this.state)
-    if( !this.props.errors.length ) {
-      this.props.history.push(`/users/${this.props.user.id}`)
+    const formData = new FormData();
+    if( this.state.photoFile ) {
+      formData.append('user[photo]', this.state.photoFile)
     }
+    formData.append('user[email]', this.state.email)
+    formData.append('user[location]', this.state.location)
+    formData.append('user[username]', this.state.username)
+    formData.append('user[description]', this.state.description)
+    this.props.updateUser(formData, this.props.user)
+      .then( this.props.history.push(`/users/${this.props.user.id}`) )
   }
 
   renderErrors() {
@@ -39,6 +53,19 @@ class EditUser extends React.Component {
         {this.props.errors.forEach(error => <span className="error">{error}</span> )}
       </div>
     )
+  }
+
+  renderImage() {
+    if( this.state.filePreview ) {
+      return(
+        <img
+          src={this.state.filePreview}
+          className="profile-avatar-image-preview"
+        />
+      )
+    } else {
+      return null
+    }
   }
 
   render() {
@@ -57,11 +84,12 @@ class EditUser extends React.Component {
         </div>
         <form onSubmit={this.handleSubmit} className='update-user-form'>
           <label className='photo-label'>
+          {this.renderImage()}
           <input
             type='file'
-            value={this.state.photo}
-            onChange={this.handleChange('image')}
-            />
+            className='image-input-file-area'
+            onChange={this.handleFile}>
+            </input>
           </label>
           <label className='email-label'>email
             <input

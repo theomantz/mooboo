@@ -1,11 +1,12 @@
 class Api::PinsController < ApplicationController
   
   def create
+    debugger
     @pin = Pin.new(pin_params)
     if @pin.save
       render 'api/pins/show'
     else
-      render json: @pin.error.full_messages, status: 400
+      render json: @pin.errors.full_messages, status: 400
     end
   end
 
@@ -46,7 +47,7 @@ class Api::PinsController < ApplicationController
   private
   
   def pin_params
-    params.require(:pin).permit(:uploader_id, :title, :description, :board_ids)
+    params.require(:pin).permit(:uploader_id, :title, :description, :board_ids, :photo)
   end
   
 end

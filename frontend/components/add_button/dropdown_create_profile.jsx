@@ -13,12 +13,12 @@ class DropDownProfile extends React.Component {
     return (
       <div className="dropdown-list-container">
         <ul className="dropdown-list">
-          <Link to={`/users/${userId}/pins/new`}>
+          <Link to={`/pins/new`}>
             <li onClick={this.handleClick}>
               Create Pin
             </li>
           </Link>
-          <Link to={`/users/${userId}/boards/new`}>
+          <Link to={`/boards/new`}>
             <li onClick={this.handleClick}>
               Create Board</li>
           </Link>

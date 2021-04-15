@@ -28,9 +28,8 @@
   flex-direction: column;
   justify-content: space-evenly;
   border-radius: 50px;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  box-shadow:  20px 20px 60px #d9d9d9,
-             -20px -20px 60px #ffffff;
+  background: linear-gradient(145deg, #ffffff, #fffefe);
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 20px 0px;
 }
 
 .content-show-card {
@@ -130,14 +129,12 @@
   font-weight: 600;
   transition: all 5s;
   background: #ffffff;
-  box-shadow:  20px 20px 60px #d9d9d9,
-             -20px -20px 60px #ffffff;
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 20px 0p
 }
 
 .save-button-button:active {
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
-  box-shadow:  20px 20px 60px #d9d9d9,
-             -20px -20px 60px #ffffff;
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 20px 0p
 }
 
 .save-button-dropdown {
@@ -187,15 +184,18 @@
 }
 
 .save-button-dropdown-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
+  z-index: 10;
 }
 
 .drop-down-list-container {
   padding: 18px 24px 18px 24px;
   width: 80%;
+
 }
 
 .content-nav-container {
@@ -302,4 +302,29 @@
   font-weight: 500;
   font-size: 18px;
   margin-top: 10px;
+}
+
+.main-page-pin-index {
+  width: 95%;
+  margin: 2% auto;
+}
+
+.plus-icon-outer-container.main {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+}
+
+.plus-icon-outer-container.main.true {
+  background-color: rgb(255 255 255 / 90%);
+  filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 0px 8px);
+}
+
+.profile-add-icon.main {
+  box-shadow: none;
+  filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 0px 8px);
+}
+
+.board-index-component.today-page {
+  margin-top: 25px;
 }

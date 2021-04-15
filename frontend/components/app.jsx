@@ -10,17 +10,20 @@ import LoginFormContainer from './session_forms/login_form_container'
 import SignupFormContainer from './session_forms/signup_form_container'
 import LandingPageContainer from './landing/landing_page_container';
 import PinCardShowContainer from './card_show/pin_card_show_container';
+import CreatePinFormContainer from './pins_form/create_pin_form_container'
 import BoardShowContainer from './board_show/board_show_container'
 import PinIndexContainer from './pins/pin_index_container'
 import ProfileContainer from './profile/profile_container'
 import EditUserContainer from './edit_user/edit_user_container'
 import AboutPage from './about_page/about'
+import TodayPageContainer from './today_page/today_page_container'
 
 
 const App = () => (
   <div style={{height: "100vw"}}>
     <header>
       <NavBannerContainer />
+      <Route exact path='/pins/new' component={CreatePinFormContainer} />
       <Switch>
         <AuthRoute exact path='/' component={LandingPageContainer} />
         <AuthRoute exact path='/login' component={LoginFormContainer} />
@@ -44,8 +47,9 @@ const App = () => (
         </div>
       </Route>
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
+      <ProtectedRoute exact path='/today' component={TodayPageContainer} />
     </Switch>
-      {/* <Redirect exact from='*' to='/home' /> */}
+      <Redirect exact from='*' to='/home' />
   </div>
 )
 

@@ -19,8 +19,16 @@ class Api::BoardsController < ApplicationController
   end
 
   def index
-    @boards = Board.where(user_id: params[:userId]).includes(:pins)
-    if !@boards.nil?
+    if params[:userId]
+      @boards = Board
+        .where(user_id: params[:userId])
+        .includes(:pins)
+    else
+      @boards = Board
+        .where(private: false)
+        .includes(:pins)
+    end
+    if !@boards.empty?
       render 'api/boards/index'
     else
       render json: ['invalid request'], status: 404

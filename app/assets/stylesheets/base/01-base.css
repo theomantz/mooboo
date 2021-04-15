@@ -33,8 +33,7 @@ button {
   transition: all 0.3s;
   border-radius: 131px;
   background: #ffffff;
-  box-shadow:  5px 5px 10px #e6e6e6,
-             -5px -5px 10px #ffffff;
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 20px 0px;
 }
 
 .button-link.delete-button {
