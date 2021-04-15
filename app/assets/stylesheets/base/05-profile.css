@@ -98,6 +98,8 @@
   font-size: 20px;
   font-weight: 700;
   text-decoration: none;
+  box-sizing: content-box;
+  height: 20px;
   padding: 25px;
   border-radius: 100px;
   transition: all 0.3s;
@@ -386,6 +388,32 @@
   height: fit-content;
 }
 
+.user-follow-container {
+  display: flex;
+  flex-direction: row;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.following {
+  margin-right: 10px;
+  color: black;
+  cursor: pointer;
+}
+
+.following:hover {
+  text-decoration: underline;
+}
+
+.followers {
+  margin-left: 10px;
+  color: black;
+  cursor: pointer;
+}
+
+.followers:hover {
+  text-decoration: underline;
+}
 
 @media screen and (min-width:0 ){
   .profile-page-pin-index {

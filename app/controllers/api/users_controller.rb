@@ -43,9 +43,9 @@ class Api::UsersController < ApplicationController
   def follow
     @user = User.find_by(id: params[:id])
     @followee = User.find_by(id: params[:followee_id])
-    if !@user.nil? && !@followee.nil? && @user.id == current_user.id 
+    if !@user.nil? && !@followee.nil? && @followee.id == current_user.id 
       @followee.followers << @user
-      render ['Followed!'], status: 200
+      render json: ['Followed!'], status: 200
     else
       render json: @user.errors.full_messages, status: 400
     end

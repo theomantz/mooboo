@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
+import FollowButtonContainer from '../follow_button/follow_button_container'
 import AddButtonContainer from '../add_button/add_button_container'
 
 
@@ -71,10 +72,22 @@ class Profile extends React.Component {
     }
   }
 
+  renderFollowers() {
+    const { followers, followees } = this.props.user
+    let numFollowers = followers ? Object.values(followers).length : '0'
+    let numFollowees = followees ? Object.values(followers).length : '0'
+    return(
+      <div className='user-follow-container'>
+        <span className='following'> {numFollowees} Following </span>
+        <span className='followers'> {numFollowers} Followers </span>
+      </div>
+    )
+  }
+
   renderDetails() {
     if( !this.props.user ) return null
     const { user } = this.props
-    if( user.location || user.description ) {
+    if( user.location || user.description || user.followers ) {
       return(
         <div className="user-description-container">
           {user.location ? <span 
@@ -120,7 +133,7 @@ class Profile extends React.Component {
         </div>
       )
     } else {
-      return null
+      <AddButtonContainer user={user} location='profile-page' />
     }
   }
 
@@ -133,6 +146,7 @@ class Profile extends React.Component {
         <div className="profile-page-avatar-container">
           {this.renderAvatar()}
           {this.renderUsername()}
+          {this.renderFollowers()}
           {this.renderDetails()}
         </div>
         <div className="profile-page-content-container">
