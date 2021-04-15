@@ -20,6 +20,7 @@
 .content-show-card-container {
   max-width: 2050px;
   max-height: 100%;
+  min-height: 400px;
   margin: 50px 50px 50px 50px;
   box-sizing: border-box;
   padding: 50px;
@@ -103,9 +104,11 @@
 
 .content-card-save-button-container {
   display: flex;
+  position: fixed;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  top: 20%;
 }
 
 .save-button-container {
@@ -113,6 +116,17 @@
   flex-direction: row;
   justify-content: center;
   margin-bottom: 40px;
+}
+
+.save-button-container:hover .save-button-dropdown {
+  box-shadow: -2px 1px 5px rgb(32 33 36 / 28%);
+  border-color: rgba(223,225,229,0);
+}
+
+
+.save-button-container:hover .save-button-button {
+  box-shadow: 0 1px 5px rgb(32 33 36 / 28%);
+  border-color: rgba(223,225,229,0);
 }
 
 .save-button-button {
@@ -123,18 +137,23 @@
   border-bottom-left-radius: 0px;
   margin-left: 0px;
   border: none;
-  color: #6E9885;
+  color: #F55845;
   background-color: #ffffff;
   font-size: 16px;
   font-weight: 600;
-  transition: all 5s;
   background: #ffffff;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px 0p
+  border: 1px solid lightgray;
+  border-left: none;
+}
+
+.save-button-button:hover {
+    box-shadow: 0 1px 5px rgb(32 33 36 / 28%);
+    border-color: rgba(223,225,229,0);
 }
 
 .save-button-button:active {
-  background: linear-gradient(145deg, #e6e6e6, #ffffff);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px 0p
+    box-shadow: 0 1px 5px rgb(32 33 36 / 28%);
+    border-color: rgba(223,225,229,0);
 }
 
 .save-button-dropdown {
@@ -149,8 +168,18 @@
   font-weight: 600;
   margin-right: 0px;
   background: #ffffff;
-  box-shadow:  20px 20px 60px #c8c8c8,
-             -20px -20px 60px #ffffff;
+  border: 1px solid lightgray;
+  border-right: none;
+}
+
+.save-button-dropdown:hover {
+    box-shadow: -2px 1px 5px rgb(32 33 36 / 28%);
+    border-color: rgba(223,225,229,0);
+}
+
+.save-button-dropdown:active {
+    box-shadow: -2px 1px 5px rgb(32 33 36 / 28%);
+    border-color: rgba(223,225,229,0);
 }
 
 .dropdown-list-icon {
@@ -175,13 +204,9 @@
 .save-button-container-true {
   border: 1px solid lightgray;
   border-radius: 18px;
+  margin-bottom: 0px;
 }
 
-.save-button-dropdown:active {
-  background: linear-gradient(145deg, #d4d4d4, #fbfbfb);
-  box-shadow:  20px 20px 60px #c8c8c8,
-             -20px -20px 60px #ffffff;
-}
 
 .save-button-dropdown-container {
   position: relative;
@@ -193,9 +218,9 @@
 }
 
 .drop-down-list-container {
-  padding: 18px 24px 18px 24px;
-  width: 80%;
-
+  padding: 18px 0;
+  width: 100%;
+  background-color: white;
 }
 
 .content-nav-container {
