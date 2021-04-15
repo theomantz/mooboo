@@ -218,8 +218,9 @@
 }
 
 .drop-down-list-container {
-  padding: 18px 0;
   width: 100%;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   background-color: white;
 }
 

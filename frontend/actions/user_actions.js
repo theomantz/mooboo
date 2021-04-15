@@ -25,4 +25,4 @@ export const updateUser = (formData, user) => dispatch => {
       .then(user => dispatch(receiveUser(user)),
       errors => dispatch(receiveUserErrors(errors)))
   )
-}
+};
