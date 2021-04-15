@@ -316,7 +316,7 @@
 }
 
 .plus-icon-outer-container.main.true {
-  background-color: rgb(255 255 255 / 90%);
+  background-color: rgba(255, 255, 255, 0.9);
   filter: drop-shadow(rgba(0, 0, 0, 0.1) 0px 0px 8px);
 }
 
