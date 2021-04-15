@@ -13,7 +13,7 @@ class SessionNavBanner extends React.Component {
         style={{ width: "32px", height: "32px", borderRadius: "100%", objectFit: "cover" }} />
       )
     } else {
-      <FontAwesomeIcon icon={faUser} />
+     return <FontAwesomeIcon icon={faUser} />
     }
   }
   

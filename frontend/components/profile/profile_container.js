@@ -2,6 +2,7 @@ import Profile from './profile'
 import { connect } from 'react-redux' 
 import { fetchBoards } from '../../actions/board_actions'
 import { fetchUser } from '../../actions/user_actions'
+import { openModal } from '../../actions/modal_actions'
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -14,7 +15,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchBoards: userId => dispatch(fetchBoards(userId)),
-  fetchUser: userId => dispatch(fetchUser(userId))
+  fetchUser: userId => dispatch(fetchUser(userId)),
+  openModal: modal => dispatch(openModal(modal))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

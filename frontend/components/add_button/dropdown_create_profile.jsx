@@ -7,21 +7,23 @@ class DropDownProfile extends React.Component {
 
   }
 
+  handleClick(type) {
+    this.props.openModal(type)
+  }
+
+
   render() {
     if ( !this.props.active ) return null
     const userId = this.props.match.params.userId
     return (
       <div className="dropdown-list-container">
         <ul className="dropdown-list">
-          <Link to={`/pins/new`}>
-            <li onClick={this.handleClick}>
+            <li onClick={() => this.handleClick('pin')}>
               Create Pin
             </li>
-          </Link>
-          <Link to={`/boards/new`}>
-            <li onClick={this.handleClick}>
-              Create Board</li>
-          </Link>
+            <li onClick={() => this.handleClick('board')}>
+              Create Board
+            </li>
         </ul>
       </div>
     );

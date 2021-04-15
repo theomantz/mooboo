@@ -1,9 +1,11 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
-import FollowButtonContainer from '../follow_button/follow_button_container'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AddButtonContainer from '../add_button/add_button_container'
+import FollowButtonContainer from '../follow_button/follow_button_container'
+import FollowersListContainer from '../follows_list/followers_list_container'
+import FolloweesListContainer from '../follows_list/followees_list_container'
 
 
 const colors = [
@@ -76,12 +78,22 @@ class Profile extends React.Component {
     const { followers, followees } = this.props.user
     let numFollowers = followers ? Object.values(followers).length : '0'
     let numFollowees = followees ? Object.values(followers).length : '0'
-    return(
-      <div className='user-follow-container'>
-        <span className='following'> {numFollowees} Following </span>
-        <span className='followers'> {numFollowers} Followers </span>
+    return (
+      <div className="user-follow-container">
+        <span
+          className="Following"
+          onClick={() => this.props.openModal("Following")}
+        >
+          {numFollowees} Followers
+        </span>
+        <span
+          className="Followers"
+          onClick={() => this.props.openModal("Followers")}
+        >
+          {numFollowers} Following
+        </span>
       </div>
-    )
+    );
   }
 
   renderDetails() {

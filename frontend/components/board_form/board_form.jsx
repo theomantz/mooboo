@@ -95,11 +95,15 @@ class CreateBoard extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.submitBoard(this.state)
-    this.props.history.goBack()
+    this.handleBackArrow()
   }
 
   handleBackArrow() {
-    this.props.history.goBack()
+    if( this.props.formType === 'Create' ) {
+      this.props.closeModal()
+    } else {
+      this.props.history.goBack()
+    }
   }
   
   render() {
@@ -113,8 +117,10 @@ class CreateBoard extends React.Component {
               className="update-user-back-arrow"
             />
         </div>
+        <div className='board-form-header-text'>
           {this.props.formType === 'Create' ? 'Lets get Creative!' : 'Always time for Edits'}
           {this.renderErrors()}
+        </div>
         </header>
         <form onSubmit={this.handleSubmit} className='edit-board-form'>
           <label className='board-form-inputs'>title

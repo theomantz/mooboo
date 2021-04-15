@@ -6,10 +6,8 @@
   position: relative;
   width: 484px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 32px;
   background: #ffffff;
-  box-shadow:  18px 18px 36px #8a8a8a,
-             -18px -18px 36px #ffffff;
 }
 
 .session-form-header {
@@ -134,13 +132,15 @@
   justify-content: flex-end;
   padding: 10px;
   margin: 5px 5px 5px auto;
-  border-radius: 8px;
-  transition: all 1s; 
+  transition: all 1s;
+  margin-top: 20px;
+  margin-right: 20px;
 }
 
 .close-button:hover {
   background-color: lightgray;
   cursor: pointer;
+  border-radius: 100%;
 }
 
 .close-button-icon {

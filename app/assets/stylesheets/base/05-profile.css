@@ -311,7 +311,7 @@
 
 }
 
-.dropdown-list > a > li {
+.dropdown-list > li {
   padding: 8px 40% 4px 4px;
   width: 180px;
   box-sizing: border-box;
@@ -322,7 +322,7 @@
   text-align: left;
 }
 
-.dropdown-list > a > li:hover {
+.dropdown-list > li:hover {
   background-color: gray;
   color: white;
 }
@@ -395,24 +395,52 @@
   justify-content: center;
 }
 
-.following {
+.Following {
   margin-right: 10px;
   color: black;
   cursor: pointer;
+  position: absolute;
+  left: 40%;
 }
 
-.following:hover {
+
+.Following:hover {
   text-decoration: underline;
 }
 
-.followers {
+.Followers {
   margin-left: 10px;
   color: black;
   cursor: pointer;
+  position: absolute;
+  right: 40%;
 }
 
-.followers:hover {
+
+.Followers:hover {
   text-decoration: underline;
+}
+
+.follow-drop-down {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  border: 1px solid lightgray;
+  padding: 15px;
+}
+
+.follow-drop-down.Following {
+  left: 38%;
+  bottom: 9%;
+  padding: 12px 10px 33px 40px;
+  border-radius: 16px;
+}
+
+.follow-drop-down.Followers {
+  border-radius: 16px;
+  padding: 12px 40px 33px 10px;
+  right: 38%;
+  bottom: 9%;
 }
 
 @media screen and (min-width:0 ){
