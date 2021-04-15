@@ -33,11 +33,11 @@ const App = () => (
       </Switch>
     </header>
     <Switch>
+      <Route exact path='/boards/new' component={CreateBoardContainer} />
       <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
       <Route exact path='/boards/:boardId' component={BoardShowContainer} />
       <Route exact path='/boards/:boardId/edit' component={EditBoardContainer} />
       <Route exact path='/users/:userId/edit' component={EditUserContainer} />
-      <Route exact path='/boards/new' component={CreateBoardContainer} />
       <Route path='/users/:userId'>
         <div className='profile-page-container'>
           <Route path='/users/:userId' component={ProfileContainer} />

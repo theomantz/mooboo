@@ -9,10 +9,14 @@
 }
 
 .board-form-header {
-  padding: 50px;
-  font-size: 24px;
-  font-weight: 700;
-  margin: auto;
+    display: flex;
+    font-size: 24px;
+    font-weight: 700;
+    width: 95%;
+    margin: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .edit-board-form {

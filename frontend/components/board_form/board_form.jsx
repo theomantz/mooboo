@@ -2,6 +2,8 @@ import React from 'react';
 import uuid from 'react-uuid';
 import { Redirect, Link } from 'react-router-dom'
 import PinCardContainer from '../card/pin_card_container'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons' 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class CreateBoard extends React.Component {
   constructor(props) {
@@ -21,6 +23,7 @@ class CreateBoard extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBoardDelete = this.handleBoardDelete.bind(this);
+    this.handleBackArrow = this.handleBackArrow.bind(this)
   }
 
   componentDidMount(){
@@ -92,6 +95,11 @@ class CreateBoard extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.submitBoard(this.state)
+    this.props.history.goBack()
+  }
+
+  handleBackArrow() {
+    this.props.history.goBack()
   }
   
   render() {
@@ -99,6 +107,12 @@ class CreateBoard extends React.Component {
     return(
       <div className={`edit-board-container ${this.props.formType}`}>
         <header className="board-form-header">
+        <div className='update-user-back-arrow-container'>
+          <FontAwesomeIcon icon={faArrowLeft} 
+            onClick={this.handleBackArrow} 
+              className="update-user-back-arrow"
+            />
+        </div>
           {this.props.formType === 'Create' ? 'Lets get Creative!' : 'Always time for Edits'}
           {this.renderErrors()}
         </header>

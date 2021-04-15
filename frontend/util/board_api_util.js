@@ -2,7 +2,7 @@ export const fetchBoards = userId => (
   $.ajax({
     url: 'api/boards',
     method: 'GET',
-    data: { userId }
+    data: { user_id: userId }
   })
 );
 
