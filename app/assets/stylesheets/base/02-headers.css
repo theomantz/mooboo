@@ -67,7 +67,7 @@
   transition: all 0.3s;
   border-radius: 68px;
   background: #ffffff;
-  box-shadow: rgb(0 0 0 / 10%) 0px 1px 20px 0px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px 0px;
 }
 
 .profile-link-button:hover {
