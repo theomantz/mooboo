@@ -190,7 +190,13 @@ board4.save!
 
 pins = Pin.all
 boards = Board.all
+users = User.all
 
 pins.each do |pin|
   boards.sample().pins << pin
+end
+
+users.each do |user|
+  demo.followers << user
+  demo.followee << user
 end
