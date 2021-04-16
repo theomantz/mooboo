@@ -15378,6 +15378,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
+var colors = ["#14613B", "#6E9885", "#DDE388", "#F3BA8D", "#F55845"];
 
 var LandingPage = /*#__PURE__*/function (_React$Component) {
   _inherits(LandingPage, _React$Component);
@@ -15387,7 +15388,7 @@ var LandingPage = /*#__PURE__*/function (_React$Component) {
   function LandingPage() {
     _classCallCheck(this, LandingPage);
 
-    return _super.apply(this, arguments);
+    return _super.call(this, props);
   }
 
   _createClass(LandingPage, [{
