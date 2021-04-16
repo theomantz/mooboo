@@ -76,3 +76,9 @@ gem "aws-sdk-rails", "~> 3.6"
 gem "aws-sdk-s3"
 
 gem "email_validator", "~> 2.2"
+
+gem "webpacker", "~> 5.2"
+
+gem "haml", "~> 5.2"
+
+gem "ransack", "~> 2.4"
