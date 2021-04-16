@@ -20,9 +20,10 @@ class NoSessionNavBanner extends React.Component {
             <div className="about-link-container link-container">
             <NavLink 
               to='/about'
+              className='button-link about-link'
               activeClassName='active-link'
               >
-              <span className='about-page-link'>About</span>
+              About
             </NavLink>
             </div>
             <div className="socials-link-container link-container">

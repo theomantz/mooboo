@@ -205,6 +205,15 @@
   background-color: #14613B;
 }
 
+a.button-link.about-link {
+  box-shadow: none;
+}
+
+a.button-link.about-link:hover {
+  background-color: none;
+  text-decoration: underline;
+}
+
 .active-link-logo {
   background-color: none;
   border-radius: 70px;
