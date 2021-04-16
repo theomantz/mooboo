@@ -25,8 +25,8 @@ const App = () => (
     <Modal />
     <header>
       <NavBannerContainer />
-      <Route exact path='/pins/new' component={CreatePinFormContainer} />
-      <Route exact path='/boards/new' component={CreateBoardContainer} />
+      {/* <Route exact path='/pins/new' component={CreatePinFormContainer} />
+      <Route exact path='/boards/new' component={CreateBoardContainer} /> */}
       <Switch>
         <AuthRoute exact path='/' component={LandingPageContainer} />
         <AuthRoute exact path='/login' component={LoginFormContainer} />

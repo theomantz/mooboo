@@ -1,23 +1,17 @@
 json.pins do
   json.array!(@pins) do |pin|
-    json.set! pin.id do
-      json.extract! pin, :id, :title, :uploader_id
-    end
+    json.extract! pin, :id, :title, :uploader_id
   end
 end
 
 json.boards do
   json.array!(@boards) do |board|
-    json.set! board.id do
-      json.extract! board, :id, :title, :user_id
-    end
+    json.extract! board, :id, :title, :user_id
   end
 end
 
 json.users do
   json.array!(@users) do |user|
-    json.set! user.id do
-      json.extract! user, :id, :username
-    end
+    json.extract! user, :id, :username
   end
 end

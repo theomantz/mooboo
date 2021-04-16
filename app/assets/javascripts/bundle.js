@@ -10790,15 +10790,7 @@ var App = function App() {
     style: {
       height: "100vw"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_1__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_nav_banner_nav_banner_container__WEBPACK_IMPORTED_MODULE_7__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_19__.Route, {
-    exact: true,
-    path: "/pins/new",
-    component: _pins_form_create_pin_form_container__WEBPACK_IMPORTED_MODULE_12__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_19__.Route, {
-    exact: true,
-    path: "/boards/new",
-    component: _board_form_create_board_container__WEBPACK_IMPORTED_MODULE_5__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_19__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_2__.AuthRoute, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_1__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("header", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_nav_banner_nav_banner_container__WEBPACK_IMPORTED_MODULE_7__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_19__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_frontend_util__WEBPACK_IMPORTED_MODULE_2__.AuthRoute, {
     exact: true,
     path: "/",
     component: _landing_landing_page_container__WEBPACK_IMPORTED_MODULE_10__.default
@@ -13362,6 +13354,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pins_form_create_pin_form_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pins_form/create_pin_form_container */ "./frontend/components/pins_form/create_pin_form_container.js");
 /* harmony import */ var _follows_list_followers_list_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../follows_list/followers_list_container */ "./frontend/components/follows_list/followers_list_container.js");
 /* harmony import */ var _follows_list_followees_list_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../follows_list/followees_list_container */ "./frontend/components/follows_list/followees_list_container.js");
+/* harmony import */ var _search_bar_search_bar_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../search_bar/search_bar_container */ "./frontend/components/search_bar/search_bar_container.js");
+
 
 
 
@@ -13405,6 +13399,10 @@ function Modal(_ref) {
 
     case 'Following':
       component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_follows_list_followees_list_container__WEBPACK_IMPORTED_MODULE_8__.default, null);
+      break;
+
+    case 'search':
+      component = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_search_bar_search_bar_container__WEBPACK_IMPORTED_MODULE_9__.default, null);
       break;
 
     default:
@@ -14744,12 +14742,34 @@ var SearchBar = /*#__PURE__*/function (_React$Component) {
         users: null
       },
       itemSelected: {},
-      showItemSelected: false
+      showItemSelected: false,
+      active: false
     };
+    _this.containerClick = _this.containerClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(SearchBar, [{
+    key: "containerClick",
+    value: function containerClick() {
+      debugger;
+      var active = this.state.active;
+      var flag = !active;
+      this.setState({
+        active: flag
+      });
+      this.handleModal();
+    }
+  }, {
+    key: "handleModal",
+    value: function handleModal() {
+      var active = this.state.active;
+      var _this$props = this.props,
+          openModal = _this$props.openModal,
+          closeModal = _this$props.closeModal;
+      active ? openModal('search') : closeModal();
+    }
+  }, {
     key: "getAutoCompleteResults",
     value: function getAutoCompleteResults(e) {
       var _this2 = this;
@@ -14775,6 +14795,7 @@ var SearchBar = /*#__PURE__*/function (_React$Component) {
       var boardsList = boards.map(function (board) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
           to: "boards/".concat(board.id),
+          replace: true,
           key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
           key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
@@ -14794,6 +14815,7 @@ var SearchBar = /*#__PURE__*/function (_React$Component) {
       var pinsList = pins.map(function (pin) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
           to: "pins/".concat(pin.uploader_id, "/").concat(pin.id),
+          replace: true,
           key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
           key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
@@ -14813,6 +14835,7 @@ var SearchBar = /*#__PURE__*/function (_React$Component) {
       var usersList = users.map(function (user) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
           to: "users/".concat(user.id),
+          replace: true,
           key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
           key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
@@ -14837,13 +14860,17 @@ var SearchBar = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "outer-search-container"
+        className: "outer-search-container",
+        onClick: function onClick(e) {
+          return _this3.containerClick;
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "search-bar-input-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "text",
         className: "search-bar",
         value: this.state.term,
+        onClick: this.containerClick,
         onChange: function onChange(e) {
           return _this3.getAutoCompleteResults(e);
         }
@@ -14871,6 +14898,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _search_bar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search_bar */ "./frontend/components/search_bar/search_bar.jsx");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+
+
 
 
 
@@ -14879,7 +14909,14 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    openModal: function openModal(modal) {
+      return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__.openModal)(modal));
+    },
+    closeModal: function closeModal() {
+      return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__.closeModal)());
+    }
+  };
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, mapDispatchToProps)(_search_bar__WEBPACK_IMPORTED_MODULE_0__.default));

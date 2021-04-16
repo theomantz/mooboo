@@ -7,6 +7,7 @@ import CreateBoardFormContainer from '../board_form/create_board_container';
 import CreatePinFormContainer from '../pins_form/create_pin_form_container';
 import FollowersListContainer from '../follows_list/followers_list_container'
 import FolloweesListContainer from '../follows_list/followees_list_container'
+import SearchBarContainer from '../search_bar/search_bar_container'
 
 function Modal({modal, closeModal}) {
   if (!modal) {
@@ -31,6 +32,9 @@ function Modal({modal, closeModal}) {
       break;
     case 'Following':
       component = <FolloweesListContainer />;
+      break;
+    case 'search':
+      component = <SearchBarContainer />
       break;
     default:
       return null;

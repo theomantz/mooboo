@@ -15,10 +15,27 @@ class SearchBar extends React.Component {
         users: null
       },
       itemSelected: {},
-      showItemSelected: false
+      showItemSelected: false,
+      active: false
     }
+    
+    this.containerClick = this.containerClick.bind(this)
 
   };
+
+  containerClick() {
+    debugger
+    const { active } = this.state
+    let flag = !active 
+    this.setState({ active: flag })
+    this.handleModal()
+  }
+
+  handleModal() {
+    const { active } = this.state
+    const { openModal, closeModal } = this.props
+    active ? openModal('search') : closeModal()
+  }
 
   getAutoCompleteResults(e) {
     this.setState({
@@ -39,7 +56,8 @@ class SearchBar extends React.Component {
     if( !boards || !boards.length ) return null
       const boardsList = boards.map(board => {
         return(
-        <Link to={`boards/${board.id}`} key={uuid()}>
+        <Link to={`boards/${board.id}`} replace 
+          key={uuid()}>
           <span key={uuid()}>{board.title}</span>
         </Link>
         )
@@ -57,7 +75,10 @@ class SearchBar extends React.Component {
     if( !pins || !pins.length ) return null
       const pinsList = pins.map(pin => {
         return(
-        <Link to={`pins/${pin.uploader_id}/${pin.id}`} key={uuid()}>
+        <Link 
+          to={`pins/${pin.uploader_id}/${pin.id}`} 
+          replace
+          key={uuid()}>
           <span key={uuid()}>{pin.title}</span> 
         </Link>
         )
@@ -75,7 +96,10 @@ class SearchBar extends React.Component {
     if ( !users || !users.length ) return null;
       const usersList = users.map(user => {
         return(
-        <Link to={`users/${user.id}`} key={uuid()}>
+        <Link 
+          to={`users/${user.id}`} 
+          replace
+          key={uuid()}>
           <span key={uuid()}>{user.username}</span> 
         </Link>
         )
@@ -100,12 +124,15 @@ class SearchBar extends React.Component {
   
   render() {
     return (
-      <div className='outer-search-container'>
+      <div 
+        className='outer-search-container' 
+        onClick={(e) => this.containerClick}>
         <div className='search-bar-input-container'>
           <input
             type='text'
             className='search-bar'
             value={this.state.term}
+            onClick={this.containerClick}
             onChange={e => this.getAutoCompleteResults(e)}
             />
         </div>
