@@ -1,10 +1,16 @@
 class Api::SearchController < ApplicationController
   
   def search
-    @pins = Pin.ransack(title_cont: params[:q]).result(distinct: true).limit(5)
-    @boards = Board.rnnsack(title_cont: params[:q]).result(distinct: true).limit(5)
-    @users = User.ransack(username_cont: params[:q]).result(distinct: true).limit(5)
-    render 'api/search'
+    @pins = Pin.where("title LIKE ?", "%#{params[:q]}" ).limit(3)
+    @boards = Board.where("title LIKE ?", "%#{params[:q]}" ).limit(3)
+    @users = User.where("username LIKE ?", "%#{params[:q]}" ).limit(3)
+    render 'api/search/search'
   end
   
+
+  private
+  def force_json
+    request.format = :json
+  end
+
 end

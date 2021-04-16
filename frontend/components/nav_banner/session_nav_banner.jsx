@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch} from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faSearch} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SearchBarContainer from '../search_bar/search_bar_container';
 
 class SessionNavBanner extends React.Component {
   renderAvatar() {
@@ -40,7 +41,7 @@ class SessionNavBanner extends React.Component {
           <div className="search-bar-icon">
             <FontAwesomeIcon icon={faSearch} />
           </div>
-          <input type="text" className="search-bar"></input>
+          <SearchBarContainer />
         </div>
         <div className="right-nav-container">
         <NavLink 
