@@ -220,5 +220,10 @@ a.button-link.about-link:hover {
   padding: 1px;
 }
 
+.about-socials-link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 
 

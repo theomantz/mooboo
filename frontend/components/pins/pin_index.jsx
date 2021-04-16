@@ -22,11 +22,7 @@ class PinIndex extends React.Component {
 
   render() {
     if( !this.props.pins ) return null
-    return(
-      <div className="profile-page-pin-index">
-        {this.pinsItemRender()}
-      </div>
-    )
+    return <div className="main-page-pin-index">{this.pinsItemRender()}</div>;
   }
 }
 

@@ -18,16 +18,17 @@ class NoSessionNavBanner extends React.Component {
         <div className="right-nav-container">
           <div className="developer-links-container">
             <div className="about-link-container link-container">
-            <NavLink 
-              to='/about'
-              className='button-link about-link'
-              activeClassName='active-link'
-              >
-              About
-            </NavLink>
+              <span 
+                className='about-socials-link'
+                onClick={() => this.props.openModal('about')}>
+                About
+              </span>
             </div>
             <div className="socials-link-container link-container">
-              <span>Socials</span>
+              <span
+              className='about-socials-link'
+              onClick={() => this.props.openModal('socials')}
+              >Socials</span>
             </div>
           </div>
           <nav className="button-container">

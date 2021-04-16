@@ -36,7 +36,7 @@ class DocumentGrid extends React.Component {
   }
 
   handleLoad() {
-    setTimeout(() => this.props.closeModal() ,2000);
+    setTimeout(() => this.props.closeModal() , 3000);
   }
 
   renderContentCards() {

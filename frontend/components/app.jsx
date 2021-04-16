@@ -27,15 +27,12 @@ const App = () => (
       <NavBannerContainer />
       <Route exact path='/pins/new' component={CreatePinFormContainer} />
       <Route exact path='/boards/new' component={CreateBoardContainer} />
-      <Switch>
-        <AuthRoute exact path='/' component={LandingPageContainer} />
-        <AuthRoute exact path='/login' component={LoginFormContainer} />
-        <AuthRoute exact path='/signup' component={SignupFormContainer} />
-        <AuthRoute exact path='/about' component={AboutPage} />
-        <AuthRoute exact path='*' component={LandingPageContainer}/>
-      </Switch>
     </header>
     <Switch>
+      <Switch>
+        <AuthRoute exact path='/' component={LandingPageContainer} />
+        <AuthRoute exact path='*' component={LandingPageContainer}/>
+      </Switch>
       <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
       <Route exact path='/boards/:boardId' component={BoardShowContainer} />
       <Route exact path='/boards/:boardId/edit' component={EditBoardContainer} />

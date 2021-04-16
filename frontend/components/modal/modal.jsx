@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import AboutPage from '../about_page/about'
+import SocialsPage from '../socials/socials'
 import { closeModal } from '../../actions/modal_actions';
 import LoadingContainer from '../loading/loading_container'
 import LoginFormContainer from '../session_forms/login_form_container';
@@ -35,6 +37,12 @@ function Modal({modal, closeModal}) {
       break;
     case 'loading':
       component = <LoadingContainer />;
+      break;
+    case 'about':
+      component = <AboutPage />;
+      break;
+    case 'socials':
+      component = <SocialsPage />;
       break;
     default:
       return null;

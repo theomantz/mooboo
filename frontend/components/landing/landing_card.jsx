@@ -14,18 +14,13 @@ class LandingCard extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({ active: !this.state.active })
-    setTimeout(() => this.setState({ active: !this.state.active }), 2500)
-  }
-
 
   render() {
     const color = colors[Math.floor(Math.random() * colors.length)];
     const height = heights[Math.floor(Math.random() * heights.length)];
     return (
       <div>
-        <Flip left opposite when={this.state.active}>
+        <Flip left duration={2000}>
           <div key={uuid()}>
             <div className="content-card">
               <div 

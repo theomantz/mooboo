@@ -11,7 +11,8 @@ const mapDispatchToProps = (dispatch) => ({
   logIn: (user) => dispatch(logIn(user)),
   signUp: (user) => dispatch(signUp(user)),
   logOut: () => dispatch(logOut()),
-  openModal: modal => dispatch(openModal(modal))
+  openModal: modal => dispatch(openModal(modal)),
+  closeModal: () => dispatch(closeModal())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBanner);
