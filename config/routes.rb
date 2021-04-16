@@ -15,7 +15,10 @@ Rails.application.routes.draw do
     post 'boards/:board_id/:pin_id' => 'boards#add_to_board', as: :add_pin_to_board
     delete 'boards/:board_id/:pin_id' => 'boards#remove', as: :remove
     
+    get :search, controller: :search
+    
     resource :session, only: [:create, :destroy]
+    
   end
   
 end
