@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom'
 class BoardShow extends Component {
   constructor(props) {
     super(props)
+
+    this.handleBack = this.handleBack.bind(this)
+    
   }
 
   componentDidMount() {
@@ -40,6 +43,7 @@ class BoardShow extends Component {
 
   renderEdit() {
     if( this.props.userId !== this.props.board.user_id ) return null
+    const { board } = this.props
     return (
       <Link to={`/boards/${board.id}/edit`}>
         <div className="edit-user-button-container">

@@ -107,6 +107,20 @@ button {
   z-index: 10;
 }
 
+.loading-modal-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgb(255, 255, 255);
+  z-index: 10;
+}
+
+.grid-loader-container {
+  width: 65px;
+}
+
 .modal-child {
   position: absolute;
   top: 50%;

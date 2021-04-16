@@ -10,7 +10,6 @@ class FollowersList extends React.Component {
   }
 
   componentDidMount() {
-    debugger
     const {
       location,
       fetchUser } = this.props
@@ -69,7 +68,6 @@ class FollowersList extends React.Component {
   }
 
   render() {
-    debugger
     if( !this.props.user ) return null
     return(
       <div 

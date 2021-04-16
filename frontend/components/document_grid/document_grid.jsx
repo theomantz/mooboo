@@ -19,11 +19,24 @@ class DocumentGrid extends React.Component {
       height: null,
       numCols: null,
     }
+
+    this.handleLoad = this.handleLoad.bind(this)
+    
   }
 
   componentDidMount() {
     window.scrollTo(0, 0)
     this.props.fetchPins()
+    this.props.openModal('loading')
+    document.addEventListener('load', this.handleLoad())
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('load', this.handleLoad())
+  }
+
+  handleLoad() {
+    setTimeout(() => this.props.closeModal() ,2000);
   }
 
   renderContentCards() {

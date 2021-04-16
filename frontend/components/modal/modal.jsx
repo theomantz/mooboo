@@ -1,6 +1,7 @@
 import React from 'react';
-import { closeModal } from '../../actions/modal_actions';
 import { connect } from 'react-redux';
+import { closeModal } from '../../actions/modal_actions';
+import LoadingContainer from '../loading/loading_container'
 import LoginFormContainer from '../session_forms/login_form_container';
 import SignupFormContainer from '../session_forms/signup_form_container';
 import CreateBoardFormContainer from '../board_form/create_board_container';
@@ -32,16 +33,29 @@ function Modal({modal, closeModal}) {
     case 'Following':
       component = <FolloweesListContainer />;
       break;
+    case 'loading':
+      component = <LoadingContainer />;
+      break;
     default:
       return null;
   }
-  return (
-    <div className="modal-background" onClick={closeModal}>
-      <div className="modal-child" onClick={e => e.stopPropagation()}>
-        { component }
+  if( modal !== 'loading' ) {
+    return (
+      <div className="modal-background" onClick={closeModal}>
+        <div className="modal-child" onClick={e => e.stopPropagation()}>
+          { component }
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return(
+      <div className="loading-modal-background">
+        <div className="modal-child">
+          {component}
+        </div>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = state => {
