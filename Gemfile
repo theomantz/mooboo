@@ -76,3 +76,5 @@ gem "aws-sdk-rails", "~> 3.6"
 gem "aws-sdk-s3"
 
 gem "email_validator", "~> 2.2"
+
+gem "newrelic_rpm", "~> 7.0"
