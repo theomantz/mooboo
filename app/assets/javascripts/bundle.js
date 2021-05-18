@@ -17737,7 +17737,6 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           fetchPins = _this$props.fetchPins,
           openModal = _this$props.openModal,
-          closeModal = _this$props.closeModal,
           content = _this$props.content;
       window.scrollTo(0, 0);
 
@@ -17749,32 +17748,34 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
         openModal('loading');
         this.buildContentCards();
       }
-
-      if (!!contentCards && loading) {
-        this.setState({
-          loading: false
-        });
-        setInterval(closeModal(), 2000);
-      }
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      if (!!contentCards && !loading) return null;
+    value: function componentDidUpdate(prevProps) {
       var _this$state2 = this.state,
           contentCards = _this$state2.contentCards,
           loading = _this$state2.loading;
-      var closeModal = this.props.closeModal;
+      var _this$props2 = this.props,
+          closeModal = _this$props2.closeModal,
+          content = _this$props2.content;
+
+      var compareContent = function compareContent(prevContent, curContent) {
+        return prevContent.length === curContent.length && prevContent.every(function (obj, i) {
+          return obj.id === curContent[i].id || false;
+        });
+      };
+
+      var flag = !compareContent(prevProps.content, content);
 
       if (!contentCards) {
         this.buildContentCards();
       }
 
-      if (!!contentCards && loading) {
+      if (loading && flag) {
         this.setState({
           loading: false
         });
-        setInterval(closeModal(), 2000);
+        setTimeout(closeModal, 3000);
       }
     }
   }, {

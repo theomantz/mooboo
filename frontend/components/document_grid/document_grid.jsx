@@ -28,7 +28,7 @@ class DocumentGrid extends React.Component {
 
   componentDidMount() {
     const { contentCards, loading } = this.state
-    const { fetchPins, openModal, closeModal, content } = this.props
+    const { fetchPins, openModal,  content } = this.props
 
     window.scrollTo(0, 0)
 
@@ -42,25 +42,30 @@ class DocumentGrid extends React.Component {
       this.buildContentCards()
     }
 
-    if( !!contentCards && loading ) {
-      this.setState({ loading: false });
-      setInterval(closeModal(), 2000)
-    }
-
   }
 
-  componentDidUpdate() {
-    if(!!contentCards && !loading) return null
-    const {contentCards, loading} = this.state
-    const { closeModal } = this.props
+  componentDidUpdate(prevProps) {
+
+    const { contentCards, loading } = this.state;
+    const { closeModal, content } = this.props;
+
+    const compareContent = ( prevContent, curContent ) => {
+      return prevContent.length === curContent.length && prevContent.every((obj, i) => {
+        return obj.id === curContent[i].id || false
+      })
+    }
+
+    const flag = !compareContent(prevProps.content, content)
 
     if(!contentCards) {
       this.buildContentCards();
     }
 
-    if( !!contentCards && loading ) {
+    if( loading && flag ) {
+
       this.setState({loading: false})
-      setInterval(closeModal(), 2000);
+      setTimeout(closeModal, 3000);
+
     }
   }
 
