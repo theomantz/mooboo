@@ -132,12 +132,13 @@ class Profile extends React.Component {
   }
 
   renderBackArrow() {
+    const { history } = this.props
     return(
         <div className="update-user-back-arrow-container">
           <FontAwesomeIcon
             icon={faArrowLeft}
             className="update-user-back-arrow"
-            onClick={() => this.props.history.goBack()}
+            onClick={() => history.push('/home')}
           />
       </div>
     )

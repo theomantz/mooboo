@@ -15,13 +15,9 @@ class User < ApplicationRecord
 
   has_one_attached :photo
 
-  has_many :pins,
-    class_name: :Pin,
-    foreign_key: :uploader_id
+  has_many :pins
   
-  has_many :boards,
-    class_name: :Board,
-    foreign_key: :user_id
+  has_many :boards
 
   has_many :followee_follows, foreign_key: :follower_id, class_name: :Follow
   has_many :followees, through: :followee_follows, source: :followee

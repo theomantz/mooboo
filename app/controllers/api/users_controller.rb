@@ -32,6 +32,16 @@ class Api::UsersController < ApplicationController
     render :show
   end
 
+  def index
+    @user = User.where(id: params[:userId])
+      .includes(:followers, :followees)
+      .first
+
+    @users = @user.followers + @user.followees
+
+    render :index
+  end
+
   def destroy
   end
 
@@ -41,25 +51,46 @@ class Api::UsersController < ApplicationController
   end
 
   def follow
-    @user = User.find_by(id: params[:id])
-    @followee = User.find_by(id: params[:followee_id])
-    if !@user.nil? && !@followee.nil? && @followee.id == current_user.id 
-      @followee.followers << @user
-      render json: ['Followed!'], status: 200
+
+    @user = User.find_by(id: params[:current_user_id])
+    @user_to_follow = User.find_by(id: params[:user_id])
+
+    if !@user.nil? && !@user_to_follow.nil? && @user.id == current_user.id 
+
+      @user_to_follow.followers << @user
+      @user.followees << @user_to_follow
+
+      if @user.save && @user_to_follow.save
+        render 'api/users/show'
+      else
+        render json: @user.errors.full_messages, status: 400
+      end
+      
     else
+
       render json: @user.errors.full_messages, status: 400
+
     end
   end
 
   def unfollow
-    @user = User.find_by(id: params[:id])
-    @followee = User.find_by(id: params[:followee_id])
-    if !@user.nil? && !@followee.nil? && @user.id == current_user.id 
-      @followee.followers.delete(@user)
-      render ['Unfollowed'], status: 200
+
+    @user = User.find_by(id: params[:current_user_id])
+    @following = User.find_by(id: params[:user_id])
+    
+    if !@user.nil? && !@following.nil? && @user.id == current_user.id 
+
+      @following.followers.delete(@user)
+      @user.followees.delete(@following)
+
+      if @user.save && @following.save 
+        render '/api/users/show'
+      end
+
     else
       render json: @user.errors.full_messages, status: 400
     end
+
   end
 
   private

@@ -18,8 +18,10 @@ class SaveButton extends React.Component {
 
  
   componentDidMount() {
-    // debugger
-    this.props.fetchBoards(this.props.userId)
+    const { boards, fetchBoards, userId } = this.props
+    if( !boards.length ) {
+      fetchBoards(userId)
+    }
   }
 
   handleDivClick() {

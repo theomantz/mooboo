@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+=begin 
 User.destroy_all
 Pin.destroy_all
 Board.destroy_all
@@ -199,4 +200,10 @@ end
 users.each do |user|
   demo.followers << user
   demo.followee << user
-end
+end 
+=end
+
+# Add photos from file, compress images
+
+require 'json'
+require ''

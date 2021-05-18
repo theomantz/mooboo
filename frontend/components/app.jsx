@@ -42,7 +42,7 @@ const App = () => (
       <Route exact path='/users/:userId/edit' component={EditUserContainer} />
       <Route path='/users/:userId'>
         <div className='profile-page-container'>
-          <Route path='/users/:userId' component={ProfileContainer} />
+          <Route exact path='/users/:userId' component={ProfileContainer} />
           <Route exact path='/users/:userId/boards' component={BoardsIndexContainer} />
           <Route exact path='/users/:userId/pins' component={PinIndexContainer} />
           <Route exact path='/users/:userId/boards/new' component={CreateBoardContainer} />
@@ -51,7 +51,7 @@ const App = () => (
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
       <ProtectedRoute exact path='/today' component={TodayPageContainer} />
     </Switch>
-      <Redirect exact from='*' to='/home' />
+      {/* <Redirect exact from='*' to='/home' /> */}
   </div>
 )
 

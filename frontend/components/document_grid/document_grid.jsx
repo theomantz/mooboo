@@ -50,9 +50,11 @@ class DocumentGrid extends React.Component {
     const { closeModal, content } = this.props;
 
     const compareContent = ( prevContent, curContent ) => {
-      return prevContent.length === curContent.length && prevContent.every((obj, i) => {
-        return obj.id === curContent[i].id || false
-      })
+      return (
+        prevContent.length === curContent.length && prevContent.every((obj, i) => {
+          return obj.id === curContent[i].id || false
+        }) 
+      )
     }
 
     const flag = !compareContent(prevProps.content, content)

@@ -78,3 +78,7 @@ gem "aws-sdk-s3"
 gem "email_validator", "~> 2.2"
 
 gem "newrelic_rpm", "~> 7.0"
+
+gem "mini_magick", "~> 4.11"
+
+gem "json", "~> 2.5"

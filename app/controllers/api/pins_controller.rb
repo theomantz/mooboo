@@ -36,7 +36,7 @@ class Api::PinsController < ApplicationController
 
   def destroy
     @pin = Pin.find_by(id: params[:id])
-    if @pin && ( @pin.uploader_id == current_user.id )
+    if @pin && ( @pin.user_id == current_user.id )
       pin_id = @pin.id
       @pin.destroy
       render json: pin_id, status: 200 
@@ -48,7 +48,7 @@ class Api::PinsController < ApplicationController
   private
   
   def pin_params
-    params.require(:pin).permit(:uploader_id, :title, :description, :board_ids, :photo)
+    params.require(:pin).permit(:id, :user_id, :title, :description, :board_ids, :photo)
   end
   
 end

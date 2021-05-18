@@ -66,7 +66,7 @@ export const createBoard = board => dispatch => {
 export const addPinToBoard = ( boardId, pinId ) => dispatch => {
   return(
     BoardApiUtils.addPin(boardId, pinId)
-      .then(message => dispatch(receiveSuccessMessage(message)),
+      .then(board => dispatch(receiveBoard(board)),
       errors => dispatch(receiveBoardErrors(errors)) )
   )
 };
