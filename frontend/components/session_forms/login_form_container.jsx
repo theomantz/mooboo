@@ -9,7 +9,7 @@ const mapStateToProps = ( { errors } ) => {
   return {
     errors: errors.session,
     formType: 'login',
-    linkTo: '/signup',
+    linkTo: 'signup',
     linkText: 'not on mooboo? sign up instead.'
   }
 };
@@ -20,6 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
     <button onClick={() => dispatch(openModal("signup"))}>Signup</button>
   ),
   clearErrors: () => dispatch(clearSession()),
+  openModal: modal => dispatch(openModal(modal)),
   closeModal: () => dispatch(closeModal()),
 });
 

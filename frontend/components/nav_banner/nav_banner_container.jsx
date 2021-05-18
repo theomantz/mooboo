@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { logIn, signUp, logOut } from "../../actions/session_actions";
 import { openModal, closeModal } from '../../actions/modal_actions'
 
-const mapStateToProps = (state) => ({
-  currentUser: state.entities.users[state.session.id],
-});
+const mapStateToProps = ({ entities: { users }, session }) => {
+  return {
+    currentUser: users[session.id],
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
   logIn: (user) => dispatch(logIn(user)),

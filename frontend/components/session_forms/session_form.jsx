@@ -27,8 +27,13 @@ class SessionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.processForm(this.state)
-      .then(this.props.closeModal())
+    
+    const { processForm } = this.props
+    const credentials = this.state
+
+    processForm(credentials)
+      .then(() => this.props.closeModal())
+
   }
 
   renderErrors() {
@@ -43,7 +48,7 @@ class SessionForm extends React.Component {
   }
 
   render() {
-    const { formType, linkTo, linkText } = this.props;
+    const { formType, linkTo, linkText, openModal } = this.props;
     return (
       <div className={`session-form-container ${formType}-form-container`}>
         <div className='session-form close-button'>
@@ -84,9 +89,12 @@ class SessionForm extends React.Component {
         </div>
         <div className="session-form-button-link-container">
           <DemoUserButtonContainer />
-          <Link to={linkTo} className="session-form-link">
+          <span 
+            onClick={() => openModal(linkTo)}
+            className="session-form-link"
+          >
             {linkText}
-          </Link>
+          </span>
         </div>
       </div>
     );
