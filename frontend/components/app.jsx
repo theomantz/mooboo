@@ -21,20 +21,20 @@ import TodayPageContainer from './today_page/today_page_container'
 
 
 const App = () => (
-  <div style={{height: "100vw"}}>
+  <div className='inner-root'>
     <Modal />
     <header>
       <NavBannerContainer />
       <Route exact path='/pins/new' component={CreatePinFormContainer} />
       <Route exact path='/boards/new' component={CreateBoardContainer} />
-      <Switch>
-        <AuthRoute exact path='/' component={LandingPageContainer} />
-        <AuthRoute exact path='/login' component={LoginFormContainer} />
-        <AuthRoute exact path='/signup' component={SignupFormContainer} />
-        <AuthRoute exact path='/about' component={AboutPage} />
-        <AuthRoute exact path='*' component={LandingPageContainer}/>
-      </Switch>
     </header>
+    <Switch>
+      <AuthRoute exact path='/' component={LandingPageContainer} />
+      <AuthRoute exact path='/login' component={LoginFormContainer} />
+      <AuthRoute exact path='/signup' component={SignupFormContainer} />
+      <AuthRoute exact path='/about' component={AboutPage} />
+      <AuthRoute exact path='*' component={LandingPageContainer}/>
+    </Switch>
     <Switch>
       <Route exact path='/pins/:userId/:pinId' component={PinCardShowContainer} />
       <Route exact path='/boards/:boardId' component={BoardShowContainer} />
