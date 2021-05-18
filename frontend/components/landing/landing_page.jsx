@@ -101,12 +101,23 @@ const LandingPage = () =>  {
   }
   
 
-  return(
-    <div className='outer-landing-container'>
-        {renderGreeting()}
-        {renderGrid()}
+  return (
+    <div className="outer-landing-container">
+      {renderGreeting()}
+      {renderGrid()}
+      <div
+        style={{
+          height: "180px",
+          maxHeight: "20%",
+          width: "100%",
+          backgroundImage:
+            "linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255))",
+          position: 'fixed',
+          bottom: '0'
+        }}
+      ></div>
     </div>
-  )
+  );
 
 }
 

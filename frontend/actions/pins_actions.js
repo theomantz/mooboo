@@ -5,10 +5,12 @@ export const RECEIVE_PIN = 'RECEIVE_PIN'
 export const RECEIVE_PINS = 'RECEIVE_PINS'
 export const RECEIVE_PIN_ERRORS = 'RECEIVE_PIN_ERRORS'
 
-const receivePins = pins => ({
-  type: RECEIVE_PINS,
-  pins
-});
+const receivePins = pins => {
+  return ({
+    type: RECEIVE_PINS,
+    pins
+  })
+};
 
 const receivePin = pin => {
   return({
@@ -17,15 +19,19 @@ const receivePin = pin => {
   })
 };
 
-const removePin = pinId => ({
-  type: REMOVE_PIN,
-  pinId
-})
+const removePin = pinId => {
+  return ({
+    type: REMOVE_PIN,
+    pinId
+  })
+}
 
-const receiveErrors = errors => ({
-  type: RECEIVE_PIN_ERRORS,
-  errors
-});
+const receiveErrors = errors => {
+  return ({
+    type: RECEIVE_PIN_ERRORS,
+    errors
+  })
+};
 
 export const fetchPins = () => dispatch => {
   return ( 

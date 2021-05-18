@@ -18945,7 +18945,16 @@ var LandingPage = function LandingPage() {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "outer-landing-container"
-  }, renderGreeting(), renderGrid());
+  }, renderGreeting(), renderGrid(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      height: "180px",
+      maxHeight: "20%",
+      width: "100%",
+      backgroundImage: "linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255))",
+      position: 'fixed',
+      bottom: '0'
+    }
+  }));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LandingPage);
