@@ -18700,6 +18700,117 @@ var FollowersList = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
+/***/ "./frontend/components/landing/column.js":
+/*!***********************************************!*\
+  !*** ./frontend/components/landing/column.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_spring__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+var Column = function Column(_ref) {
+  var CARDS = _ref.CARDS,
+      index = _ref.index,
+      length = _ref.length;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(CARDS),
+      _useState2 = _slicedToArray(_useState, 2),
+      cards = _useState2[0],
+      setCards = _useState2[1];
+
+  var transitions = (0,react_spring__WEBPACK_IMPORTED_MODULE_1__.useTransition)(cards, {
+    from: {
+      opacity: 0,
+      transform: "translate3d(0px, -50%, 0px)"
+    },
+    enter: {
+      opacity: 1,
+      transform: "translate3d(0px, 0px, 0px)"
+    },
+    leave: {
+      opacity: 0,
+      transform: "translate3d(0px, 50%, 0px)"
+    },
+    delay: 200,
+    config: react_spring__WEBPACK_IMPORTED_MODULE_1__.config.molasses,
+    onRest: function onRest() {
+      return setCards([]);
+    }
+  });
+  var margin;
+
+  if (length < 3) {
+    margin = [0];
+  } else if (length === 3) {
+    margin = [0, 1, 0];
+  } else if (length === 4) {
+    margin = [0, 1, 1, 0];
+  } else if (length === 5) {
+    margin = [0, 1, 2, 1, 0];
+  } else if (length === 6) {
+    margin = [0, 1, 2, 2, 1, 0];
+  } else if (length === 7) {
+    margin = [0, 1, 2, 3, 2, 1, 0];
+  }
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // debugger
+    if (cards.length === 0) {
+      setTimeout(function () {
+        setCards(CARDS);
+      }, 2000 + 250 * index);
+    }
+  }, [cards]);
+  var midPoint;
+
+  if (length % 2 === 0) {
+    var mid = length / 2;
+    midPoint = [mid, mid + 1];
+  } else {}
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: 'column',
+      marginTop: "".concat(margin[index] * 50, "px")
+    }
+  }, transitions(function (styles, item) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_spring__WEBPACK_IMPORTED_MODULE_1__.animated.div, {
+      style: _objectSpread({}, styles)
+    }, item);
+  }));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Column);
+
+/***/ }),
+
 /***/ "./frontend/components/landing/landing_page.jsx":
 /*!******************************************************!*\
   !*** ./frontend/components/landing/landing_page.jsx ***!
@@ -18713,9 +18824,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_spring__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
-/* harmony import */ var _urls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./urls */ "./frontend/components/landing/urls.js");
-/* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-uuid */ "./node_modules/react-uuid/uuid.js");
-/* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_uuid__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _column__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./column */ "./frontend/components/landing/column.js");
+/* harmony import */ var _urls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./urls */ "./frontend/components/landing/urls.js");
+/* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-uuid */ "./node_modules/react-uuid/uuid.js");
+/* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_uuid__WEBPACK_IMPORTED_MODULE_4__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -18733,21 +18845,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var LandingPage = function LandingPage() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined),
       _useState2 = _slicedToArray(_useState, 2),
       numColumns = _useState2[0],
       setNumColumns = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined),
       _useState4 = _slicedToArray(_useState3, 2),
-      columns = _useState4[0],
-      setColumns = _useState4[1];
+      windowHeight = _useState4[0],
+      setWindowHeight = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState6 = _slicedToArray(_useState5, 2),
-      index = _useState6[0],
-      setIndex = _useState6[1];
+      columns = _useState6[0],
+      setColumns = _useState6[1];
+
+  var greetings = ["mood", "taste", "style", "attitude"];
 
   var renderGreeting = function renderGreeting() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -18756,88 +18871,72 @@ var LandingPage = function LandingPage() {
       className: "landing-page-header"
     }, "welcome to mooboo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       className: "landing-page-subtext"
-    }, "find your mood"));
+    }, "find your next mood"));
   };
 
-  var windowHeight = window.innerHeight;
-  var windowWidth = window.innerWidth;
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setNumColumns(Math.floor((window.innerWidth - 32) / 250));
+    function handleResize() {
+      setNumColumns(Math.floor((window.innerWidth - 32) / 250));
+      setWindowHeight(window.innerHeight);
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return function () {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (windowHeight && !columns) {
+      setColumns(buildColumns());
+    }
+  });
 
   var renderGrid = function renderGrid() {
-    if (!windowHeight || !windowWidth) return null;
+    if (!windowHeight || !numColumns) return null;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "splash-page-pin-index",
       style: {
         gridTemplateColumns: "repeat(".concat(numColumns, ", 250px)"),
-        gridTemplateRows: 'none'
+        gridTemplateRows: 'none',
+        height: '100vh',
+        overflowY: 'hidden'
       }
     }, columns ? columns : null);
   };
 
   var buildColumns = function buildColumns() {
+    if (!windowHeight) return null;
     var columns = [];
+    var index = 0;
 
     for (var i = 0; i < numColumns; i++) {
-      columns.push(buildColumn(i));
+      var height = windowHeight;
+      var cards = [];
+
+      while (height > 0 && cards.length < 10) {
+        var photo = _urls__WEBPACK_IMPORTED_MODULE_3__.default[index];
+        cards.push(renderCard(photo));
+        height = Math.floor(height - photo.height / (photo.width / 250));
+        index++;
+      }
+
+      columns.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_column__WEBPACK_IMPORTED_MODULE_2__.default, {
+        CARDS: cards,
+        key: react_uuid__WEBPACK_IMPORTED_MODULE_4___default()(),
+        index: i,
+        length: numColumns
+      }));
     }
 
     return columns;
   };
 
-  var buildColumn = function buildColumn(i) {
-    var height = windowHeight;
-    var column = [];
-    debugger;
-
-    while (height > 0 && column.length < windowHeight / 200) {
-      var photo = _urls__WEBPACK_IMPORTED_MODULE_2__.default[index];
-      column.push(renderCard(photo));
-      setIndex(index + 1);
-      height = height - (32 + photo.height / (photo.width / 250));
-    }
-
-    return column;
-  };
-
-  var renderColumns = function renderColumns() {
-    debugger;
-    var transitions = (0,react_spring__WEBPACK_IMPORTED_MODULE_1__.useTransition)(column, {
-      from: {
-        opacity: 0
-      },
-      enter: {
-        opacity: 1
-      },
-      leave: {
-        opacity: 0
-      },
-      delay: 200,
-      config: react_spring__WEBPACK_IMPORTED_MODULE_1__.config.molasses
-    });
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      style: {
-        display: "flex",
-        flexDirection: "column"
-      }
-    }, transitions(function (_ref, item) {
-      var opacity = _ref.opacity;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_spring__WEBPACK_IMPORTED_MODULE_1__.animated.div, {
-        style: {
-          opacity: opacity.to(item.op),
-          transform: opacity.to(item.trans).to(function (y) {
-            return "translate3d(0,".concat(y, "px,0)");
-          })
-        }
-      }, item);
-    }));
-  };
-
-  var renderCard = function renderCard(url) {
+  var renderCard = function renderCard(urlInput) {
+    var url = urlInput;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "content-card-splash",
-      key: react_uuid__WEBPACK_IMPORTED_MODULE_3___default()()
+      key: react_uuid__WEBPACK_IMPORTED_MODULE_4___default()()
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       className: "content-card-image-landing",
       src: url.urls.small

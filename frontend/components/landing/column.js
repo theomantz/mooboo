@@ -1,46 +1,79 @@
 import React, { useState, useEffect } from "react";
 import { useTransition, animated, config } from "react-spring";
 
-const Column = ({NUM_CARDS}) => {
+const Column = ({CARDS, index, length}) => {
 
-  const vhToPixel = (value) => `${(window.innerHeight * value) / 100}px`;
-  const vwToPixel = (value) => `${(window.innerWidth * value) / 100}px`;
-
-  const [cards, setCards] = useState(NUM_TRANS);
+  const [cards, setCards] = useState(CARDS);
 
   const transitions = useTransition(cards, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-    delay: 200,
+    from: {
+      opacity: 0,
+      transform: "translate3d(0px, -50%, 0px)",
+    },
+    enter: {
+      opacity: 1,
+      transform: "translate3d(0px, 0px, 0px)",
+    },
+    leave: {
+      opacity: 0,
+      transform: "translate3d(0px, 50%, 0px)",
+    },
+    delay: (200  ),
     config: config.molasses,
-    onRest: () => setItems([]),
+    onRest: () => setCards([]),
   });
 
+  let margin;
+  if (length < 3) {
+    margin = [0];
+  } else if (length === 3) {
+    margin = [0, 1, 0];
+  } else if (length === 4) {
+    margin = [0, 1, 1, 0];
+  } else if (length === 5) {
+    margin = [0, 1, 2, 1, 0];
+  } else if (length === 6) {
+    margin = [0, 1, 2, 2, 1, 0];
+  } else if (length === 7) {
+    margin = [0, 1, 2, 3, 2, 1, 0];
+  }
+
   useEffect(() => {
-    if (items.length === 0) {
+    // debugger
+    if (cards.length === 0) {
       setTimeout(() => {
-        setItems(NUM_TRANS);
-      }, 2000);
+        setCards(CARDS);
+      }, ( 2000 + ( 250 * index )));
     }
-  }, [items]);
+  }, [cards]);
+
+  let midPoint;
+  if(length % 2 === 0) {
+    let mid = length / 2
+    midPoint = [mid, mid + 1]
+  } else {
+
+  }
+
+
 
   return (
-    <div style={{ display: "flex" }}>
-      {transitions(({ opacity }, item) => (
+    <div style={{ 
+      display: "flex", 
+      flexDirection: 'column',
+      marginTop: `${margin[index] * 50}px`
+    }}>
+      {transitions((styles, item) => (
         <animated.div
           style={{
-            opacity: opacity.to(item.op),
-            transform: opacity
-              .to(item.trans)
-              .to((y) => `translate3d(0,${y}px,0)`),
+            ...styles
           }}
         >
-          {item.fig}
+          {item}
         </animated.div>
       ))}
     </div>
   );
-
-  
 }
+
+export default Column;

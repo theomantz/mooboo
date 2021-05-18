@@ -1,41 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { useTransition, animated, config } from "react-spring";
+import Column from './column'
 import Urls from './urls';
 import uuid from 'react-uuid';
+
 const LandingPage = () =>  {
 
-  const [numColumns, setNumColumns] = useState(0)
+  const [numColumns, setNumColumns] = useState(undefined)
+  const [windowHeight, setWindowHeight] = useState(undefined)
   const [columns, setColumns] = useState(null)
-  const [index, setIndex] = useState(0)
 
+  const greetings = [
+    "mood",
+    "taste",
+    "style",
+    "attitude"
+  ]
+  
   const renderGreeting = () => {
     return (
       <div className="landing-page-text">
         <h1 className="landing-page-header">welcome to mooboo</h1>
-        <span className="landing-page-subtext">find your mood</span>
+        <span className="landing-page-subtext">find your next mood</span>
       </div>
     )
   }
+
   
-  const windowHeight = window.innerHeight;
-  const windowWidth = window.innerWidth;
-
-
-
   useEffect(() => {
+    
+    function handleResize() {
+      setNumColumns(Math.floor((window.innerWidth - 32) / 250));
+      setWindowHeight(window.innerHeight);
+    }
+    
+    window.addEventListener('resize', handleResize)
 
-    setNumColumns(Math.floor((window.innerWidth - 32) / 250));
+    handleResize()
 
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    } 
   }, [])
 
+  useEffect(() => {
+    if(windowHeight && !columns) {
+      setColumns(buildColumns());
+    }
+  })
+
   const renderGrid = () => {
-    if(!windowHeight || !windowWidth) return null
+    if(!windowHeight || !numColumns) return null
     return(
        <div 
         className="splash-page-pin-index"
         style={{
           gridTemplateColumns: `repeat(${numColumns}, 250px)`,
-          gridTemplateRows: 'none'
+          gridTemplateRows: 'none',
+          height: '100vh',
+          overflowY: 'hidden',
         }}
       >
       {columns ? columns : null}
@@ -44,68 +67,27 @@ const LandingPage = () =>  {
   }
 
   const buildColumns = () => {
-
+    if(!windowHeight) return null
     const columns = []
-    
-    for(let i = 0; i < numColumns ; i++ ) {
-      columns.push(buildColumn(i))
+    let index = 0
+
+    for(let i = 0; i < numColumns; i++) {
+      let height = windowHeight
+      let cards = []
+      while(height > 0 && cards.length < 10) {
+        const photo = Urls[index]
+        cards.push(renderCard(photo))
+        height = Math.floor(height - (photo.height / (photo.width / 250)))
+        index++
+      }
+      columns.push(<Column CARDS={cards} key={uuid()} index={i} length={numColumns}/>)
     }
 
     return columns
   }
 
-  const buildColumn = (i) => {
-    
-    let height = windowHeight;
-    const column = []
-
-    debugger
-    
-    while ( height > 0 && column.length < (windowHeight / 200) ) {
-      let photo = Urls[index]
-      column.push(renderCard(photo))
-      setIndex(index + 1)
-      height = height - (32 + (photo.height/(photo.width / 250)))
-    }
-
-    return column;
-    
-  }
-
-  const renderColumns = () => {
-        debugger;
-        const transitions = useTransition(column, {
-          from: { opacity: 0 },
-          enter: { opacity: 1 },
-          leave: { opacity: 0 },
-          delay: 200,
-          config: config.molasses,
-        });
-
-        return (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {transitions(({ opacity }, item) => (
-              <animated.div
-                style={{
-                  opacity: opacity.to(item.op),
-                  transform: opacity
-                    .to(item.trans)
-                    .to((y) => `translate3d(0,${y}px,0)`),
-                }}
-              >
-                {item}
-              </animated.div>
-            ))}
-          </div>
-        );
-  }
-
-  const renderCard = (url) => {
+  const renderCard = (urlInput) => {
+    const url = urlInput
     return (
         <div 
           className="content-card-splash"
