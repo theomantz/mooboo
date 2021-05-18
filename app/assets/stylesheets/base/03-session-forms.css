@@ -113,6 +113,7 @@
   padding: 15px;
   margin: 10px auto 10px auto;
   color: black;
+  cursor: pointer;
 }
 
 .session-form-link:hover {

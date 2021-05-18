@@ -1,9 +1,9 @@
 class Api::PinsController < ApplicationController
   
   def create
-    debugger
     @pin = Pin.new(pin_params)
     if @pin.save
+      # @pins = Pin.all.order(updated_at: :desc)
       render 'api/pins/show'
     else
       render json: @pin.errors.full_messages, status: 400
@@ -20,8 +20,8 @@ class Api::PinsController < ApplicationController
   end
 
   def index
+    # @pins = Pin.all.order(updated_at: :desc)
     @pins = Pin.all
-    debugger
     render 'api/pins/index'
   end
 

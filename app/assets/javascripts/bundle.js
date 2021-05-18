@@ -17720,39 +17720,72 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       width: null,
       height: null,
-      numCols: null
-    };
-    _this.handleLoad = _this.handleLoad.bind(_assertThisInitialized(_this));
+      numCols: null,
+      contentCards: null,
+      loading: true
+    }; // this.handleLoad = this.handleLoad.bind(this)
+
     return _this;
   }
 
   _createClass(DocumentGrid, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this$state = this.state,
+          contentCards = _this$state.contentCards,
+          loading = _this$state.loading;
+      var _this$props = this.props,
+          fetchPins = _this$props.fetchPins,
+          openModal = _this$props.openModal,
+          closeModal = _this$props.closeModal,
+          content = _this$props.content;
       window.scrollTo(0, 0);
-      this.props.fetchPins();
-      this.props.openModal('loading');
-      document.addEventListener('load', this.handleLoad());
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      document.removeEventListener('load', this.handleLoad());
-    }
-  }, {
-    key: "handleLoad",
-    value: function handleLoad() {
-      var _this2 = this;
 
-      setTimeout(function () {
-        return _this2.props.closeModal();
-      }, 3000);
+      if (!content.length) {
+        fetchPins();
+      }
+
+      if (!contentCards) {
+        openModal('loading');
+        this.buildContentCards();
+      }
+
+      if (!!contentCards && loading) {
+        this.setState({
+          loading: false
+        });
+        setInterval(closeModal(), 2000);
+      }
     }
   }, {
-    key: "renderContentCards",
-    value: function renderContentCards() {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (!!contentCards && !loading) return null;
+      var _this$state2 = this.state,
+          contentCards = _this$state2.contentCards,
+          loading = _this$state2.loading;
+      var closeModal = this.props.closeModal;
+
+      if (!contentCards) {
+        this.buildContentCards();
+      }
+
+      if (!!contentCards && loading) {
+        this.setState({
+          loading: false
+        });
+        setInterval(closeModal(), 2000);
+      }
+    }
+  }, {
+    key: "buildContentCards",
+    value: function buildContentCards() {
       if (!this.props.content.length) return null;
       var content = this.props.content;
+      content.sort(function (a, b) {
+        var diff = new Date(b.updated_at) - new Date(a.updated_at);
+        return diff < 0 ? -1 : diff === 0 ? 0 : 1;
+      });
       var contentCards = content.map(function (content, index) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_card_pin_card_container__WEBPACK_IMPORTED_MODULE_2__.default, {
           content: content,
@@ -17760,14 +17793,18 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
           key: "doc-card-".concat(index)
         });
       });
-      return contentCards;
+      this.setState({
+        contentCards: contentCards
+      });
     }
   }, {
     key: "renderContent",
     value: function renderContent() {
+      var contentCards = this.state.contentCards;
+      if (!contentCards) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "profile-page-pin-index"
-      }, this.renderContentCards());
+      }, contentCards);
     }
   }, {
     key: "render",
@@ -24170,9 +24207,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state) {
+var mapStateToProps = function mapStateToProps(_ref) {
+  var users = _ref.entities.users,
+      session = _ref.session;
   return {
-    currentUser: state.entities.users[state.session.id]
+    currentUser: users[session.id]
   };
 };
 
@@ -24724,7 +24763,8 @@ var PinForm = /*#__PURE__*/function (_React$Component) {
       });
       var _this$props2 = this.props,
           formType = _this$props2.formType,
-          userId = _this$props2.userId;
+          userId = _this$props2.userId,
+          closeModal = _this$props2.closeModal;
 
       if (!this.state.photoFile) {
         return this.setState({
@@ -24740,7 +24780,9 @@ var PinForm = /*#__PURE__*/function (_React$Component) {
         formData.append('pin[photo]', this.state.photoFile);
         formData.append('pin[uploader_id]', this.props.userId);
         formData.append('pin[description]', this.state.description);
-        this.props.createPin(formData).then(this.props.history.push(formType === 'Create' ? "/home" : "users/".concat(userId)), function (errors) {
+        this.props.createPin(formData).then(function () {
+          return closeModal();
+        }, function (errors) {
           return _this2.setState({
             errors: errors
           });
@@ -25379,7 +25421,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
   return {
     errors: errors.session,
     formType: 'login',
-    linkTo: '/signup',
+    linkTo: 'signup',
     linkText: 'not on mooboo? sign up instead.'
   };
 };
@@ -25396,6 +25438,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     }, "Signup"),
     clearErrors: function clearErrors() {
       return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_4__.clearSession)());
+    },
+    openModal: function openModal(modal) {
+      return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__.openModal)(modal));
     },
     closeModal: function closeModal() {
       return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_3__.closeModal)());
@@ -25419,7 +25464,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-uuid */ "./node_modules/react-uuid/uuid.js");
 /* harmony import */ var react_uuid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_uuid__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _demo_user_demo_user_button_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../demo_user/demo_user_button_container */ "./frontend/components/demo_user/demo_user_button_container.jsx");
@@ -25494,8 +25538,14 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
-      this.props.processForm(this.state).then(this.props.closeModal());
+      var processForm = this.props.processForm;
+      var credentials = this.state;
+      processForm(credentials).then(function () {
+        return _this3.props.closeModal();
+      });
     }
   }, {
     key: "renderErrors",
@@ -25513,12 +25563,13 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$props = this.props,
           formType = _this$props.formType,
           linkTo = _this$props.linkTo,
-          linkText = _this$props.linkText;
+          linkText = _this$props.linkText,
+          openModal = _this$props.openModal;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "session-form-container ".concat(formType, "-form-container")
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -25526,7 +25577,7 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_ai__WEBPACK_IMPORTED_MODULE_4__.AiOutlineClose, {
         className: "close-button-icon",
         onClick: function onClick() {
-          return _this3.props.closeModal();
+          return _this4.props.closeModal();
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         src: window.moobooLarge,
@@ -25559,8 +25610,10 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
         className: "session-form-divider"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "OR")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "session-form-button-link-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_demo_user_demo_user_button_container__WEBPACK_IMPORTED_MODULE_2__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
-        to: linkTo,
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_demo_user_demo_user_button_container__WEBPACK_IMPORTED_MODULE_2__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        onClick: function onClick() {
+          return openModal(linkTo);
+        },
         className: "session-form-link"
       }, linkText)));
     }
@@ -25602,7 +25655,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
   return {
     errors: errors.session,
     formType: 'signup',
-    linkTo: '/login',
+    linkTo: 'login',
     linkText: 'already on mooboo? log in instead'
   };
 };
@@ -25614,6 +25667,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     clearErrors: function clearErrors() {
       return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__.clearSession)());
+    },
+    openModal: function openModal(modal) {
+      return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__.openModal)(modal));
     },
     closeModal: function closeModal() {
       return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__.closeModal)());
@@ -26424,8 +26480,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/user_actions */ "./frontend/actions/user_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -26435,10 +26493,13 @@ var usersReducer = function usersReducer() {
   Object.freeze(state);
 
   switch (action.type) {
-    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_USER:
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_CURRENT_USER:
       return Object.assign({}, state, _defineProperty({}, action.user.id, action.user));
 
-    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_0__.REMOVE_USERS:
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_USER:
+      return Object.assign({}, state, _defineProperty({}, action.user.id, action.user));
+
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__.REMOVE_USERS:
       return {};
 
     default:

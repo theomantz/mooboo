@@ -77,27 +77,30 @@ class PinForm extends React.Component {
   }
 
   handleSubmit(e) {
+
     e.preventDefault()
+
     if( this.state.errors ) this.setState({ errors: null })
-    const { formType, userId } = this.props
+    const { formType, userId, closeModal } = this.props
+
     if( !this.state.photoFile ) {
       return this.setState({ errors: 'No pic, no pin'})
     } else if( !this.state.title ) {
       return this.setState({ errors: 'Needs a title!'})
     } else {
+
       const formData = new FormData;
+
       formData.append( 'pin[title]', this.state.title )
       formData.append( 'pin[photo]', this.state.photoFile )
       formData.append( 'pin[uploader_id]', this.props.userId )
       formData.append( 'pin[description]', this.state.description )
+
       this.props.createPin(formData)
-        .then(this.props.history.push(
-            formType === 'Create' ? 
-            `/home` :
-            `users/${userId}`
-          ),
+        .then(() => closeModal(),
           errors => this.setState({ errors: errors })
         )
+
     }
   }
 
