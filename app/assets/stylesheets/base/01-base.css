@@ -10,6 +10,7 @@ button {
   cursor: pointer;
 }
 
+
 .text-input {
   border-style: none;
   border-radius: 68px;
@@ -75,7 +76,6 @@ button {
 .landing-page-text { 
   display: flex;
   flex-direction: column;
-  margin: 50px auto 50px auto;
   justify-content: center;
   font-size: 24px;
   text-align: center;
