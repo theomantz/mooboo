@@ -30,14 +30,14 @@ class DocumentCard extends React.Component {
   render() {
     const { content } = this.props
     return (
-      <Link to={`/pins/${content.uploader_id}/${content.id}`}>
+      <Link to={`/pins/${content.user_id}/${content.id}`}>
         <div key={uuid()}>
           <div className="content-card">
             <div className="content-card-image">
               <img
               src={content.photoUrl}
                 alt={content.title}
-                style={docStyles.docCard}
+                style={{...docStyles.docCard, width: '260px'}}
               />
               {this.renderDelete()}
             </div>

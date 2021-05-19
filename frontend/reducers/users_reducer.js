@@ -1,7 +1,8 @@
 import { RECEIVE_CURRENT_USER } from '../actions/session_actions'
 import {
   RECEIVE_USER,
-  REMOVE_USERS
+  RECEIVE_USERS,
+  REMOVE_USERS,
 } from '../actions/user_actions'
 
 const usersReducer = (state = {}, action) => {
@@ -11,6 +12,8 @@ const usersReducer = (state = {}, action) => {
       return Object.assign({}, state, { [action.user.id]: action.user })
     case RECEIVE_USER:
       return Object.assign({}, state, { [action.user.id]: action.user })
+    case RECEIVE_USERS:
+      return Object.assign({}, state, action.users )
     case REMOVE_USERS:
       return {}
     default:

@@ -5,6 +5,15 @@ export const fetchUser = userId => (
   })
 );
 
+export const fetchUsersByRelation = (user) => {
+  return (
+      $.ajax({
+        url: `api/users/${user.id}/follows`,
+        method: 'GET',
+      })
+    )
+}
+
 export const updateUser = (userFormData, user) => {
   return(
     $.ajax({
@@ -17,19 +26,19 @@ export const updateUser = (userFormData, user) => {
   )
 };
 
-export const followUser = (userId, followeeId) => {
+export const followUser = (currentUserId, userId) => {
   return(
     $.ajax({
-      url: `api/users/${userId}/${followeeId}`,
+      url: `api/users/${currentUserId}/${userId}`,
       method: 'POST'
     })
   )
 };
 
-export const unfollowUser = (userId, followeeId) => {
+export const unfollowUser = (currentUserId, userId) => {
   return(
     $.ajax({
-      url: `api/users/${userId}/${followeeId}`,
+      url: `api/users/${currentUserId}/${userId}`,
       method: 'DELETE'
     })
   )

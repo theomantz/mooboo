@@ -13,20 +13,27 @@ class DropdownCard extends React.Component {
 
   handleClick(item) {
     return e => {
-      const { pinId } = this.props;
-      this.props.addPinToBoard(item.id, pinId)
-      const addedBoards = this.state.addedBoards.push(item.id)
-      this.setState({ addedBoards: addedBoards })
-      this.filterBoards()
+      
+      const { addedBoards } = this.state
+      const { pinId, addPinToBoard } = this.props;
+
+      addPinToBoard(item.id, pinId)
+        .then(() => {
+          const newBoards = addedBoards.push(item.id)
+          this.setState({ addedBoards: newBoards })
+        })
     }
   }
 
   filterBoards() {
+
     const { boards } = this.props
-    const addedBoards = this.state.addedBoards
-    if( !boards.length  ) return null
+    const { addedBoards } = this.state
+    
     const { pinId } = this.props
+    if( !boards.length  ) return null
     const availableBoards = []
+
     boards.forEach( board => {
       if( !board.pins ) { 
         if( board.title !== 'Quick Save') {
@@ -43,10 +50,13 @@ class DropdownCard extends React.Component {
   }
 
   render() {
+
     const { show, boards } = this.props
     if( !boards.length ) return null
     let availableBoards = this.filterBoards()
+
     if ( !show || !availableBoards ) return null;
+
     if( availableBoards.length < 1 ) {
       return( 
         <li className='all-boards-message'>
@@ -57,12 +67,12 @@ class DropdownCard extends React.Component {
         </li>
       )
     }
-    const dropdownList = availableBoards.map((item, index) => (
+    const dropdownList = availableBoards.map((board, index) => (
       <li className="dropdown-list-item" key={`board-list-item-${index}`}>
-        <span className="dropdown-list-text">{item.title}</span>
+        <span className="dropdown-list-text">{board.title}</span>
         <button
           className="dropdown-list-save-button button-link"
-          onClick={this.handleClick(item)}
+          onClick={this.handleClick(board)}
         >
           Save
         </button>

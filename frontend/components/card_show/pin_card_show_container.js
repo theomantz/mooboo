@@ -3,15 +3,12 @@ import { connect } from 'react-redux'
 import { fetchUser } from '../../actions/user_actions'
 import { fetchPin, deletePin } from '../../actions/pins_actions'
 
-const mapStateToProps = ( state, ownProps ) => {
-  const { entities, session } = state
-  const { users, pins } = entities
-  const { match } = ownProps
-  return({
+const mapStateToProps = ( {entities: {users, pins}, session}, { match } ) => {
+  return {
     content: pins[match.params.pinId],
     uploader: users[match.params.userId],
     userId: session.id
-  })
+  }
 };
 
 const mapDispatchToProps = dispatch => ({

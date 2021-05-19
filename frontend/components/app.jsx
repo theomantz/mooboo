@@ -51,7 +51,7 @@ const App = () => (
       <ProtectedRoute exact path='/home' component={DocumentGridContainer} />
       <ProtectedRoute exact path='/today' component={TodayPageContainer} />
     </Switch>
-      <Redirect exact from='*' to='/home' />
+      {/* <Redirect exact from='*' to='/home' /> */}
   </div>
 )
 

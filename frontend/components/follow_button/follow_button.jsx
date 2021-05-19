@@ -1,13 +1,11 @@
 import React from 'react'
-import { 
-  followUser,
-  unfollowUser
- } from '../../util/user_api_util'
+
 
 
 class FollowButton extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       followedStatus: null
     }
@@ -22,11 +20,11 @@ class FollowButton extends React.Component {
   }
 
   determineStatus() {
-    const { user, currentUserId } = this.props
-    if( user.followers ) {
-      const followed = Object.values(user.followers).some( follower => {
-        return follower.id === currentUserId
-      })
+    const { user, currentUser } = this.props
+    const { followees } = currentUser
+
+    if( followees ) {
+      const followed = Boolean(followees[user.id])
       if( followed ) {
         this.setState( { followedStatus: true } )
       }
@@ -35,16 +33,16 @@ class FollowButton extends React.Component {
 
 
   followUser() {
-    const { user, currentUserId } = this.props
-    followUser( user.id, currentUserId )
+    const { user, currentUser, followUser } = this.props
+    followUser( currentUser.id, user.id )
       .then( () => this.setState({
         followedStatus: true
       }))
   }
 
   unfollowUser() {
-    const { user, currentUserId } = this.props
-    unfollowUser( user.id, currentUserId )
+    const { user, currentUser, unfollowUser } = this.props
+    unfollowUser( currentUser.id , user.id )
       .then( () => this.setState({
         followedStatus: false
       }))
@@ -52,9 +50,10 @@ class FollowButton extends React.Component {
   
 
   renderButton() {
-    const { user, currentUserId } = this.props
-    if( user.id === currentUserId ) return null
-    if( this.state.followedStatus ) {
+    const { user, currentUser } = this.props
+    const { followedStatus } = this.state
+    if( user.id === currentUser.id ) return null
+    if( followedStatus ) {
       return (
         <button className="button-link follow-button" onClick={this.unfollowUser}>
           Unfollow
@@ -73,7 +72,8 @@ class FollowButton extends React.Component {
   }
   
   render() {
-    if( !this.props.currentUserId ) return null
+    const { currentUser } = this.props
+    if( !currentUser ) return null
     return (
     <div className='follow-unfollow-button-container'>
       {this.renderButton()}

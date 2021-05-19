@@ -15496,8 +15496,8 @@ var createBoard = function createBoard(board) {
 };
 var addPinToBoard = function addPinToBoard(boardId, pinId) {
   return function (dispatch) {
-    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.addPin(boardId, pinId).then(function (message) {
-      return dispatch(receiveSuccessMessage(message));
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__.addPin(boardId, pinId).then(function (board) {
+      return dispatch(receiveBoard(board));
     }, function (errors) {
       return dispatch(receiveBoardErrors(errors));
     });
@@ -15823,15 +15823,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "REMOVE_USERS": () => (/* binding */ REMOVE_USERS),
 /* harmony export */   "RECEIVE_USER": () => (/* binding */ RECEIVE_USER),
+/* harmony export */   "RECEIVE_USERS": () => (/* binding */ RECEIVE_USERS),
 /* harmony export */   "RECEIVE_USER_ERRORS": () => (/* binding */ RECEIVE_USER_ERRORS),
 /* harmony export */   "fetchUser": () => (/* binding */ fetchUser),
+/* harmony export */   "fetchUsers": () => (/* binding */ fetchUsers),
 /* harmony export */   "updateUser": () => (/* binding */ updateUser),
+/* harmony export */   "followUser": () => (/* binding */ followUser),
+/* harmony export */   "unfollowUser": () => (/* binding */ unfollowUser),
 /* harmony export */   "clearUsers": () => (/* binding */ clearUsers)
 /* harmony export */ });
 /* harmony import */ var _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/user_api_util */ "./frontend/util/user_api_util.js");
 
 var REMOVE_USERS = 'REMOVE_USERS';
 var RECEIVE_USER = 'RECEIVE_USER';
+var RECEIVE_USERS = 'RECEIVE_USERS';
 var RECEIVE_USER_ERRORS = 'RECEIVE_USER_ERRORS';
 
 var receiveUser = function receiveUser(user) {
@@ -15848,6 +15853,13 @@ var receiveUserErrors = function receiveUserErrors(errors) {
   };
 };
 
+var receiveUsers = function receiveUsers(users) {
+  return {
+    type: RECEIVE_USERS,
+    users: users
+  };
+};
+
 var removeUsers = function removeUsers() {
   return {
     type: CLEAR_USERS
@@ -15858,6 +15870,17 @@ var fetchUser = function fetchUser(userId) {
   return function (dispatch) {
     return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchUser(userId).then(function (user) {
       return dispatch(receiveUser(user));
+    }, function (err) {
+      return dispatch(receiveUserErrors(err));
+    });
+  };
+};
+var fetchUsers = function fetchUsers(user) {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchUsersByRelation(user).then(function (users) {
+      return dispatch(receiveUsers(users));
+    }, function (err) {
+      return dispatch(receiveUserErrors(err));
     });
   };
 };
@@ -15867,6 +15890,24 @@ var updateUser = function updateUser(formData, user) {
       return dispatch(receiveUser(user));
     }, function (errors) {
       return dispatch(receiveUserErrors(errors));
+    });
+  };
+};
+var followUser = function followUser(currentUserId, userId) {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.followUser(currentUserId, userId).then(function (user) {
+      return dispatch(receiveUser(user), function (err) {
+        return dispatch(receiveUserErrors(err));
+      });
+    });
+  };
+};
+var unfollowUser = function unfollowUser(currentUserId, userId) {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.unfollowUser(currentUserId, userId).then(function (user) {
+      return dispatch(receiveUser(user), function (err) {
+        return dispatch(receiveUserErrors(err));
+      });
     });
   };
 };
@@ -16278,11 +16319,7 @@ var App = function App() {
     exact: true,
     path: "/today",
     component: _today_page_today_page_container__WEBPACK_IMPORTED_MODULE_18__.default
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_19__.Redirect, {
-    exact: true,
-    from: "*",
-    to: "/home"
-  }));
+  })));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -17002,15 +17039,20 @@ var BoardsIndex = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this$props = this.props,
           fetchBoards = _this$props.fetchBoards,
-          match = _this$props.match;
-      fetchBoards(match.params.userId);
+          user = _this$props.user;
+      fetchBoards(user.id);
     }
   }, {
     key: "render",
     value: function render() {
-      var boards = this.props.boards;
+      var _this$props2 = this.props,
+          boards = _this$props2.boards,
+          user = _this$props2.user;
       if (!boards) return null;
-      var BoardCards = boards.map(function (board, index) {
+      var filteredBoards = boards.filter(function (board) {
+        return board.user_id === user.id;
+      });
+      var BoardCards = filteredBoards.map(function (board, index) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_board_card_board_card__WEBPACK_IMPORTED_MODULE_1__.default, {
           board: board,
           key: "board-id-".concat(board.id, "-index-").concat(index)
@@ -17049,11 +17091,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+  var _ref$entities = _ref.entities,
+      boards = _ref$entities.boards,
+      users = _ref$entities.users;
+  var params = _ref2.match.params;
   return {
-    boards: Object.values(state.entities.boards),
-    userId: ownProps.userId,
-    user: state.entities.users[ownProps.userId]
+    boards: Object.values(boards),
+    user: users[params.userId]
   };
 };
 
@@ -17086,6 +17131,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -17151,7 +17202,7 @@ var DocumentCard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var content = this.props.content;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-        to: "/pins/".concat(content.uploader_id, "/").concat(content.id)
+        to: "/pins/".concat(content.user_id, "/").concat(content.id)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()()
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -17161,7 +17212,9 @@ var DocumentCard = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         src: content.photoUrl,
         alt: content.title,
-        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_2__.docStyles.docCard
+        style: _objectSpread(_objectSpread({}, _config_document_grid__WEBPACK_IMPORTED_MODULE_2__.docStyles.docCard), {}, {
+          width: '260px'
+        })
       }), this.renderDelete()))));
     }
   }]);
@@ -17193,9 +17246,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
+var mapStateToProps = function mapStateToProps(_ref, ownProps) {
+  var session = _ref.session;
   return {
-    userId: state.session.id
+    userId: session.id
   };
 };
 
@@ -17312,7 +17366,7 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
       window.scrollTo(0, 0);
 
       if (content) {
-        fetchUser(content.uploader_id);
+        fetchUser(content.user_id);
       }
     }
   }, {
@@ -17322,7 +17376,7 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
       var _this$props2 = this.props,
           content = _this$props2.content,
           userId = _this$props2.userId;
-      if (content.uploader_id !== userId) return null;
+      if (content.user_id !== userId) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "pin-card-delete-button-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
@@ -17355,11 +17409,12 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderFollow",
     value: function renderFollow() {
-      if (!this.props.location || !this.props.userId) return null;
       var _this$props3 = this.props,
           uploader = _this$props3.uploader,
-          userId = _this$props3.userId;
-      if (!this.props.uploader || uploader.id === userId) return null;
+          userId = _this$props3.userId,
+          location = _this$props3.location;
+      if (!location || !userId) return null;
+      if (!uploader || uploader.id === userId) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "follow-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -17419,7 +17474,7 @@ var CardShow = /*#__PURE__*/function (_React$Component) {
         className: "content-show-card-text-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "content-card-text"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, description)), this.renderFollow()), this.renderDeleteButton())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, description)), this.renderFollow(), this.renderDeleteButton()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "document-grid-show-page-container"
       }));
     }
@@ -17460,12 +17515,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-  var entities = state.entities,
-      session = state.session;
-  var users = entities.users,
-      pins = entities.pins;
-  var match = ownProps.match;
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+  var _ref$entities = _ref.entities,
+      users = _ref$entities.users,
+      pins = _ref$entities.pins,
+      session = _ref.session;
+  var match = _ref2.match;
   return {
     content: pins[match.params.pinId],
     uploader: users[match.params.userId],
@@ -17737,44 +17792,42 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           fetchPins = _this$props.fetchPins,
           openModal = _this$props.openModal,
-          closeModal = _this$props.closeModal,
           content = _this$props.content;
       window.scrollTo(0, 0);
+      fetchPins();
 
-      if (!content.length) {
-        fetchPins();
-      }
-
-      if (!contentCards) {
+      if (!contentCards || contentCards.length !== content.length) {
         openModal('loading');
         this.buildContentCards();
-      }
-
-      if (!!contentCards && loading) {
-        this.setState({
-          loading: false
-        });
-        setInterval(closeModal(), 2000);
       }
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      if (!!contentCards && !loading) return null;
+    value: function componentDidUpdate(prevProps) {
       var _this$state2 = this.state,
           contentCards = _this$state2.contentCards,
           loading = _this$state2.loading;
-      var closeModal = this.props.closeModal;
+      var _this$props2 = this.props,
+          closeModal = _this$props2.closeModal,
+          content = _this$props2.content;
 
-      if (!contentCards) {
+      var compareContent = function compareContent(prevContent, curContent) {
+        return prevContent.length === curContent.length && prevContent.every(function (obj, i) {
+          return obj.id === curContent[i].id || false;
+        });
+      };
+
+      var flag = !compareContent(prevProps.content, content);
+
+      if (!contentCards || contentCards.length !== content.length) {
         this.buildContentCards();
       }
 
-      if (!!contentCards && loading) {
+      if (loading && flag) {
         this.setState({
           loading: false
         });
-        setInterval(closeModal(), 2000);
+        setTimeout(closeModal, 3000);
       }
     }
   }, {
@@ -17946,17 +17999,17 @@ var DropdownCard = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
-        var pinId = _this2.props.pinId;
+        var addedBoards = _this2.state.addedBoards;
+        var _this2$props = _this2.props,
+            pinId = _this2$props.pinId,
+            addPinToBoard = _this2$props.addPinToBoard;
+        addPinToBoard(item.id, pinId).then(function () {
+          var newBoards = addedBoards.push(item.id);
 
-        _this2.props.addPinToBoard(item.id, pinId);
-
-        var addedBoards = _this2.state.addedBoards.push(item.id);
-
-        _this2.setState({
-          addedBoards: addedBoards
+          _this2.setState({
+            addedBoards: newBoards
+          });
         });
-
-        _this2.filterBoards();
       };
     }
   }, {
@@ -17964,8 +18017,8 @@ var DropdownCard = /*#__PURE__*/function (_React$Component) {
     value: function filterBoards() {
       var boards = this.props.boards;
       var addedBoards = this.state.addedBoards;
-      if (!boards.length) return null;
       var pinId = this.props.pinId;
+      if (!boards.length) return null;
       var availableBoards = [];
       boards.forEach(function (board) {
         if (!board.pins) {
@@ -18004,15 +18057,15 @@ var DropdownCard = /*#__PURE__*/function (_React$Component) {
         }, "Don't worry, we won't judge. We love this one too."));
       }
 
-      var dropdownList = availableBoards.map(function (item, index) {
+      var dropdownList = availableBoards.map(function (board, index) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
           className: "dropdown-list-item",
           key: "board-list-item-".concat(index)
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
           className: "dropdown-list-text"
-        }, item.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        }, board.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
           className: "dropdown-list-save-button button-link",
-          onClick: _this3.handleClick(item)
+          onClick: _this3.handleClick(board)
         }, "Save"));
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -18048,11 +18101,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(_ref) {
-  var entities = _ref.entities,
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+  var users = _ref.entities.users,
       session = _ref.session;
+  var boards = _ref2.boards,
+      show = _ref2.show,
+      pinId = _ref2.pinId;
   return {
-    userId: session.id
+    user: users[session.id],
+    boards: boards,
+    show: show,
+    pinId: pinId
   };
 };
 
@@ -18326,7 +18385,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _util_user_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/user_api_util */ "./frontend/util/user_api_util.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18348,7 +18406,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 
 
 
@@ -18381,12 +18438,11 @@ var FollowButton = /*#__PURE__*/function (_React$Component) {
     value: function determineStatus() {
       var _this$props = this.props,
           user = _this$props.user,
-          currentUserId = _this$props.currentUserId;
+          currentUser = _this$props.currentUser;
+      var followees = currentUser.followees;
 
-      if (user.followers) {
-        var followed = Object.values(user.followers).some(function (follower) {
-          return follower.id === currentUserId;
-        });
+      if (followees) {
+        var followed = Boolean(followees[user.id]);
 
         if (followed) {
           this.setState({
@@ -18402,9 +18458,9 @@ var FollowButton = /*#__PURE__*/function (_React$Component) {
 
       var _this$props2 = this.props,
           user = _this$props2.user,
-          currentUserId = _this$props2.currentUserId;
-
-      (0,_util_user_api_util__WEBPACK_IMPORTED_MODULE_1__.followUser)(user.id, currentUserId).then(function () {
+          currentUser = _this$props2.currentUser,
+          followUser = _this$props2.followUser;
+      followUser(currentUser.id, user.id).then(function () {
         return _this2.setState({
           followedStatus: true
         });
@@ -18417,9 +18473,9 @@ var FollowButton = /*#__PURE__*/function (_React$Component) {
 
       var _this$props3 = this.props,
           user = _this$props3.user,
-          currentUserId = _this$props3.currentUserId;
-
-      (0,_util_user_api_util__WEBPACK_IMPORTED_MODULE_1__.unfollowUser)(user.id, currentUserId).then(function () {
+          currentUser = _this$props3.currentUser,
+          unfollowUser = _this$props3.unfollowUser;
+      unfollowUser(currentUser.id, user.id).then(function () {
         return _this3.setState({
           followedStatus: false
         });
@@ -18430,10 +18486,11 @@ var FollowButton = /*#__PURE__*/function (_React$Component) {
     value: function renderButton() {
       var _this$props4 = this.props,
           user = _this$props4.user,
-          currentUserId = _this$props4.currentUserId;
-      if (user.id === currentUserId) return null;
+          currentUser = _this$props4.currentUser;
+      var followedStatus = this.state.followedStatus;
+      if (user.id === currentUser.id) return null;
 
-      if (this.state.followedStatus) {
+      if (followedStatus) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
           className: "button-link follow-button",
           onClick: this.unfollowUser
@@ -18448,7 +18505,8 @@ var FollowButton = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.currentUserId) return null;
+      var currentUser = this.props.currentUser;
+      if (!currentUser) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "follow-unfollow-button-container"
       }, this.renderButton());
@@ -18475,21 +18533,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _follow_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./follow_button */ "./frontend/components/follow_button/follow_button.jsx");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
 
 
 
-var mapStateToProps = function mapStateToProps(_ref) {
-  var session = _ref.session;
+
+var mapStateToProps = function mapStateToProps(_ref, ownProps) {
+  var session = _ref.session,
+      users = _ref.entities.users;
   return {
-    currentUserId: session.id
+    currentUser: users[session.id],
+    user: users[ownProps.user.id] || ownProps.user.id
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    followUser: function followUser(currentUserId, userId) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.followUser)(currentUserId, userId));
+    },
+    unfollowUser: function unfollowUser(currentUserId, userId) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.unfollowUser)(currentUserId, userId));
+    }
+  };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mapStateToProps, null)(_follow_button__WEBPACK_IMPORTED_MODULE_1__.default));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mapStateToProps, mapDispatchToProps)(_follow_button__WEBPACK_IMPORTED_MODULE_1__.default));
 
 /***/ }),
 
@@ -18528,6 +18597,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchUser: function fetchUser(userId) {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUser)(userId));
     },
+    fetchUsers: function fetchUsers(user) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)(user));
+    },
     clearUsers: function clearUsers() {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.clearUsers)());
     },
@@ -18563,10 +18635,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+  var session = _ref.session,
+      users = _ref.entities.users;
+  var pathname = _ref2.location.pathname;
   return {
-    currentUserId: state.session.id,
-    user: state.entities.users[parseInt(ownProps.location.pathname.slice(7))],
+    currentUser: users[session.id],
+    user: users[parseInt(pathname.slice(7))],
     listType: "Followers"
   };
 };
@@ -18575,6 +18650,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchUser: function fetchUser(userId) {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUser)(userId));
+    },
+    fetchUsers: function fetchUsers(user) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)(user));
     },
     clearUsers: function clearUsers() {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.clearUsers)());
@@ -18649,10 +18727,13 @@ var FollowersList = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this$props = this.props,
-          location = _this$props.location,
-          fetchUser = _this$props.fetchUser;
-      var userId = location.pathname.slice(7);
-      fetchUser(userId);
+          user = _this$props.user,
+          fetchUser = _this$props.fetchUser,
+          fetchUsers = _this$props.fetchUsers,
+          listType = _this$props.listType;
+      fetchUser(user.id).then(function (action) {
+        return fetchUsers(action.user);
+      });
     }
   }, {
     key: "assignRelations",
@@ -18661,7 +18742,7 @@ var FollowersList = /*#__PURE__*/function (_React$Component) {
 
       var _this$props2 = this.props,
           user = _this$props2.user,
-          currentUserId = _this$props2.currentUserId;
+          currentUser = _this$props2.currentUser;
       var users;
 
       if (this.props.listType === 'Followers') {
@@ -18677,23 +18758,21 @@ var FollowersList = /*#__PURE__*/function (_React$Component) {
         }, "None Yet!");
       }
 
-      var relationships = Object.values(users).map(function (user) {
-        if (user.id !== currentUserId) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-            to: "".concat(user.id),
-            key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()(),
-            onClick: function onClick() {
-              return _this.props.closeModal();
-            }
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
-            key: "follow-page-link-".concat(user.id),
-            className: "relation-list-item"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-            className: "relation-list-link"
-          }, "@", user.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_follow_button_follow_button_container__WEBPACK_IMPORTED_MODULE_2__.default, {
-            user: user
-          })));
-        }
+      var relationships = Object.values(users).map(function (u) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+          key: "follow-page-link-".concat(u.id),
+          className: "relation-list-item"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+          to: "".concat(u.id),
+          key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()(),
+          onClick: function onClick() {
+            return _this.props.closeModal();
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+          className: "relation-list-link"
+        }, "@", u.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_follow_button_follow_button_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+          user: u
+        }));
       });
       return relationships.filter(function (relation) {
         return relation !== undefined;
@@ -18817,7 +18896,6 @@ var Column = function Column(_ref) {
   }
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    // debugger
     if (cards.length === 0) {
       setTimeout(function () {
         setCards(CARDS);
@@ -24524,15 +24602,42 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(PinIndex);
 
   function PinIndex(props) {
+    var _this;
+
     _classCallCheck(this, PinIndex);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      numCols: null
+    };
+    return _this;
   }
 
   _createClass(PinIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchPins(this.props.match.params.userId);
+      var _this$props = this.props,
+          fetchPins = _this$props.fetchPins,
+          match = _this$props.match,
+          pins = _this$props.pins;
+      var numCols = this.state.numCols;
+      debugger;
+      fetchPins(match.params.userId);
+
+      if (!numCols) {
+        this.setNumCols();
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {}
+  }, {
+    key: "setNumCols",
+    value: function setNumCols() {
+      var numCols = Math.floor(window.innerWidth * 0.75 / (260 + 16));
+      this.setState({
+        numCols: numCols
+      });
     }
   }, {
     key: "pinsItemRender",
@@ -24549,9 +24654,14 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.pins) return null;
+      var pins = this.props.pins;
+      var numCols = this.state.numCols;
+      if (!pins || !numCols) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "main-page-pin-index"
+        className: "main-page-pin-index",
+        style: {
+          columnCount: numCols
+        }
       }, this.pinsItemRender());
     }
   }]);
@@ -24956,9 +25066,19 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   _createClass(Profile, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var userId = this.props.match.params.userId;
-      this.props.fetchBoards(userId);
-      this.props.fetchUser(userId);
+      var _this$props = this.props,
+          userId = _this$props.userId,
+          fetchBoards = _this$props.fetchBoards,
+          fetchUser = _this$props.fetchUser,
+          fetchUsers = _this$props.fetchUsers;
+
+      if (userId) {
+        fetchBoards(userId);
+        fetchUser(userId).then(function (action) {
+          console.log(action);
+          fetchUsers(action.user);
+        });
+      }
     }
   }, {
     key: "renderAvatar",
@@ -25008,7 +25128,7 @@ var Profile = /*#__PURE__*/function (_React$Component) {
           followers = _this$props$user.followers,
           followees = _this$props$user.followees;
       var numFollowers = followers ? Object.values(followers).length : '0';
-      var numFollowees = followees ? Object.values(followers).length : '0';
+      var numFollowees = followees ? Object.values(followees).length : '0';
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-follow-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -25044,9 +25164,9 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderEdit",
     value: function renderEdit() {
-      var _this$props = this.props,
-          user = _this$props.user,
-          currentUser = _this$props.currentUser;
+      var _this$props2 = this.props,
+          user = _this$props2.user,
+          currentUser = _this$props2.currentUser;
 
       if (user.id === currentUser.id) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
@@ -25065,24 +25185,23 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderBackArrow",
     value: function renderBackArrow() {
-      var _this3 = this;
-
+      var history = this.props.history;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "update-user-back-arrow-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_1__.FontAwesomeIcon, {
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faArrowLeft,
         className: "update-user-back-arrow",
         onClick: function onClick() {
-          return _this3.props.history.goBack();
+          return history.push('/home');
         }
       }));
     }
   }, {
     key: "renderAdd",
     value: function renderAdd() {
-      var _this$props2 = this.props,
-          user = _this$props2.user,
-          currentUser = _this$props2.currentUser;
+      var _this$props3 = this.props,
+          user = _this$props3.user,
+          currentUser = _this$props3.currentUser;
 
       if (user.id === currentUser.id) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -25101,11 +25220,11 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.user) return null;
       var user = this.props.user;
+      if (!user) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "profile-container",
-        key: this.props.user
+        key: user
       }, this.renderBackArrow(), this.renderEdit(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "profile-page-avatar-container"
       }, this.renderAvatar(), this.renderUsername(), this.renderFollowers(), this.renderDetails()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -25155,11 +25274,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+  var _ref$entities = _ref.entities,
+      users = _ref$entities.users,
+      boards = _ref$entities.boards,
+      session = _ref.session;
+  var params = _ref2.match.params;
   return {
-    boards: state.entities.boards,
-    user: state.entities.users[ownProps.match.params.userId],
-    currentUser: state.entities.users[state.session.id]
+    boards: boards,
+    user: users[params.userId],
+    currentUser: users[session.id],
+    userId: params.userId
   };
 };
 
@@ -25170,6 +25295,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchUser: function fetchUser(userId) {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUser)(userId));
+    },
+    fetchUsers: function fetchUsers(user) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)(user));
     },
     openModal: function openModal(modal) {
       return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__.openModal)(modal));
@@ -25278,8 +25406,14 @@ var SaveButton = /*#__PURE__*/function (_React$Component) {
   _createClass(SaveButton, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // debugger
-      this.props.fetchBoards(this.props.userId);
+      var _this$props = this.props,
+          boards = _this$props.boards,
+          fetchBoards = _this$props.fetchBoards,
+          userId = _this$props.userId;
+
+      if (!boards.length) {
+        fetchBoards(userId);
+      }
     }
   }, {
     key: "handleDivClick",
@@ -25320,9 +25454,9 @@ var SaveButton = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       if (!this.props.boards) return null;
-      var _this$props = this.props,
-          boards = _this$props.boards,
-          pinId = _this$props.pinId;
+      var _this$props2 = this.props,
+          boards = _this$props2.boards,
+          pinId = _this$props2.pinId;
       var show = this.state.open;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "save-button-container save-button-container-".concat(this.state.open),
@@ -26499,6 +26633,9 @@ var usersReducer = function usersReducer() {
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_USER:
       return Object.assign({}, state, _defineProperty({}, action.user.id, action.user));
 
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_USERS:
+      return Object.assign({}, state, action.users);
+
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__.REMOVE_USERS:
       return {};
 
@@ -26821,6 +26958,7 @@ var logOut = function logOut() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "fetchUser": () => (/* binding */ fetchUser),
+/* harmony export */   "fetchUsersByRelation": () => (/* binding */ fetchUsersByRelation),
 /* harmony export */   "updateUser": () => (/* binding */ updateUser),
 /* harmony export */   "followUser": () => (/* binding */ followUser),
 /* harmony export */   "unfollowUser": () => (/* binding */ unfollowUser)
@@ -26828,6 +26966,12 @@ __webpack_require__.r(__webpack_exports__);
 var fetchUser = function fetchUser(userId) {
   return $.ajax({
     url: "api/users/".concat(userId),
+    method: 'GET'
+  });
+};
+var fetchUsersByRelation = function fetchUsersByRelation(user) {
+  return $.ajax({
+    url: "api/users/".concat(user.id, "/follows"),
     method: 'GET'
   });
 };
@@ -26840,15 +26984,15 @@ var updateUser = function updateUser(userFormData, user) {
     processData: false
   });
 };
-var followUser = function followUser(userId, followeeId) {
+var followUser = function followUser(currentUserId, userId) {
   return $.ajax({
-    url: "api/users/".concat(userId, "/").concat(followeeId),
+    url: "api/users/".concat(currentUserId, "/").concat(userId),
     method: 'POST'
   });
 };
-var unfollowUser = function unfollowUser(userId, followeeId) {
+var unfollowUser = function unfollowUser(currentUserId, userId) {
   return $.ajax({
-    url: "api/users/".concat(userId, "/").concat(followeeId),
+    url: "api/users/".concat(currentUserId, "/").concat(userId),
     method: 'DELETE'
   });
 };

@@ -24,9 +24,26 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    const userId = this.props.match.params.userId
-    this.props.fetchBoards( userId )
-    this.props.fetchUser( userId )
+
+    const { 
+      userId, fetchBoards, 
+      fetchUser, fetchUsers 
+    } = this.props
+
+    if( userId ) {
+
+      fetchBoards( userId )
+      
+      fetchUser( userId )
+      .then((action) => {
+
+        console.log(action)
+        fetchUsers(action.user)
+        
+      })
+
+    }
+    
   }
 
   renderAvatar() {
@@ -68,13 +85,13 @@ class Profile extends React.Component {
           </span>
         </div>
       )
-    }
+  }
   }
 
   renderFollowers() {
     const { followers, followees } = this.props.user
     let numFollowers = followers ? Object.values(followers).length : '0'
-    let numFollowees = followees ? Object.values(followers).length : '0'
+    let numFollowees = followees ? Object.values(followees).length : '0'
     return (
       <div className="user-follow-container">
         <span
@@ -132,12 +149,13 @@ class Profile extends React.Component {
   }
 
   renderBackArrow() {
+    const { history } = this.props
     return(
         <div className="update-user-back-arrow-container">
           <FontAwesomeIcon
             icon={faArrowLeft}
             className="update-user-back-arrow"
-            onClick={() => this.props.history.goBack()}
+            onClick={() => history.push('/home')}
           />
       </div>
     )
@@ -158,10 +176,10 @@ class Profile extends React.Component {
   }
 
   render() {
-    if( !this.props.user ) return null;
     const { user } = this.props
+    if( !user ) return null;
     return (
-      <div className="profile-container" key={this.props.user}>
+      <div className="profile-container" key={user}>
           {this.renderBackArrow()}
           {this.renderEdit()}
         <div className="profile-page-avatar-container">

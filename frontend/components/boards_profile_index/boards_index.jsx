@@ -5,13 +5,14 @@ import { docStyles } from '../config/document_grid'
 class BoardsIndex extends React.Component {
 
   componentDidMount() {
-    const { fetchBoards, match } = this.props
-    fetchBoards(match.params.userId)
+    const { fetchBoards, user } = this.props
+    fetchBoards(user.id)
   }
   render() {
-    const { boards } = this.props
+    const { boards, user } = this.props
     if( !boards ) return null
-    const BoardCards = boards.map( (board, index) => {
+    const filteredBoards = boards.filter(board => board.user_id === user.id )
+    const BoardCards = filteredBoards.map( (board, index) => {
       return(<BoardCard board={board} key={`board-id-${board.id}-index-${index}`}/>)
     })
     return(

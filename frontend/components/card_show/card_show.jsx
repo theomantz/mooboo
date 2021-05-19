@@ -30,14 +30,14 @@ class CardShow extends React.Component {
     fetchContent(match.params.pinId)
     window.scrollTo(0, 0)
     if ( content ) {
-      fetchUser(content.uploader_id)
+      fetchUser(content.user_id)
     }
   }
 
   renderDeleteButton() {
     if( !this.props.content || !this.props.userId ) return null
     const { content, userId } = this.props
-    if( content.uploader_id !== userId ) return null
+    if( content.user_id !== userId ) return null
     return(
       <div className='pin-card-delete-button-container'>
         <Link to='/home'>
@@ -71,9 +71,9 @@ class CardShow extends React.Component {
   }
 
   renderFollow() {
-    if( !this.props.location || !this.props.userId ) return null
-    const { uploader, userId } = this.props
-    if( !this.props.uploader || uploader.id === userId ) return null
+    const { uploader, userId, location } = this.props
+    if( !location || !userId ) return null
+    if( !uploader || uploader.id === userId ) return null
     return(
       <div className='follow-container'>
         <span className='follow-header-text'>Posted by:</span>
@@ -125,8 +125,8 @@ class CardShow extends React.Component {
                 <p>{description}</p>
               </div>
               {this.renderFollow()}
+              {this.renderDeleteButton()}
             </div>
-            {this.renderDeleteButton()}
           </div>
         </div>
         <div className="document-grid-show-page-container"></div>

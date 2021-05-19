@@ -10,15 +10,22 @@ class FollowersList extends React.Component {
   }
 
   componentDidMount() {
+
     const {
-      location,
-      fetchUser } = this.props
-    const userId = location.pathname.slice(7);
-    fetchUser(userId)
+      user,
+      fetchUser,
+      fetchUsers,
+      listType
+    } = this.props
+    
+    fetchUser(user.id)
+      .then(action => fetchUsers(action.user))
+    
   }
 
   assignRelations() {
-    const { user, currentUserId } = this.props
+
+    const { user, currentUser } = this.props
     let users 
     if( this.props.listType === 'Followers') {
       users = user.followers
@@ -32,23 +39,22 @@ class FollowersList extends React.Component {
         </li>
       );
     }
-    const relationships = Object.values(users).map( user => {
-      if( user.id !== currentUserId) {
+
+    const relationships = Object.values(users).map( u => {
         return (
-          <Link 
-            to={`${user.id}`} 
-            key={uuid()}
-            onClick={() => this.props.closeModal()}>
-            <li key={`follow-page-link-${user.id}`}
+            <li key={`follow-page-link-${u.id}`}
             className='relation-list-item'>
-              <span className='relation-list-link'>
-                @{user.username} 
-              </span>
-                <FollowButtonContainer user={user}/>
+              <Link 
+                to={`${u.id}`} 
+                key={uuid()}
+                onClick={() => this.props.closeModal()}>
+                  <span className='relation-list-link'>
+                    @{u.username} 
+                  </span>
+              </Link>
+              <FollowButtonContainer user={u}/>
             </li>
-          </Link>
         );
-      }
     })
     return relationships.filter( relation => relation !== undefined )
   }

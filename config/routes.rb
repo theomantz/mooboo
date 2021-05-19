@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json }  do
 
     resources :users, only: [:create, :show, :update]
+
+    get 'users/:user_id/follows' => 'users#follows', as: :users_follows
     get 'users/pins/:id' => 'users#pins_by_user', as: :pins_by_user
-    post 'users/:id/:followee_id' => 'users#follow', as: :follow
-    delete 'users/:id/:followee_id' => 'users#unfollow', as: :unfollow
+    post 'users/:current_user_id/:user_id' => 'users#follow', as: :follow
+    delete 'users/:current_user_id/:user_id' => 'users#unfollow', as: :unfollow
     
     resources :pins, only: [:create, :index, :show, :update, :destroy]
 
