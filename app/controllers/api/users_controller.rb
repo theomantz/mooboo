@@ -56,7 +56,7 @@ class Api::UsersController < ApplicationController
   end
 
   def pins_by_user
-    @pins = Pin.where(uploader_id: params[:id])
+    @pins = Pin.where(user_id: params[:id])
     render 'api/pins/index'
   end
 
@@ -64,8 +64,10 @@ class Api::UsersController < ApplicationController
 
     @user = User.where(id: params[:current_user_id])
       .includes(:followees)
+      .first
     @user_to_follow = User.where(id: params[:user_id])
       .includes(:followers)
+      .first
 
     if !@user.nil? && !@user_to_follow.nil? && @user.id == current_user.id 
 

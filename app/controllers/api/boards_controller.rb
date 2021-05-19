@@ -19,7 +19,7 @@ class Api::BoardsController < ApplicationController
   end
 
   def index
-    debugger
+
     if params[:user_id]
       @boards = Board
         .where(user_id: params[:user_id])

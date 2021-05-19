@@ -17794,10 +17794,7 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
           openModal = _this$props.openModal,
           content = _this$props.content;
       window.scrollTo(0, 0);
-
-      if (!content.length) {
-        fetchPins();
-      }
+      fetchPins();
 
       if (!contentCards || contentCards.length !== content.length) {
         openModal('loading');
@@ -17822,7 +17819,7 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
 
       var flag = !compareContent(prevProps.content, content);
 
-      if (!contentCards) {
+      if (!contentCards || contentCards.length !== content.length) {
         this.buildContentCards();
       }
 
@@ -24605,15 +24602,42 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(PinIndex);
 
   function PinIndex(props) {
+    var _this;
+
     _classCallCheck(this, PinIndex);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      numCols: null
+    };
+    return _this;
   }
 
   _createClass(PinIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchPins(this.props.match.params.userId);
+      var _this$props = this.props,
+          fetchPins = _this$props.fetchPins,
+          match = _this$props.match,
+          pins = _this$props.pins;
+      var numCols = this.state.numCols;
+      debugger;
+      fetchPins(match.params.userId);
+
+      if (!numCols) {
+        this.setNumCols();
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {}
+  }, {
+    key: "setNumCols",
+    value: function setNumCols() {
+      var numCols = Math.floor(window.innerWidth * 0.75 / (260 + 16));
+      this.setState({
+        numCols: numCols
+      });
     }
   }, {
     key: "pinsItemRender",
@@ -24630,9 +24654,14 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.pins) return null;
+      var pins = this.props.pins;
+      var numCols = this.state.numCols;
+      if (!pins || !numCols) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "main-page-pin-index"
+        className: "main-page-pin-index",
+        style: {
+          columnCount: numCols
+        }
       }, this.pinsItemRender());
     }
   }]);

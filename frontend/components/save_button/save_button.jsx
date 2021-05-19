@@ -9,7 +9,7 @@ class SaveButton extends React.Component {
     super(props)
     this.state = {
       selected: 'Quick Save',
-      open: false
+      open: false,
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleDefaultSave = this.handleDefaultSave.bind(this)
