@@ -37,7 +37,7 @@ class DocumentCard extends React.Component {
               <img
               src={content.photoUrl}
                 alt={content.title}
-                style={docStyles.docCard}
+                style={{...docStyles.docCard, width: '260px'}}
               />
               {this.renderDelete()}
             </div>

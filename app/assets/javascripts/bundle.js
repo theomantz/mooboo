@@ -15875,9 +15875,9 @@ var fetchUser = function fetchUser(userId) {
     });
   };
 };
-var fetchUsers = function fetchUsers(data) {
+var fetchUsers = function fetchUsers(user) {
   return function (dispatch) {
-    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchUsersByRelation(data).then(function (users) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchUsersByRelation(user).then(function (users) {
       return dispatch(receiveUsers(users));
     }, function (err) {
       return dispatch(receiveUserErrors(err));
@@ -15894,18 +15894,22 @@ var updateUser = function updateUser(formData, user) {
   };
 };
 var followUser = function followUser(currentUserId, userId) {
-  return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.followUser(currentUserId, userId).then(function (user) {
-    return dispatchEvent(receiveUser(user), function (err) {
-      return dispatch(receiveUserErrors(err));
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.followUser(currentUserId, userId).then(function (user) {
+      return dispatch(receiveUser(user), function (err) {
+        return dispatch(receiveUserErrors(err));
+      });
     });
-  });
+  };
 };
 var unfollowUser = function unfollowUser(currentUserId, userId) {
-  return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.unfollowUser(currentUserId, userId).then(function (user) {
-    return dispatchEvent(receiveUser(user), function (err) {
-      return dispatch(receiveUserErrors(err));
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__.unfollowUser(currentUserId, userId).then(function (user) {
+      return dispatch(receiveUser(user), function (err) {
+        return dispatch(receiveUserErrors(err));
+      });
     });
-  });
+  };
 };
 var clearUsers = function clearUsers() {
   (function () {
@@ -16293,7 +16297,6 @@ var App = function App() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "profile-page-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_19__.Route, {
-    exact: true,
     path: "/users/:userId",
     component: _profile_profile_container__WEBPACK_IMPORTED_MODULE_15__.default
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_19__.Route, {
@@ -17036,15 +17039,20 @@ var BoardsIndex = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this$props = this.props,
           fetchBoards = _this$props.fetchBoards,
-          match = _this$props.match;
-      fetchBoards(match.params.userId);
+          user = _this$props.user;
+      fetchBoards(user.id);
     }
   }, {
     key: "render",
     value: function render() {
-      var boards = this.props.boards;
+      var _this$props2 = this.props,
+          boards = _this$props2.boards,
+          user = _this$props2.user;
       if (!boards) return null;
-      var BoardCards = boards.map(function (board, index) {
+      var filteredBoards = boards.filter(function (board) {
+        return board.user_id === user.id;
+      });
+      var BoardCards = filteredBoards.map(function (board, index) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_board_card_board_card__WEBPACK_IMPORTED_MODULE_1__.default, {
           board: board,
           key: "board-id-".concat(board.id, "-index-").concat(index)
@@ -17083,11 +17091,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var mapStateToProps = function mapStateToProps(state, ownProps) {
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+  var _ref$entities = _ref.entities,
+      boards = _ref$entities.boards,
+      users = _ref$entities.users;
+  var params = _ref2.match.params;
   return {
-    boards: Object.values(state.entities.boards),
-    userId: ownProps.userId,
-    user: state.entities.users[ownProps.userId]
+    boards: Object.values(boards),
+    user: users[params.userId]
   };
 };
 
@@ -17120,6 +17131,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _config_document_grid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config/document_grid */ "./frontend/components/config/document_grid.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -17195,7 +17212,9 @@ var DocumentCard = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         src: content.photoUrl,
         alt: content.title,
-        style: _config_document_grid__WEBPACK_IMPORTED_MODULE_2__.docStyles.docCard
+        style: _objectSpread(_objectSpread({}, _config_document_grid__WEBPACK_IMPORTED_MODULE_2__.docStyles.docCard), {}, {
+          width: '260px'
+        })
       }), this.renderDelete()))));
     }
   }]);
@@ -17780,7 +17799,7 @@ var DocumentGrid = /*#__PURE__*/function (_React$Component) {
         fetchPins();
       }
 
-      if (!contentCards) {
+      if (!contentCards || contentCards.length !== content.length) {
         openModal('loading');
         this.buildContentCards();
       }
@@ -17988,10 +18007,10 @@ var DropdownCard = /*#__PURE__*/function (_React$Component) {
             pinId = _this2$props.pinId,
             addPinToBoard = _this2$props.addPinToBoard;
         addPinToBoard(item.id, pinId).then(function () {
-          var addedBoards = addedBoards.push(item.id);
+          var newBoards = addedBoards.push(item.id);
 
           _this2.setState({
-            addedBoards: addedBoards
+            addedBoards: newBoards
           });
         });
       };
@@ -18369,7 +18388,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _util_user_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/user_api_util */ "./frontend/util/user_api_util.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18391,7 +18409,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 
 
 
@@ -18444,9 +18461,9 @@ var FollowButton = /*#__PURE__*/function (_React$Component) {
 
       var _this$props2 = this.props,
           user = _this$props2.user,
-          currentUser = _this$props2.currentUser;
-
-      (0,_util_user_api_util__WEBPACK_IMPORTED_MODULE_1__.followUser)(currentUser.id, user.id).then(function () {
+          currentUser = _this$props2.currentUser,
+          followUser = _this$props2.followUser;
+      followUser(currentUser.id, user.id).then(function () {
         return _this2.setState({
           followedStatus: true
         });
@@ -18459,9 +18476,9 @@ var FollowButton = /*#__PURE__*/function (_React$Component) {
 
       var _this$props3 = this.props,
           user = _this$props3.user,
-          currentUser = _this$props3.currentUser;
-
-      (0,_util_user_api_util__WEBPACK_IMPORTED_MODULE_1__.unfollowUser)(currentUser.id, user.id).then(function () {
+          currentUser = _this$props3.currentUser,
+          unfollowUser = _this$props3.unfollowUser;
+      unfollowUser(currentUser.id, user.id).then(function () {
         return _this3.setState({
           followedStatus: false
         });
@@ -18474,7 +18491,6 @@ var FollowButton = /*#__PURE__*/function (_React$Component) {
           user = _this$props4.user,
           currentUser = _this$props4.currentUser;
       var followedStatus = this.state.followedStatus;
-      debugger;
       if (user.id === currentUser.id) return null;
 
       if (followedStatus) {
@@ -18520,13 +18536,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _follow_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./follow_button */ "./frontend/components/follow_button/follow_button.jsx");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+
 
 
 
 var mapStateToProps = function mapStateToProps(_ref, ownProps) {
   var session = _ref.session,
       users = _ref.entities.users;
-  debugger;
   return {
     currentUser: users[session.id],
     user: users[ownProps.user.id] || ownProps.user.id
@@ -18534,10 +18551,17 @@ var mapStateToProps = function mapStateToProps(_ref, ownProps) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    followUser: function followUser(currentUserId, userId) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.followUser)(currentUserId, userId));
+    },
+    unfollowUser: function unfollowUser(currentUserId, userId) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.unfollowUser)(currentUserId, userId));
+    }
+  };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mapStateToProps, null)(_follow_button__WEBPACK_IMPORTED_MODULE_1__.default));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mapStateToProps, mapDispatchToProps)(_follow_button__WEBPACK_IMPORTED_MODULE_1__.default));
 
 /***/ }),
 
@@ -18576,8 +18600,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchUser: function fetchUser(userId) {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUser)(userId));
     },
-    fetchUsers: function fetchUsers(data) {
-      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)(data));
+    fetchUsers: function fetchUsers(user) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)(user));
     },
     clearUsers: function clearUsers() {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.clearUsers)());
@@ -18618,7 +18642,6 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   var session = _ref.session,
       users = _ref.entities.users;
   var pathname = _ref2.location.pathname;
-  debugger;
   return {
     currentUser: users[session.id],
     user: users[parseInt(pathname.slice(7))],
@@ -18631,8 +18654,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchUser: function fetchUser(userId) {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUser)(userId));
     },
-    fetchUsers: function fetchUsers(data) {
-      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)(data));
+    fetchUsers: function fetchUsers(user) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)(user));
     },
     clearUsers: function clearUsers() {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.clearUsers)());
@@ -18706,16 +18729,13 @@ var FollowersList = /*#__PURE__*/function (_React$Component) {
   _createClass(FollowersList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       var _this$props = this.props,
           user = _this$props.user,
           fetchUser = _this$props.fetchUser,
           fetchUsers = _this$props.fetchUsers,
           listType = _this$props.listType;
-      fetchUser(user.id);
-      fetchUsers({
-        user: user,
-        relation: listType
+      fetchUser(user.id).then(function (action) {
+        return fetchUsers(action.user);
       });
     }
   }, {
@@ -18723,7 +18743,6 @@ var FollowersList = /*#__PURE__*/function (_React$Component) {
     value: function assignRelations() {
       var _this = this;
 
-      debugger;
       var _this$props2 = this.props,
           user = _this$props2.user,
           currentUser = _this$props2.currentUser;
@@ -18742,26 +18761,21 @@ var FollowersList = /*#__PURE__*/function (_React$Component) {
         }, "None Yet!");
       }
 
-      debugger;
       var relationships = Object.values(users).map(function (u) {
-        debugger;
-
-        if (u.id !== currentUser.id) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-            to: "".concat(u.id),
-            key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()(),
-            onClick: function onClick() {
-              return _this.props.closeModal();
-            }
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
-            key: "follow-page-link-".concat(u.id),
-            className: "relation-list-item"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-            className: "relation-list-link"
-          }, "@", u.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_follow_button_follow_button_container__WEBPACK_IMPORTED_MODULE_2__.default, {
-            user: u
-          })));
-        }
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+          key: "follow-page-link-".concat(u.id),
+          className: "relation-list-item"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+          to: "".concat(u.id),
+          key: react_uuid__WEBPACK_IMPORTED_MODULE_1___default()(),
+          onClick: function onClick() {
+            return _this.props.closeModal();
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+          className: "relation-list-link"
+        }, "@", u.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_follow_button_follow_button_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+          user: u
+        }));
       });
       return relationships.filter(function (relation) {
         return relation !== undefined;
@@ -18885,7 +18899,6 @@ var Column = function Column(_ref) {
   }
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    // debugger
     if (cards.length === 0) {
       setTimeout(function () {
         setCards(CARDS);
@@ -25024,9 +25037,19 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   _createClass(Profile, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var userId = this.props.match.params.userId;
-      this.props.fetchBoards(userId);
-      this.props.fetchUser(userId);
+      var _this$props = this.props,
+          userId = _this$props.userId,
+          fetchBoards = _this$props.fetchBoards,
+          fetchUser = _this$props.fetchUser,
+          fetchUsers = _this$props.fetchUsers;
+
+      if (userId) {
+        fetchBoards(userId);
+        fetchUser(userId).then(function (action) {
+          console.log(action);
+          fetchUsers(action.user);
+        });
+      }
     }
   }, {
     key: "renderAvatar",
@@ -25076,7 +25099,7 @@ var Profile = /*#__PURE__*/function (_React$Component) {
           followers = _this$props$user.followers,
           followees = _this$props$user.followees;
       var numFollowers = followers ? Object.values(followers).length : '0';
-      var numFollowees = followees ? Object.values(followers).length : '0';
+      var numFollowees = followees ? Object.values(followees).length : '0';
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-follow-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -25112,9 +25135,9 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderEdit",
     value: function renderEdit() {
-      var _this$props = this.props,
-          user = _this$props.user,
-          currentUser = _this$props.currentUser;
+      var _this$props2 = this.props,
+          user = _this$props2.user,
+          currentUser = _this$props2.currentUser;
 
       if (user.id === currentUser.id) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
@@ -25147,9 +25170,9 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderAdd",
     value: function renderAdd() {
-      var _this$props2 = this.props,
-          user = _this$props2.user,
-          currentUser = _this$props2.currentUser;
+      var _this$props3 = this.props,
+          user = _this$props3.user,
+          currentUser = _this$props3.currentUser;
 
       if (user.id === currentUser.id) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -25168,11 +25191,11 @@ var Profile = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.user) return null;
       var user = this.props.user;
+      if (!user) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "profile-container",
-        key: this.props.user
+        key: user
       }, this.renderBackArrow(), this.renderEdit(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "profile-page-avatar-container"
       }, this.renderAvatar(), this.renderUsername(), this.renderFollowers(), this.renderDetails()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -25231,7 +25254,8 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   return {
     boards: boards,
     user: users[params.userId],
-    currentUser: users[session.id]
+    currentUser: users[session.id],
+    userId: params.userId
   };
 };
 
@@ -25242,6 +25266,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchUser: function fetchUser(userId) {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUser)(userId));
+    },
+    fetchUsers: function fetchUsers(user) {
+      return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__.fetchUsers)(user));
     },
     openModal: function openModal(modal) {
       return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_4__.openModal)(modal));
@@ -26913,14 +26940,10 @@ var fetchUser = function fetchUser(userId) {
     method: 'GET'
   });
 };
-var fetchUsersByRelation = function fetchUsersByRelation(data) {
+var fetchUsersByRelation = function fetchUsersByRelation(user) {
   return $.ajax({
-    url: 'api/users/follows',
-    method: 'POST',
-    data: {
-      userId: data.user.id,
-      relation: data.relation
-    }
+    url: "api/users/".concat(user.id, "/follows"),
+    method: 'GET'
   });
 };
 var updateUser = function updateUser(userFormData, user) {

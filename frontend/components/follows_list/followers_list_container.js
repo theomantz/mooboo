@@ -6,7 +6,6 @@ import { fetchUser, clearUsers, fetchUsers } from '../../actions/user_actions'
 
 
 const mapStateToProps = ({ session, entities: { users }},{ location: { pathname } }) => {
-  debugger
   return {
     currentUser: users[session.id],
     user: users[parseInt(pathname.slice(7))],
@@ -16,7 +15,7 @@ const mapStateToProps = ({ session, entities: { users }},{ location: { pathname 
 
 const mapDispatchToProps = dispatch => ({
   fetchUser: userId => dispatch(fetchUser(userId)),
-  fetchUsers: data => dispatch(fetchUsers(data)),
+  fetchUsers: user => dispatch(fetchUsers(user)),
   clearUsers: () => dispatch(clearUsers()),
   closeModal: () => dispatch(closeModal())
 });

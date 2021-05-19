@@ -1,8 +1,5 @@
 import React from 'react'
-import { 
-  followUser,
-  unfollowUser
- } from '../../util/user_api_util'
+
 
 
 class FollowButton extends React.Component {
@@ -25,6 +22,7 @@ class FollowButton extends React.Component {
   determineStatus() {
     const { user, currentUser } = this.props
     const { followees } = currentUser
+
     if( followees ) {
       const followed = Boolean(followees[user.id])
       if( followed ) {
@@ -35,7 +33,7 @@ class FollowButton extends React.Component {
 
 
   followUser() {
-    const { user, currentUser } = this.props
+    const { user, currentUser, followUser } = this.props
     followUser( currentUser.id, user.id )
       .then( () => this.setState({
         followedStatus: true
@@ -43,7 +41,7 @@ class FollowButton extends React.Component {
   }
 
   unfollowUser() {
-    const { user, currentUser } = this.props
+    const { user, currentUser, unfollowUser } = this.props
     unfollowUser( currentUser.id , user.id )
       .then( () => this.setState({
         followedStatus: false
@@ -54,7 +52,6 @@ class FollowButton extends React.Component {
   renderButton() {
     const { user, currentUser } = this.props
     const { followedStatus } = this.state
-    debugger
     if( user.id === currentUser.id ) return null
     if( followedStatus ) {
       return (

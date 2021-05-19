@@ -37,7 +37,7 @@ class DocumentGrid extends React.Component {
       fetchPins()
     }
     
-    if(!contentCards) {
+    if(!contentCards || contentCards.length !== content.length ) {
       openModal('loading')
       this.buildContentCards()
     }
@@ -57,6 +57,7 @@ class DocumentGrid extends React.Component {
       )
     }
 
+    
     const flag = !compareContent(prevProps.content, content)
 
     if(!contentCards) {

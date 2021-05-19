@@ -31,9 +31,9 @@ export const fetchUser = userId => dispatch => {
   )
 };
 
-export const fetchUsers = data => dispatch => {
+export const fetchUsers = user => dispatch => {
   return (
-    UserApiUtil.fetchUsersByRelation(data)
+    UserApiUtil.fetchUsersByRelation(user)
       .then(users => dispatch(receiveUsers(users)),
       err => dispatch(receiveUserErrors(err)))
   )
@@ -47,18 +47,18 @@ export const updateUser = (formData, user) => dispatch => {
   )
 };
 
-export const followUser = (currentUserId, userId) => {
+export const followUser = (currentUserId, userId) => dispatch => {
   return (
     UserApiUtil.followUser(currentUserId, userId)
-      .then(user => dispatchEvent(receiveUser(user),
+      .then(user => dispatch(receiveUser(user),
       err => dispatch(receiveUserErrors(err))))
   )
 }
 
-export const unfollowUser = (currentUserId, userId) => {
+export const unfollowUser = (currentUserId, userId) => dispatch => {
   return (
     UserApiUtil.unfollowUser(currentUserId, userId)
-      .then(user => dispatchEvent(receiveUser(user),
+      .then(user => dispatch(receiveUser(user),
       err => dispatch(receiveUserErrors(err))))
   )
 }

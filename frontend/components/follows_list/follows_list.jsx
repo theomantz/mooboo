@@ -10,7 +10,7 @@ class FollowersList extends React.Component {
   }
 
   componentDidMount() {
-    debugger
+
     const {
       user,
       fetchUser,
@@ -19,15 +19,12 @@ class FollowersList extends React.Component {
     } = this.props
     
     fetchUser(user.id)
-
-    fetchUsers({
-      user: user, relation: listType
-    })
+      .then(action => fetchUsers(action.user))
     
   }
 
   assignRelations() {
-    debugger
+
     const { user, currentUser } = this.props
     let users 
     if( this.props.listType === 'Followers') {
@@ -42,25 +39,22 @@ class FollowersList extends React.Component {
         </li>
       );
     }
-    debugger
+
     const relationships = Object.values(users).map( u => {
-      debugger
-      if( u.id !== currentUser.id) {
         return (
-          <Link 
-            to={`${u.id}`} 
-            key={uuid()}
-            onClick={() => this.props.closeModal()}>
             <li key={`follow-page-link-${u.id}`}
             className='relation-list-item'>
-              <span className='relation-list-link'>
-                @{u.username} 
-              </span>
-                <FollowButtonContainer user={u}/>
+              <Link 
+                to={`${u.id}`} 
+                key={uuid()}
+                onClick={() => this.props.closeModal()}>
+                  <span className='relation-list-link'>
+                    @{u.username} 
+                  </span>
+              </Link>
+              <FollowButtonContainer user={u}/>
             </li>
-          </Link>
         );
-      }
     })
     return relationships.filter( relation => relation !== undefined )
   }

@@ -453,10 +453,15 @@
   text-decoration: none;
   color: black;
   border-radius: 17px;
+  min-height: 60px;
 }
 
 .relation-list-item:hover {
   background: lightgray;
+}
+
+.relation-list-link {
+  color: black;
 }
 
 .close-header-text {

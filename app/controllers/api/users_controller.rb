@@ -25,6 +25,7 @@ class Api::UsersController < ApplicationController
   end
 
   def show
+
     @user = User
     .where(id: params[:id])
     .includes(:followers, :followees)
@@ -32,14 +33,23 @@ class Api::UsersController < ApplicationController
     render :show
   end
 
-  def index
-    @user = User.where(id: params[:userId])
+  def follows
+    
+    @user = User.where(id: params[:user_id])
       .includes(:followers, :followees)
       .first
+      
+    if @user 
 
-    @users = @user.followers + @user.followees
+      @users = @user.followers + @user.followees
+      render :index
 
-    render :index
+    else
+
+      render json: @user.errors.full_messages
+
+    end
+
   end
 
   def destroy
@@ -52,18 +62,20 @@ class Api::UsersController < ApplicationController
 
   def follow
 
-    @user = User.find_by(id: params[:current_user_id])
-    @user_to_follow = User.find_by(id: params[:user_id])
+    @user = User.where(id: params[:current_user_id])
+      .includes(:followees)
+    @user_to_follow = User.where(id: params[:user_id])
+      .includes(:followers)
 
     if !@user.nil? && !@user_to_follow.nil? && @user.id == current_user.id 
 
-      @user_to_follow.followers << @user
-      @user.followees << @user_to_follow
-
-      if @user.save && @user_to_follow.save
+      
+      if !@user_to_follow.followers.include?(@user)
+        @user_to_follow.followers << @user
+        @user
         render 'api/users/show'
       else
-        render json: @user.errors.full_messages, status: 400
+        render json: ['Already following that user'], status: 400
       end
       
     else
@@ -80,10 +92,9 @@ class Api::UsersController < ApplicationController
     
     if !@user.nil? && !@following.nil? && @user.id == current_user.id 
 
-      @following.followers.delete(@user)
-      @user.followees.delete(@following)
-
-      if @user.save && @following.save 
+      
+      if @following.followers.delete(@user)
+        @user
         render '/api/users/show'
       end
 
@@ -94,7 +105,10 @@ class Api::UsersController < ApplicationController
   end
 
   private
+  def index_params
+    params.require(:user_id).permit()
+  end
   def user_params
-    params.require(:user).permit(:email, :password, :username, :description, :location, :photo)
+    params.require(:user).permit(:user_id, :email, :password, :username, :description, :location, :photo)
   end
 end

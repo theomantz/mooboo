@@ -39,7 +39,6 @@ const Column = ({CARDS, index, length}) => {
   }
 
   useEffect(() => {
-    // debugger
     if (cards.length === 0) {
       setTimeout(() => {
         setCards(CARDS);

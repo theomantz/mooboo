@@ -19,11 +19,13 @@ class User < ApplicationRecord
   
   has_many :boards
 
-  has_many :followee_follows, foreign_key: :follower_id, class_name: :Follow
-  has_many :followees, through: :followee_follows, source: :followee
 
-  has_many :follower_follows, foreign_key: :followee_id, class_name: :Follow
-  has_many :followers, through: :follower_follows, source: :follower
+  
+  has_many :follow_followers, class_name: :Follow, foreign_key: :followee_id, dependent: :destroy
+  has_many :followers, through: :follow_followers, source: :follower
+
+  has_many :following, class_name: :Follow, foreign_key: :follower_id, dependent: :destroy
+  has_many :followees, through: :following, source: :followee
 
   def self.find_by_credentials(user_params)
     user = User.find_by(email: user_params[:email])

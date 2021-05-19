@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
     resources :users, only: [:create, :show, :update]
 
-    post 'users/follows' => 'users#index', as: :users_index
+    get 'users/:user_id/follows' => 'users#follows', as: :users_follows
     get 'users/pins/:id' => 'users#pins_by_user', as: :pins_by_user
     post 'users/:current_user_id/:user_id' => 'users#follow', as: :follow
     delete 'users/:current_user_id/:user_id' => 'users#unfollow', as: :unfollow

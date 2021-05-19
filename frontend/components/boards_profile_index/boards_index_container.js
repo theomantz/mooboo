@@ -3,10 +3,9 @@ import { fetchBoards } from '../../actions/board_actions'
 import BoardsIndex from './boards_index'
 import { withRouter } from 'react-router-dom'
 
-const mapStateToProps = (state, ownProps) => ({
-  boards: Object.values(state.entities.boards),
-  userId: ownProps.userId,
-  user: state.entities.users[ownProps.userId],
+const mapStateToProps = ({entities: { boards, users }}, { match: { params }}) => ({
+  boards: Object.values(boards),
+  user: users[params.userId],
 });
 
 const mapDispatchToProps = dispatch => ({

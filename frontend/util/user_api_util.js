@@ -5,16 +5,14 @@ export const fetchUser = userId => (
   })
 );
 
-export const fetchUsersByRelation = (data) => (
-  $.ajax({
-    url: 'api/users/follows',
-    method: 'POST',
-    data: { 
-      userId: data.user.id, 
-      relation: data.relation
-    }
-  })
-)
+export const fetchUsersByRelation = (user) => {
+  return (
+      $.ajax({
+        url: `api/users/${user.id}/follows`,
+        method: 'GET',
+      })
+    )
+}
 
 export const updateUser = (userFormData, user) => {
   return(

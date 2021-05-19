@@ -19,9 +19,10 @@ class Api::BoardsController < ApplicationController
   end
 
   def index
-    if params[:userId]
+    debugger
+    if params[:user_id]
       @boards = Board
-        .where(user_id: params[:userId])
+        .where(user_id: params[:user_id])
         .includes(:pins)
     else
       @boards = Board

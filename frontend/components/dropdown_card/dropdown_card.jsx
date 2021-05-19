@@ -19,8 +19,8 @@ class DropdownCard extends React.Component {
 
       addPinToBoard(item.id, pinId)
         .then(() => {
-          const addedBoards = addedBoards.push(item.id)
-          this.setState({ addedBoards: addedBoards })
+          const newBoards = addedBoards.push(item.id)
+          this.setState({ addedBoards: newBoards })
         })
     }
   }
