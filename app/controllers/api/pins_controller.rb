@@ -1,6 +1,7 @@
 class Api::PinsController < ApplicationController
   
   def create
+    debugger
     @pin = Pin.new(pin_params)
     if @pin.save
       # @pins = Pin.all.order(updated_at: :desc)

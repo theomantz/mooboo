@@ -93,12 +93,12 @@ class PinForm extends React.Component {
 
       formData.append( 'pin[title]', this.state.title )
       formData.append( 'pin[photo]', this.state.photoFile )
-      formData.append( 'pin[uploader_id]', this.props.userId )
+      formData.append( 'pin[user_id]', this.props.userId )
       formData.append( 'pin[description]', this.state.description )
 
       this.props.createPin(formData)
         .then(() => closeModal(),
-          errors => this.setState({ errors: errors })
+          action => this.setState({ errors: Object.values(action.errors.responseJSON) })
         )
 
     }

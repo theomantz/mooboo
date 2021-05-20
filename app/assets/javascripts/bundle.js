@@ -24888,13 +24888,13 @@ var PinForm = /*#__PURE__*/function (_React$Component) {
         var formData = new FormData();
         formData.append('pin[title]', this.state.title);
         formData.append('pin[photo]', this.state.photoFile);
-        formData.append('pin[uploader_id]', this.props.userId);
+        formData.append('pin[user_id]', this.props.userId);
         formData.append('pin[description]', this.state.description);
         this.props.createPin(formData).then(function () {
           return closeModal();
-        }, function (errors) {
+        }, function (action) {
           return _this2.setState({
-            errors: errors
+            errors: Object.values(action.errors.responseJSON)
           });
         });
       }
