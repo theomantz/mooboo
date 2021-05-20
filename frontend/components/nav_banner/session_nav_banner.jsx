@@ -36,11 +36,7 @@ class SessionNavBanner extends React.Component {
             Today
           </NavLink>
         </div>
-        <div className="nav search-bar-container flex-nav">
-          <div className="search-bar-icon">
-            <FontAwesomeIcon icon={faSearch} />
-          </div>
-          <input type="text" className="search-bar"></input>
+        <div className="flex-nav">
         </div>
         <div className="right-nav-container">
         <NavLink 
