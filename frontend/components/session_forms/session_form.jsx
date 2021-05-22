@@ -28,19 +28,22 @@ class SessionForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     
-    const { processForm } = this.props
+    const { processForm, clearErrors } = this.props
     const credentials = this.state
 
+    clearErrors()
+    
     processForm(credentials)
       .then(() => this.props.closeModal())
 
   }
 
   renderErrors() {
-    if( this.props.errors === [] ) return null;
+    const { errors } = this.props
+    if( errors === [] ) return null;
     return (
       <ul className="session-form-errors-list">
-        {this.props.errors.map((error, i) => (
+        {errors.map((error, i) => (
           <li key={`error-${i}`} className="session-form errors-list">{error}</li>
         ))}
       </ul>

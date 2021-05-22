@@ -4,14 +4,17 @@ class User < ApplicationRecord
   
   validates :username, uniqueness: true, allow_nil: true
   validates :password_digest, presence: true
-  validates :email, presence: true, uniqueness: true
+  validates :email,
+  format: { with: /\A(.+)@(.+)\z/, message: "Invalid"  },
+            uniqueness: { case_sensitive: false },
+            length: { minimum: 4, maximum: 254 }
   validates :session_token, presence: true, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
   
 
   after_initialize :ensure_session_token
 
-  after_save :first_board, :assign_username
+  after_commit :first_board, :assign_username, if: :persisted?
 
   has_one_attached :photo
 
@@ -40,6 +43,8 @@ class User < ApplicationRecord
     if self.username == '' || !self.username
       self.username = find_unique_username('moo')
       return self.save!
+    else
+      return true
     end
   end
   

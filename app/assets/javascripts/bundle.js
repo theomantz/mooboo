@@ -25668,8 +25668,11 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      var processForm = this.props.processForm;
+      var _this$props = this.props,
+          processForm = _this$props.processForm,
+          clearErrors = _this$props.clearErrors;
       var credentials = this.state;
+      clearErrors();
       processForm(credentials).then(function () {
         return _this3.props.closeModal();
       });
@@ -25677,10 +25680,11 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      if (this.props.errors === []) return null;
+      var errors = this.props.errors;
+      if (errors === []) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
         className: "session-form-errors-list"
-      }, this.props.errors.map(function (error, i) {
+      }, errors.map(function (error, i) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
           key: "error-".concat(i),
           className: "session-form errors-list"
@@ -25692,11 +25696,11 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      var _this$props = this.props,
-          formType = _this$props.formType,
-          linkTo = _this$props.linkTo,
-          linkText = _this$props.linkText,
-          openModal = _this$props.openModal;
+      var _this$props2 = this.props,
+          formType = _this$props2.formType,
+          linkTo = _this$props2.linkTo,
+          linkText = _this$props2.linkText,
+          openModal = _this$props2.openModal;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "session-form-container ".concat(formType, "-form-container")
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -25864,7 +25868,7 @@ var SocialsPage = /*#__PURE__*/function (_React$Component) {
         className: "about-page-div"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
         className: "mooboo-header-text"
-      }, "Follow Me!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, "Follow me!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "social-link-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "github-link"
@@ -25872,7 +25876,8 @@ var SocialsPage = /*#__PURE__*/function (_React$Component) {
         className: "project-github-label"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
         href: "https://github.com/theomantz/mooboo",
-        className: "github-link"
+        className: "github-link",
+        target: "_blank"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_ai__WEBPACK_IMPORTED_MODULE_1__.AiFillGithub, {
         size: "8em"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -25881,7 +25886,8 @@ var SocialsPage = /*#__PURE__*/function (_React$Component) {
         className: "linked-in-label"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
         href: "https://www.linkedin.com/in/theo-mantz/",
-        className: "linkedin-link"
+        className: "linkedin-link",
+        target: "_blank"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_ai__WEBPACK_IMPORTED_MODULE_1__.AiFillLinkedin, {
         size: "8em"
       })))));
