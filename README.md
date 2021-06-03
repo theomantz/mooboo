@@ -1,5 +1,8 @@
 # mooboo
 
+[![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](https://forthebadge.com)
+
 ## 1. Overview
 mooboo (abbr. mood board) is a fully function full stack clone of the popular
 'inspiration' website Pinterest.
