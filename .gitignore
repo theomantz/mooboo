@@ -59,7 +59,8 @@ yarn-debug.log*
 /public/uploads
 
 # webpack / node section
-
+bundle.js
+bundle.js.map
 
 # Ignore bundler config.
 /.bundle
