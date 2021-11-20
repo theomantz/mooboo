@@ -1,68 +1,65 @@
-import * as UserApiUtil from '../util/user_api_util'
-export const REMOVE_USERS = 'REMOVE_USERS'
-export const RECEIVE_USER = 'RECEIVE_USER'
-export const RECEIVE_USERS = 'RECEIVE_USERS'
-export const RECEIVE_USER_ERRORS = 'RECEIVE_USER_ERRORS'
+import * as UserApiUtil from "../util/user_api_util";
+export const REMOVE_USERS = "REMOVE_USERS";
+export const RECEIVE_USER = "RECEIVE_USER";
+export const RECEIVE_USERS = "RECEIVE_USERS";
+export const RECEIVE_USER_ERRORS = "RECEIVE_USER_ERRORS";
 
-const receiveUser = user => ({
+const receiveUser = (user) => ({
   type: RECEIVE_USER,
-  user
+  user,
 });
 
-const receiveUserErrors = errors => ({
+const receiveUserErrors = (errors) => ({
   type: RECEIVE_USER_ERRORS,
-  errors
+  errors,
 });
 
-const receiveUsers = users => ({
+const receiveUsers = (users) => ({
   type: RECEIVE_USERS,
-  users
-})
+  users,
+});
 
 const removeUsers = () => ({
-  type: CLEAR_USERS
-})
+  type: CLEAR_USERS,
+});
 
-export const fetchUser = userId => dispatch => {
-  return(
-    UserApiUtil.fetchUser(userId)
-      .then(user => dispatch(receiveUser(user)),
-      err => dispatch(receiveUserErrors(err)))
-  )
+export const fetchUser = (userId) => (dispatch) => {
+  return UserApiUtil.fetchUser(userId).then(
+    (user) => dispatch(receiveUser(user)),
+    (err) => dispatch(receiveUserErrors(err))
+  );
 };
 
-export const fetchUsers = user => dispatch => {
-  return (
-    UserApiUtil.fetchUsersByRelation(user)
-      .then(users => dispatch(receiveUsers(users)),
-      err => dispatch(receiveUserErrors(err)))
-  )
-}
-
-export const updateUser = (formData, user) => dispatch => {
-  return(
-    UserApiUtil.updateUser(formData, user)
-      .then(user => dispatch(receiveUser(user)),
-      errors => dispatch(receiveUserErrors(errors)))
-  )
+export const fetchUsers = (user) => (dispatch) => {
+  return UserApiUtil.fetchUsersByRelation(user).then(
+    (users) => dispatch(receiveUsers(users)),
+    (err) => dispatch(receiveUserErrors(err))
+  );
 };
 
-export const followUser = (currentUserId, userId) => dispatch => {
-  return (
-    UserApiUtil.followUser(currentUserId, userId)
-      .then(user => dispatch(receiveUser(user),
-      err => dispatch(receiveUserErrors(err))))
-  )
-}
+export const updateUser = (formData, user) => (dispatch) => {
+  return UserApiUtil.updateUser(formData, user).then(
+    (user) => dispatch(receiveUser(user)),
+    (errors) => dispatch(receiveUserErrors(errors))
+  );
+};
 
-export const unfollowUser = (currentUserId, userId) => dispatch => {
-  return (
-    UserApiUtil.unfollowUser(currentUserId, userId)
-      .then(user => dispatch(receiveUser(user),
-      err => dispatch(receiveUserErrors(err))))
-  )
-}
+export const followUser = (currentUserId, userId) => (dispatch) => {
+  return UserApiUtil.followUser(currentUserId, userId).then((user) =>
+    dispatch(receiveUser(user), (err) => dispatch(receiveUserErrors(err)))
+  );
+};
+
+export const unfollowUser = (currentUserId, userId) => (dispatch) => {
+  return UserApiUtil.unfollowUser(currentUserId, userId).then((user) =>
+    dispatch(receiveUser(user), (err) => dispatch(receiveUserErrors(err)))
+  );
+};
+
+export const userErrors = (errors) => {
+  () => dispatch(receiveUserErrors(errors));
+};
 
 export const clearUsers = () => {
-  () => dispatch(clearUsers())
-}
+  () => dispatch(clearUsers());
+};
