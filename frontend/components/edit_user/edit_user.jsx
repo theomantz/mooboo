@@ -32,7 +32,7 @@ class EditUser extends React.Component {
     const permittedLength = (f) => {
       switch (f) {
         case "email":
-          return 20;
+          return 100;
         case "location":
           return 100;
         case "username":
